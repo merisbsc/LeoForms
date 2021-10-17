@@ -1,0 +1,46 @@
+= User-Stories LeoForms
+//
+//* As a student, I want to choose the subjects for the A-Levels in order to
+//take part at them
+
+== Surveyor
+
+=== As a surveyor, I want to create a new survey with different types of questions in order to organise the school better
+==== Definition of Done:
+
+=== As a surveyor, I want to choose from survey templates in order to create recurring surveys fast
+==== Definition of Done:
+
+=== As a surveyor, I want to send invitations to all the participants in order to get their responses easily
+==== Definition of Done:
+
+=== As a surveyor, I want to see the results of a survey in order to realize the participants' wishes
+==== Definition of Done:
+
+=== As a surveyor, I want to see who already sent their response in order to make sure the required amount of participants answered
+==== Definition of Done:
+
+=== As a surveyor, I want to see the results of old surveys in order to archive decisions by participants
+==== Definition of Done:
+
+
+== Student
+
+=== As a student, I want to log into surveys easily in order to respond to surveys without wasting a lot of time
+==== Definition of Done:
+
+=== As a student, I want to log in safely in order to have an accurate and authentic representation of my opinion
+==== Definition of Done:
+
+=== As a student, I want to answer questions of a survey in order to represent my opinion in front of school administration
+==== Definition of Done:
+
+=== As a student, I want to get a reassurance of my answers in order to make sure that no mistakes were made
+==== Definition of Done:
+
+=== As a student, I want to change my answers before the survey deadline in order to be able to change my mind
+==== Definition of Done:
+
+=== As a student, I want to see the archive of my answers in order to have proof in case of a conflict
+==== Definition of Done:
+
