@@ -7,40 +7,50 @@
 
 === As a surveyor, I want to create a new survey with different types of questions in order to organise the school better
 ==== Definition of Done:
+The surveyor is able to choose between different question types (radio, checkbox, text, ...) and ask the question in a text.
 
 === As a surveyor, I want to choose from survey templates in order to create recurring surveys fast
 ==== Definition of Done:
+When creating a new servey, I get asked if i want to create my own questions from scratch or if I want to chose from a template (e.g. Wahlfächerauswahl)
 
 === As a surveyor, I want to send invitations to all the participants in order to get their responses easily
 ==== Definition of Done:
+When I'm finished setting up my survey, I can create a link to send to all the people that I want to participate
 
 === As a surveyor, I want to see the results of a survey in order to realize the participants' wishes
 ==== Definition of Done:
+When the deadline is over, I want to see a list of all responses and a graphical representation for easier interpretation
 
 === As a surveyor, I want to see who already sent their response in order to make sure the required amount of participants answered
 ==== Definition of Done:
+While the survey is still going, I want to check who already answered the questions so I can make sure to contact those who still need to answer
 
 === As a surveyor, I want to see the results of old surveys in order to archive decisions by participants
 ==== Definition of Done:
-
+After the survey is finished, I want it to be archived so I can check the results anytime in the future.
 
 == Student
 
 === As a student, I want to log into surveys easily in order to respond to surveys without wasting a lot of time
 ==== Definition of Done:
+In order to participate, I want to click the link and get forwarded to a page where I can enter my "Matrikelnummer". This will send a link to my school-email-adress which I can use to login to the survey
 
 === As a student, I want to log in safely in order to have an accurate and authentic representation of my opinion
 ==== Definition of Done:
+Due to the authentication-link getting sent to my personal email-address, nobody else should be able to access the link
 
 === As a student, I want to answer questions of a survey in order to represent my opinion in front of school administration
 ==== Definition of Done:
+I want to be able to answer the questions intuitively and quickly. I can click to answer radio- or checkboxes or type to answer text or numerical questions
 
 === As a student, I want to get a reassurance of my answers in order to make sure that no mistakes were made
 ==== Definition of Done:
+When I submit my answers, I want to get an email with all the questions and answers I gave.
 
 === As a student, I want to change my answers before the survey deadline in order to be able to change my mind
 ==== Definition of Done:
+I want to be able to log back into the survey and change my answers before the survey deadline is over. Surveys can be accessed through the dashboard
 
 === As a student, I want to see the archive of my answers in order to have proof in case of a conflict
 ==== Definition of Done:
-
+I want to see all the survey I have taken part in. These can be filtered (e.g. done/open/..) and display the answers I gave.
