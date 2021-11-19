@@ -1,0 +1,25 @@
+* {
+  font-family: Helvetica;
+}
+
+body {
+  background: #f5f5f5;
+  color: #272822;
+  font-size: 15px;
+  padding: 8px 16px;
+}
+
+h1 a {
+  text-decoration: none;
+}
+
+h1 a:hover {
+  opacity: 0.87;
+  text-decoration: underline;
+}
+
+blockquote {
+  border-left: 3px solid rgba(0,0,0,0.21);
+  padding-left: 12px;
+  color: rgba(0,0,0,0.54);
+}
