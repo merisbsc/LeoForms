@@ -63,14 +63,14 @@ RADIOBOX
 
 
 Group "*" -- "*" Student
-Student -- Poll
-Poll -right- Survey
-Poll -- Answer
-Survey -up- Status
-Survey -right- Questionnaire
-Questionnaire -- Question
+Student "1" -- "*" Poll
+Poll "*" -right- "1" Survey
+Poll "1" --> "*" Answer
+Survey "1" -up-> "1" Status
+Survey "*" -right-> "1" Questionnaire
+Questionnaire "1" --> "*" Question
 Question -left- Answer
-Question -right- QuestionType
+Question "1" -right- "1" QuestionType
 
 
 @enduml
