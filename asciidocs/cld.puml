@@ -1,13 +1,76 @@
 @startuml
 
-class Class {
+class Group {
+Long id
+String name
+String year
+List<Student> students
 }
 
-class Student{
+class Student {
+String matrikelNr
+String firstname
+String lastname
+String email
+Group group
+}
+
+class Poll{
+Long id
+String token
+Survey survey
+Student student
+}
+
+class Answer {
+Long id
+String value
+Question question
+}
+
+class Question {
+Long id
+String questionText
+QuestionType questionType
+String fieldname
+}
+
+class Questionnaire {
+Long id
+String name
+LocalDate creationDate
+String mdQuestionnaire
+}
+
+class Survey {
+String name
+LocalDate creationDate
+LocalDate endDate
+Questionnaire questionnaire
+}
+
+enum Status {
+CREATED
+STARTED
+ENDED
+}
+
+enum QuestionType {
+TEXT
+CHECKBOX
+RADIOBOX
 }
 
 
-
+Group "*" -- "*" Student
+Student -- Poll
+Poll -right- Survey
+Poll -- Answer
+Survey -up- Status
+Survey -right- Questionnaire
+Questionnaire -- Question
+Question -left- Answer
+Question -right- QuestionType
 
 
 @enduml
