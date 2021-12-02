@@ -1,0 +1,9 @@
+<p id="header">
+  <mat-toolbar>
+    <span>LeoForms</span>
+  </mat-toolbar>
+</p>
+<textarea class="variable-textarea" [(ngModel)]="markdown"></textarea>
+<markdown class="variable-binding" [data]="markdown"></markdown>
+<input type="text" placeholder="Zielgruppe">
+<button mat-stroked-button color="primary">Send</button>
