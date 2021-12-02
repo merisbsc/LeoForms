@@ -1,0 +1,13 @@
+@startuml
+
+class Class {
+}
+
+class Student{
+}
+
+
+
+
+
+@enduml
