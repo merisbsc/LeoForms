@@ -1,5 +1,36 @@
 .example-chip-list {
   width: 100%;
+  background-color: #e5e5e5;
+  padding: 7px;
+  padding-bottom: 10px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom: 1px solid;
+}
+
+.chips-label {
+  padding-top: 20px !important;
+  margin-top: 20px !important;
+}
+
+.example-chip-list:focus {
+  border: #8a52c2;
+}
+
+.mat-form-field-hint-wrapper {
+  padding-top: 20px;
+}
+
+.mat-chip {
+  background-color: #c4c4c4;
+}
+
+.mat-chip:hover {
+  color: #8a52c2;
+}
+
+.mat-autocomplete-panel {
+  background-color: #e5e5e5;
 }
 
 
