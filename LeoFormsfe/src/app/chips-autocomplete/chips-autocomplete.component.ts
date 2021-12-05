@@ -20,6 +20,7 @@ export class ChipsAutocompleteComponent implements OnInit {
   fruits: string[] = ['5AHITM'];
   allFruits: string[] = ['1AHITM',
     '1BHITM',
+    '1CHITM',
     '2AHITM',
     '2BHITM',
     '3AHITM',
