@@ -15,6 +15,8 @@ public class Survey {
     LocalDate creationDate;
     @Column(name = "SU_END_DATE")
     LocalDate endDate;
+    @ManyToOne(fetch = FetchType.LAZY)
+    Questionnaire questionnaire;
     @Column(name = "SU_STATUS")
     @Enumerated(EnumType.STRING)
     Status status;
