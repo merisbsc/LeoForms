@@ -35,3 +35,11 @@
   padding-bottom: 10px;
   padding-top: 10px;
 }
+
+.sendButton {
+  background-color: rebeccapurple !important;
+  color: white;
+  font-size: 15px;
+  border-radius: 20px;
+  padding: 15px;
+}
