@@ -14,10 +14,8 @@ public class Poll {
     @Column(name = "P_TOKEN")
     String token;
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name = "P_STUDENT")
     Student student;
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name = "P_SURVEY")
     Survey survey;
 
     public Poll() {
