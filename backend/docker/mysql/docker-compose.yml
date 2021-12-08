@@ -1,0 +1,20 @@
+version: '3.3'
+services:
+  mysql:
+    image: mysql:latest
+    cap_add:
+      - SYS_NICE  # CAP_SYS_NICE
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
+    volumes:
+      - database:/var/lib/
+volumes:
+  database:
