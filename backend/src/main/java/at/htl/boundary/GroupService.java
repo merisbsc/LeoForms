@@ -2,6 +2,10 @@ package at.htl.boundary;
 
 import at.htl.model.Group;
 import at.htl.repositories.GroupRepository;
+import org.eclipse.microprofile.openapi.annotations.OpenAPIDefinition;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.info.Contact;
+import org.eclipse.microprofile.openapi.annotations.info.Info;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -23,6 +27,10 @@ public class GroupService {
     GroupRepository groupRepository;
 
     @GET
+    @Operation(
+            summary = "Get all Groups",
+            description = "Get all Groups"
+    )
     @Path("/getAll")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Group> getAllGroups() {
@@ -30,6 +38,10 @@ public class GroupService {
     }
 
     @POST
+    @Operation(
+            summary = "Create a new Group",
+            description = "Create a new Group"
+    )
     @Transactional
     @Path("/add")
     @Produces(MediaType.APPLICATION_JSON)
