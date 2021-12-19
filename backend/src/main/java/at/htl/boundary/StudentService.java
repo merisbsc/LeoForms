@@ -45,17 +45,37 @@ public class StudentService {
 
     @GET
     @Operation(
-            summary = "Get Students by Group",
+            summary = "Get Students by Group ID",
             description = "Get Students by Group ID"
     )
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/bygroup/{groupid}")
-    public List<Student> getByGroup(@PathParam("groupid") long id) {
+    @Path("/bygroupid/{groupid}")
+    public List<Student> getByGroupId(@PathParam("groupid") long id) {
         try {
             Group g = groupRepository.findById(id);
-            TypedQuery<Student> query = em.createNamedQuery("Student.getStudentByGroup", Student.class)
+            TypedQuery<Student> query = em.createNamedQuery("Student.getStudentByGroupId", Student.class)
                     .setParameter("GROUP", g);
 
+            return query.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    @GET
+    @Operation(
+            summary = "Get Students by Group Name"
+    )
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/bygroupname/{name}")
+    public List<Student> getByGroupName(@PathParam("name") String name) {
+        try {
+            TypedQuery<Group> gq = em.createNamedQuery("Group.getByName", Group.class)
+                    .setParameter("NAME", name);
+            Group g = gq.getSingleResult();
+
+            TypedQuery<Student> query = em.createNamedQuery("Student.getStudentByGroupName", Student.class)
+                    .setParameter("GROUP", g);
             return query.getResultList();
         } catch (NoResultException e) {
             return null;
@@ -73,7 +93,9 @@ public class StudentService {
     @Path("/create")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+
     public Response create(Student student, @Context UriInfo info) {
+
         studentRepository.merge(student);
         return Response.created(URI.create(info.getPath())).build();
     }

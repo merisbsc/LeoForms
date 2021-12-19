@@ -5,10 +5,15 @@ import javax.persistence.*;
 @Entity
 @Table(name = "LF_STUDENT")
 @NamedQueries(
-        @NamedQuery(
-                name = "Student.getStudentByGroup",
+        {@NamedQuery(
+                name = "Student.getStudentByGroupId",
+                query = "SELECT s from Student s where s.group= :GROUP"
+        ), @NamedQuery(
+                name = "Student.getStudentByGroupName",
                 query = "SELECT s from Student s where s.group= :GROUP"
         )
+        }
+
 )
 public class Student {
 
