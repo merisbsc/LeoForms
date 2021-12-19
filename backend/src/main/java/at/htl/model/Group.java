@@ -4,6 +4,12 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "LF_GROUP")
+@NamedQueries(
+        @NamedQuery(
+                name = "Group.getByName",
+                query = "SELECT g from Group g where g.name= :NAME"
+        )
+)
 public class Group {
 
     @Id

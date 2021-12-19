@@ -7,4 +7,8 @@ import javax.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class StudentRepository implements PanacheRepository<Student> {
+    public Student merge(Student student) {
+        return getEntityManager().merge(student);
+    }
+
 }
