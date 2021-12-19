@@ -83,7 +83,7 @@ public class StudentService {
     }
     //endregion
 
-
+    //region POST-Endpoints
     @POST
     @Operation(
             summary = "Create a new Student",
@@ -99,7 +99,9 @@ public class StudentService {
         studentRepository.merge(student);
         return Response.created(URI.create(info.getPath())).build();
     }
+    //endregion
 
+    //region DELETE-Endpoints
     @DELETE
     @Transactional
     @Operation(
@@ -118,5 +120,6 @@ public class StudentService {
         }
 
     }
+    //endregion
 
 }

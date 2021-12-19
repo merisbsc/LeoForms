@@ -27,6 +27,7 @@ public class GroupService {
     @Inject
     GroupRepository groupRepository;
 
+    //region GET
     @GET
     @Operation(
             summary = "Get all Groups",
@@ -37,7 +38,9 @@ public class GroupService {
     public List<Group> getAllGroups() {
         return groupRepository.listAll();
     }
+    //endregion
 
+    //region POST
     @POST
     @Operation(
             summary = "Create a new Group",
@@ -54,8 +57,9 @@ public class GroupService {
                 created(URI.create(info.getPath() + "/" + group.getId()))
                 .build();
     }
+    //endregion
 
-
+    //region DELETE
     @DELETE
     @Transactional
     @Path("/deletebyid/{id}")
@@ -72,6 +76,7 @@ public class GroupService {
         }
 
     }
+    //endregion
 
 
 
