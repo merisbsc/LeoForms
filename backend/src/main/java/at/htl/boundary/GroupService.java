@@ -1,6 +1,7 @@
 package at.htl.boundary;
 
 import at.htl.model.Group;
+import at.htl.model.Student;
 import at.htl.repositories.GroupRepository;
 import org.eclipse.microprofile.openapi.annotations.OpenAPIDefinition;
 import org.eclipse.microprofile.openapi.annotations.Operation;
@@ -47,9 +48,32 @@ public class GroupService {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response create(Group group, @Context UriInfo info) {
+
         groupRepository.persist(group);
         return Response.
                 created(URI.create(info.getPath() + "/" + group.getId()))
                 .build();
     }
+
+
+    @DELETE
+    @Transactional
+    @Path("/deletebyid/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteById(@PathParam("id") long id) {
+        try{
+            Group g = groupRepository.findById(id);
+            String g_name = g.getName();
+            groupRepository.deleteById(id);
+            return Response.status(200).header("Deleted", g.getName()).build();
+        } catch (IllegalArgumentException e){
+            return Response.status(400).header("Reason", "Gruppe mit id " + id + " existiert nicht").build();
+        }
+
+    }
+
+
+
 }
+
