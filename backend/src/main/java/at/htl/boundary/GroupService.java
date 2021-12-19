@@ -62,6 +62,9 @@ public class GroupService {
     //region DELETE
     @DELETE
     @Transactional
+    @Operation(
+            summary = "Delete Group by ID"
+    )
     @Path("/deletebyid/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -71,14 +74,12 @@ public class GroupService {
             String g_name = g.getName();
             groupRepository.deleteById(id);
             return Response.status(200).header("Deleted", g.getName()).build();
-        } catch (IllegalArgumentException e){
+        } catch (Exception e){
             return Response.status(400).header("Reason", "Gruppe mit id " + id + " existiert nicht").build();
         }
 
     }
     //endregion
-
-
 
 }
 

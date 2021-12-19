@@ -115,7 +115,7 @@ public class StudentService {
             Student s = studentRepository.findById(id);
             studentRepository.deleteById(id);
             return Response.status(200).header("Deleted", s.getFirstName() + " " + s.getLastName()).build();
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             return Response.status(400).header("Reason", "Student mit id " + id + " existiert nicht").build();
         }
 
