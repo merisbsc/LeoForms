@@ -65,4 +65,24 @@ public class QuestionnaireService {
         qr.merge(questionnaire);
         return Response.created(URI.create(info.getPath())).build();
     }
+
+    @DELETE
+    @Transactional
+    @Operation(
+            summary = "Delete a Questionnaire by ID"
+    )
+    @Path("/{id}/questionnaire-id")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteById(@PathParam("id") long id) {
+        try {
+            Questionnaire q = qr.findById(id);
+            qr.deleteById(id);
+            return Response.status(200).header("Deleted", q.getName()).build();
+        } catch (Exception e) {
+            return Response.status(400).header("Reason", "Questionnaire mit id " + id + " existiert nicht").build();
+        }
+
+    }
+
 }
