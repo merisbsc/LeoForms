@@ -7,4 +7,7 @@ import javax.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class QuestionnaireRepository implements PanacheRepository<Questionnaire> {
+    public Questionnaire merge(Questionnaire questionnaire) {
+        return getEntityManager().merge(questionnaire);
+    }
 }
