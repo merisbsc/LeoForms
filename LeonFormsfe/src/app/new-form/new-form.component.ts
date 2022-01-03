@@ -40,9 +40,6 @@ export class NewFormComponent implements OnInit {
           .replace(/^\s*\[x\]\s*/, '<input type="checkbox" checked="true"> ');
         return '<li style="list-style: none">' + text + '</li>';
       } if (/^\s*\[[r ]\]\s*/.test(text)) {
-
-
-
         text = text
           .replace(/^\s*\[r\]\s*/, '<input type="radio"> ');
         return '<li style="list-style: none">' + text + '</li>';
