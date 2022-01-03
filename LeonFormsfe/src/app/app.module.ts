@@ -28,6 +28,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatIconModule} from "@angular/material/icon";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import marked from 'marked';
 
 @NgModule({
   declarations: [
@@ -40,12 +41,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserModule,
     FormsModule,
     MarkdownModule.forRoot({
-      loader: HttpClient,
       markedOptions: {
         provide: MarkedOptions,
-        useFactory: markedOptionsFactory,
+        useValue: {
+          gfm: true,
+          breaks: false,
+          pedantic: false,
+          smartLists: true, // enable smartLists
+          smartypants: false,
+        },
       },
-      sanitize: SecurityContext.NONE
+      sanitize: SecurityContext.NONE // disable sanitization
     }),
     MatButtonModule,
     MatToolbarModule,
@@ -65,6 +71,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 })
 export class AppModule { }
 
+
+/*
 export function markedOptionsFactory(): MarkedOptions {
   const renderer = new MarkedRenderer();
 
@@ -72,10 +80,15 @@ export function markedOptionsFactory(): MarkedOptions {
     return '<blockquote class="blockquote"><p>' + text + '</p></blockquote>';
   };
 
-  renderer.heading = (text: string, level: 4) => {
-    return '<blockquote class="blockquote"><p>' + text + '</p></blockquote>';
-  };
 
+  renderer.heading = (text: string, level: 4) => {
+    const escapedText = text.toLowerCase().replace(/\[x\]/g, '-');
+    console.log(escapedText)
+    return '<div>\n' +
+      '    <input type="checkbox" id="subscribeNews" name="subscribe" value="newsletter">\n' +
+      '    <label for="subscribeNews"> ' + escapedText + '</label>\n' +
+      '  </div>';
+  };
 
   return {
     renderer: renderer,
@@ -86,11 +99,6 @@ export function markedOptionsFactory(): MarkedOptions {
     smartypants: false,
   };
 }
+*/
 
-const options: MarkdownModuleConfig = {
-  markedOptions: {
-    provide: MarkedOptions,
-    useFactory: markedOptionsFactory
-  } ,
-  sanitize: SecurityContext.NONE
-};
+
