@@ -29,13 +29,15 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatIconModule} from "@angular/material/icon";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import marked from 'marked';
+import { ShowFormComponent } from './show-form/show-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginPageComponent,
     NewFormComponent,
-    ChipsAutocompleteComponent
+    ChipsAutocompleteComponent,
+    ShowFormComponent
   ],
   imports: [
     BrowserModule,
