@@ -33,6 +33,16 @@ public class Student {
     @JoinColumn(name = "G_ID")
     Group group;
 
+    public Student(String firstName, String lastName, String email, Group group) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.group = group;
+    }
+
+    public Student() {
+    }
+
     public Long getId() {
         return id;
     }
