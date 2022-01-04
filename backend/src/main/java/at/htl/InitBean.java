@@ -12,6 +12,7 @@ import io.quarkus.runtime.StartupEvent;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -35,6 +36,7 @@ public class InitBean {
     @Inject
     QuestionnaireRepository questionnaireRepository;
 
+    @Transactional
     void onStart(@Observes StartupEvent event) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME));
 
@@ -42,7 +44,10 @@ public class InitBean {
                 .map(x -> x.split(";"))
                 .peek(x -> {
                     System.out.printf("%s: %s %s\n", x[4], x[0], x[1]);
-
+                    Group g = new Group(x[4], x[3]);
+                    Student s = new Student(x[0], x[1], x[2], g);
+                    studentRepository.merge(s);
+                    System.out.println("Saved: " + x[0] + " " + x[1]);
                 })
                 .count();
     }
