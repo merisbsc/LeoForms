@@ -10,6 +10,10 @@ import org.eclipse.microprofile.openapi.annotations.info.Info;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import javax.validation.constraints.Positive;
 import javax.ws.rs.*;
@@ -26,6 +30,9 @@ public class GroupService {
 
     @Inject
     GroupRepository groupRepository;
+
+    @Inject
+    EntityManager em;
 
     //region GET
     @GET
@@ -58,25 +65,19 @@ public class GroupService {
     //endregion
 
     //region DELETE
-    @DELETE
-    @Transactional
-    @Operation(
-            summary = "Delete Group by ID"
-    )
-    @Path("/{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteById(@PathParam("id") long id) {
-        try{
-            Group g = groupRepository.findById(id);
-            String g_name = g.getName();
-            groupRepository.deleteById(id);
-            return Response.status(200).header("Deleted", g.getName()).build();
-        } catch (Exception e){
-            return Response.status(400).header("Reason", "Gruppe mit id " + id + " existiert nicht").build();
-        }
-
-    }
+//    @DELETE
+//    @Transactional
+//    @Operation(
+//            summary = "Delete Group by ID"
+//    )
+//    @Path("/{id}")
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public Response deleteById(@PathParam("id") String id) {
+//        Group group = em.find(Group.class, id);
+//        em.remove(group);
+//        return Response.status(400).header("Reason", "Group mit id " + id + " existiert nicht").build();
+//    }
     //endregion
 
 }

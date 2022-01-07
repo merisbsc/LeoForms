@@ -41,6 +41,7 @@ public class InitBean {
         BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME));
 
         reader.lines().skip(1)
+                .distinct()
                 .map(x -> x.split(";"))
                 .peek(x -> {
                     System.out.printf("%s: %s %s\n", x[4], x[0], x[1]);

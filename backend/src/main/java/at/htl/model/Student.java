@@ -29,7 +29,7 @@ public class Student {
     @Column(name = "S_EMAIL")
     String email;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     @JoinColumn(name = "G_ID")
     Group group;
 
