@@ -23,3 +23,6 @@ blockquote {
   padding-left: 12px;
   color: rgba(0,0,0,0.54);
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

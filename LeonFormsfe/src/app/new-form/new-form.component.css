@@ -25,21 +25,7 @@
   flex: 1 1 auto;
 }
 
-#header {
-  background-color: rebeccapurple !important;
-  color: whitesmoke;
-  font-size: 30px;
-  margin-top: -16px;
-  margin-left: -24px;
-  margin-right: -24px;
-  padding-bottom: 10px;
-  padding-top: 10px;
+.example-chip-list {
+  width: 100%;
 }
 
-.sendButton {
-  background-color: rebeccapurple !important;
-  color: white;
-  font-size: 15px;
-  border-radius: 20px;
-  padding: 15px;
-}

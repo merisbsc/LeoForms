@@ -16,7 +16,6 @@ import 'prismjs/plugins/line-highlight/prism-line-highlight.js';
 import { AppRoutingModule } from './app-routing.module';
 import { LoginPageComponent } from './login-page/login-page.component';
 import {NewFormComponent} from './new-form/new-form.component';
-import { ChipsAutocompleteComponent } from './chips-autocomplete/chips-autocomplete.component';
 
 // MAT CHIP INPUT IMPORTS
 import {MaterialExampleModule} from '../material.module';
@@ -36,7 +35,6 @@ import { ShowFormComponent } from './show-form/show-form.component';
     AppComponent,
     LoginPageComponent,
     NewFormComponent,
-    ChipsAutocompleteComponent,
     ShowFormComponent
   ],
   imports: [
@@ -69,38 +67,10 @@ import { ShowFormComponent } from './show-form/show-form.component';
     BrowserAnimationsModule
   ],
   providers: [],
-  bootstrap: [AppComponent, ChipsAutocompleteComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
 
 
-/*
-export function markedOptionsFactory(): MarkedOptions {
-  const renderer = new MarkedRenderer();
-
-  renderer.blockquote = (text: string) => {
-    return '<blockquote class="blockquote"><p>' + text + '</p></blockquote>';
-  };
-
-
-  renderer.heading = (text: string, level: 4) => {
-    const escapedText = text.toLowerCase().replace(/\[x\]/g, '-');
-    console.log(escapedText)
-    return '<div>\n' +
-      '    <input type="checkbox" id="subscribeNews" name="subscribe" value="newsletter">\n' +
-      '    <label for="subscribeNews"> ' + escapedText + '</label>\n' +
-      '  </div>';
-  };
-
-  return {
-    renderer: renderer,
-    gfm: true,
-    breaks: false,
-    pedantic: false,
-    smartLists: true,
-    smartypants: false,
-  };
-}
-*/
 
 

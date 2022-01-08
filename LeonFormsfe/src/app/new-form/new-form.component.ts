@@ -1,8 +1,13 @@
-import {Component, OnInit, SecurityContext} from '@angular/core';
+import {Component, ElementRef, OnInit, SecurityContext, ViewChild} from '@angular/core';
 
 import {MarkdownModule, MarkdownModuleConfig, MarkdownService, MarkedOptions, MarkedRenderer} from 'ngx-markdown';
 import {HttpClient} from "@angular/common/http";
 import {Title} from "@angular/platform-browser";
+import {COMMA, ENTER} from "@angular/cdk/keycodes";
+import {FormControl} from "@angular/forms";
+import {map, Observable, startWith} from "rxjs";
+import {MatChipInputEvent} from "@angular/material/chips";
+import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
 
 
 
@@ -12,6 +17,14 @@ import {Title} from "@angular/platform-browser";
   styleUrls: ['./new-form.component.css']
 })
 export class NewFormComponent implements OnInit {
+
+  // CHIPS FIELDS
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+  fruitCtrl = new FormControl();
+  filteredFruits: Observable<string[]>;
+  fruits: string[] = ['Lemon'];
+  allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
+  @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
 
 
   title = 'LeoFormsfe';
@@ -28,6 +41,12 @@ export class NewFormComponent implements OnInit {
 
   constructor(private markdownService: MarkdownService, private titleService:Title) {
     this.titleService.setTitle("NEW LEO FORM");
+
+    this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
+      startWith(null),
+      map((fruit: string | null) => (fruit ? this._filter(fruit) : this.allFruits.slice())),
+    );
+
   }
 
   ngOnInit(): void {
@@ -63,11 +82,44 @@ export class NewFormComponent implements OnInit {
         + body
         + '</select>\n';
     };
-
-
-
-
   }
+
+
+  add(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+
+    // Add our fruit
+    if (value) {
+      this.fruits.push(value);
+    }
+
+    // Clear the input value
+    event.chipInput!.clear();
+
+    this.fruitCtrl.setValue(null);
+  }
+
+  remove(fruit: string): void {
+    const index = this.fruits.indexOf(fruit);
+
+    if (index >= 0) {
+      this.fruits.splice(index, 1);
+    }
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.fruits.push(event.option.viewValue);
+    this.fruitInput.nativeElement.value = '';
+    this.fruitCtrl.setValue(null);
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.allFruits.filter(fruit => fruit.toLowerCase().includes(filterValue));
+  }
+
+
 
 }
 
