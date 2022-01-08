@@ -29,9 +29,19 @@ public class Student {
     @Column(name = "S_EMAIL")
     String email;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     @JoinColumn(name = "G_ID")
     Group group;
+
+    public Student(String firstName, String lastName, String email, Group group) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.group = group;
+    }
+
+    public Student() {
+    }
 
     public Long getId() {
         return id;
