@@ -22,8 +22,8 @@ export class NewFormComponent implements OnInit {
   separatorKeysCodes: number[] = [ENTER, COMMA];
   fruitCtrl = new FormControl();
   filteredFruits: Observable<string[]>;
-  fruits: string[] = ['Lemon'];
-  allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
+  fruits: string[] = ['4AHITM'];
+  allFruits: string[] = ['1AHITM', '1BHITM', '2AHITM', '2BHITM', '3AHTIM'];
   @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
 
 

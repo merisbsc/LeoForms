@@ -3,13 +3,21 @@
     <span>LeoForms</span>
   </mat-toolbar>
 </p>
-<textarea class="variable-textarea" [(ngModel)]="markdown"></textarea>
-<markdown class="variable-binding" [data]="markdown"></markdown>
+
+<div class="grid-container">
+  <div class="grid-child-purple">
+    <textarea class="variable-textarea" [(ngModel)]="markdown"></textarea>
+  </div>
+
+  <div class="grid-child-green">
+    <markdown class="variable-binding" [data]="markdown"></markdown>
+  </div>
+</div>
 
 <tr></tr>
 
 <mat-form-field class="example-chip-list" appearance="fill">
-  <mat-label>Favorite Fruits</mat-label>
+  <mat-label>Zielgruppen wählen</mat-label>
   <mat-chip-list #chipList aria-label="Fruit selection">
     <mat-chip
       *ngFor="let fruit of fruits"
@@ -20,7 +28,7 @@
       </button>
     </mat-chip>
     <input
-      placeholder="New fruit..."
+      placeholder="Gruppe hinzufügen..."
       #fruitInput
       [formControl]="fruitCtrl"
       [matAutocomplete]="auto"
@@ -36,4 +44,4 @@
 </mat-form-field>
 
 <tr></tr>
-<button mat-flat-button color="primary">Primary</button>
+<button mat-flat-button color="primary">Send</button>
