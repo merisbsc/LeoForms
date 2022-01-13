@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 @ApplicationScoped
 public class InitBean {
 
+
     final String FILE_NAME = "src/main/resources/students.csv";
     //src/main/java/at/htl/InitBean.java
 
