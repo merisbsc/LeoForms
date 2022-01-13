@@ -52,6 +52,16 @@ public class QuestionnaireService {
         return qr.findById(id).getMarkdown();
     }
 
+    @GET
+    @Operation(
+            summary = "Get Markdown Text of the Questionnaire by Name of it"
+    )
+    @Path("/{name}/markdown/name")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getMarkdownByName(@PathParam("name") String name) {
+        return "## LeoForms hat _swag_!\\n---\\n\\n### Wahlfächer\\n1. Ordered list\\n2. Another bullet point\\n   - Unordered list\\n   - Another unordered bullet\\n";
+    }
+
 
     @POST
     @Operation(
