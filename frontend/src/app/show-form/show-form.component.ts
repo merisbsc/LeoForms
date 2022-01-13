@@ -4,7 +4,7 @@ import {MarkdownModule, MarkdownModuleConfig, MarkdownService, MarkedOptions, Ma
 import {HttpClient} from "@angular/common/http";
 import {Title} from "@angular/platform-browser";
 
-import {DataService} from '../data.service'
+import {DataService, GetFormInterface} from '../data.service'
 
 @Component({
   selector: 'app-show-form',
@@ -13,19 +13,33 @@ import {DataService} from '../data.service'
 })
 export class ShowFormComponent implements OnInit {
 
-  constructor(private markdownService: MarkdownService, private titleService:Title, public dataServ: DataService) {
-    this.titleService.setTitle("SHOW LEO FORM");
-  }
+  dataSource: GetFormInterface[];
 
   markdown = `## LeoForms hat __swag__!
 ---
 
-### Wahlfächer
+### Mahlwächer
 1. Ordered list
 2. Another bullet point
    - Unordered list
    - Another unordered bullet
 `;
+
+  constructor(private markdownService: MarkdownService, private titleService:Title, public dataServ: DataService) {
+    this.titleService.setTitle("SHOW LEO FORM");
+
+
+   // this.dataSource = this.dataServ.mds;
+
+    this.dataServ.getMds().subscribe((value: any) => {
+      this.dataSource = value;
+      console.log(this.dataSource)
+      console.log(this.dataSource[1].markdown)
+      this.markdown = value;
+    });
+
+  }
+
 
 
   ngOnInit(): void {

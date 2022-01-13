@@ -10,10 +10,13 @@ export interface GroupInterface {
 }
 
 export interface FormInterface {
-  idF: string;
-  nameF: string;
+  name: string;
   creationDate: string;
   markdown: string;
+}
+
+export interface GetFormInterface {
+  markdown: string
 }
 
 const BASE_URL: string = 'http://localhost:8080/api'
@@ -27,6 +30,7 @@ export class DataService {
 
   readonly groups: GroupInterface[];
   readonly forms: FormInterface[];
+  readonly mds: GetFormInterface[];
 
   constructor(private http: HttpClient) {
     this.forms = [];
@@ -54,12 +58,17 @@ export class DataService {
   }
 
 
+  getMds(): Observable<string> {
+    console.log(this.http.get<GetFormInterface[]>('http://localhost:8080/questionnaire/xdfcgvh/markdown/name'));
+    return this.http.get('http://localhost:8080/questionnaire/xdfcgvh/markdown/name', {responseType: 'text'});
+  }
+
+
   saveMd(nameForm: string, markdownString: string) {
 
     const form = {
-      idF: 'bfds',
-      nameF: nameForm,
-      creationDate: '12-12-2021',
+      name: nameForm,
+      creationDate: '2021-12-12',
       markdown: markdownString
     };
 

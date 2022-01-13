@@ -30,7 +30,6 @@ export class NewFormComponent implements OnInit {
   @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
   dataSource: GroupInterface[];
 
-
   title = 'LeoFormsfe';
 
   markdown = `## LeoForms hat __swag__!

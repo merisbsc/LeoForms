@@ -59,7 +59,14 @@ public class QuestionnaireService {
     @Path("/{name}/markdown/name")
     @Produces(MediaType.TEXT_PLAIN)
     public String getMarkdownByName(@PathParam("name") String name) {
-        return "## LeoForms hat _swag_!\\n---\\n\\n### Wahlfächer\\n1. Ordered list\\n2. Another bullet point\\n   - Unordered list\\n   - Another unordered bullet\\n";
+        return "## LeoForms hat __swag__!\n" +
+                "---\n" +
+                "\n" +
+                "### Mahlwächer\n" +
+                "1. Ordered list\n" +
+                "2. Another bullet point\n" +
+                "   - Unordered list\n" +
+                "   - Another unordered bullet\n";
     }
 
 
