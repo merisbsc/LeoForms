@@ -5,10 +5,11 @@ import {HttpClient} from "@angular/common/http";
 import {Title} from "@angular/platform-browser";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {FormControl} from "@angular/forms";
-import {map, Observable, startWith} from "rxjs";
+import {map, Observable, startWith, window} from "rxjs";
 import {MatChipInputEvent} from "@angular/material/chips";
 import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
 
+import {DataService, GroupInterface} from '../data.service'
 
 
 @Component({
@@ -22,9 +23,12 @@ export class NewFormComponent implements OnInit {
   separatorKeysCodes: number[] = [ENTER, COMMA];
   fruitCtrl = new FormControl();
   filteredFruits: Observable<string[]>;
-  fruits: string[] = ['4AHITM'];
-  allFruits: string[] = ['1AHITM', '1BHITM', '2AHITM', '2BHITM', '3AHTIM'];
+  fruits: string[] = [];
+  allFruits: string[] = [];
+  formName: string;
+  // @ts-ignore
   @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
+  dataSource: GroupInterface[];
 
 
   title = 'LeoFormsfe';
@@ -39,13 +43,31 @@ export class NewFormComponent implements OnInit {
    - Another unordered bullet
 `;
 
-  constructor(private markdownService: MarkdownService, private titleService:Title) {
+  constructor(private markdownService: MarkdownService, private titleService:Title, public dataServ: DataService) {
     this.titleService.setTitle("NEW LEO FORM");
 
     this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
       startWith(null),
       map((fruit: string | null) => (fruit ? this._filter(fruit) : this.allFruits.slice())),
     );
+
+
+    this.dataSource = this.dataServ.groups;
+
+    this.dataServ.getGroups().subscribe((value: any) => {
+      this.dataSource = value;
+      // @ts-ignore
+      console.log(this.dataSource[1].name)
+      let i = 0;
+      this.dataSource.forEach(item => {
+        // @ts-ignore
+        console.log(this.dataSource[i].name)
+        // @ts-ignore
+        this.allFruits.push(this.dataSource[i].name)
+        i++;
+      });
+
+    });
 
   }
 
@@ -119,7 +141,12 @@ export class NewFormComponent implements OnInit {
     return this.allFruits.filter(fruit => fruit.toLowerCase().includes(filterValue));
   }
 
+  sendForm() {
+    this.dataServ.saveMd(this.formName, this.markdown)
 
+    this.markdown = "";
+    this.formName = "";
+  }
 
 }
 

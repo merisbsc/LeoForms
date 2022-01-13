@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @ApplicationScoped
 public class InitBean {
 
-    final String FILE_NAME = "/Users/merisbesic/Documents/SCHULE/DIPLOMARBEIT/LeoForms/backend/src/main/resources/students.csv";
+    final String FILE_NAME = "/Users/tobiashoefler/Documents/Schule/DIPLOMARBEIT/LeoForms/backend/src/main/resources/students.csv";
 
     @Inject
     GroupRepository groupRepository;
