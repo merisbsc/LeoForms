@@ -44,6 +44,7 @@ public class GroupService {
     public List<Group> getAllGroups() {
         return groupRepository.listAll();
     }
+
     //endregion
 
     //region POST
