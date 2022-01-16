@@ -5,6 +5,12 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "LF_QUESTIONNAIRE")
+@NamedQueries(
+        @NamedQuery(
+                name = "Questionnaire.getQuestionnaireByName",
+                query = "select q from Questionnaire q where q.name = :NAME"
+        )
+)
 public class Questionnaire {
 
     @Id

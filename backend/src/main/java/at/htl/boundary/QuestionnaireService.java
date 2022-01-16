@@ -7,6 +7,8 @@ import org.eclipse.microprofile.openapi.annotations.Operation;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -22,6 +24,9 @@ public class QuestionnaireService {
 
     @Inject
     QuestionnaireRepository qr;
+
+    @Inject
+    EntityManager em;
 
     @GET
     @Operation(
@@ -59,15 +64,13 @@ public class QuestionnaireService {
     @Path("/{name}/markdown/name")
     @Produces(MediaType.TEXT_PLAIN)
     public String getMarkdownByName(@PathParam("name") String name) {
-        return "## LeoForms hat __swag__!\n" +
-                "---\n" +
-                "\n" +
-                "### Mahlwächer\n" +
-                "1. Ordered list\n" +
-                "2. Another bullet point\n" +
-                "   - Unordered list\n" +
-                "   - Another unordered bullet\n";
+
+        TypedQuery<Questionnaire> tq = em.createNamedQuery("Questionnaire.getQuestionnaireByName", Questionnaire.class)
+                .setParameter("NAME", name);
+        Questionnaire q = tq.getSingleResult();
+        return q.getMarkdown();
     }
+
 
 
     @POST
