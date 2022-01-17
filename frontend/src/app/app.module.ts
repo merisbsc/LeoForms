@@ -29,15 +29,13 @@ import {MatIconModule} from "@angular/material/icon";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import marked from 'marked';
 import { ShowFormComponent } from './show-form/show-form.component';
-import { FormInventoryComponent } from './form-inventory/form-inventory.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginPageComponent,
     NewFormComponent,
-    ShowFormComponent,
-    FormInventoryComponent
+    ShowFormComponent
   ],
   imports: [
     BrowserModule,
