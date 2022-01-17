@@ -58,9 +58,9 @@ export class DataService {
   }
 
 
-  getMds(): Observable<string> {
-    console.log(this.http.get<GetFormInterface[]>('http://localhost:8080/questionnaire/xdfcgvh/markdown/name'));
-    return this.http.get('http://localhost:8080/questionnaire/xdfcgvh/markdown/name', {responseType: 'text'});
+  getMds(name: string): Observable<string> {
+    console.log(this.http.get<GetFormInterface[]>('http://localhost:8080/questionnaire/' + name + '/markdown/name'));
+    return this.http.get('http://localhost:8080/questionnaire/' + name + '/markdown/name', {responseType: 'text'});
   }
 
 

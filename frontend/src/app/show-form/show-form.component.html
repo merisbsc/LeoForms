@@ -3,5 +3,14 @@
     <span>LeoForms</span>
   </mat-toolbar>
 </p>
-<!--<textarea class="variable-textarea" [(ngModel)]="markdown"></textarea>-->
+
+<mat-form-field class="name_field_form" appearance="fill">
+  <mat-label>Id eingeben...</mat-label>
+  <input [(ngModel)]="formName" matInput placeholder="LeoForm name..." >
+</mat-form-field>
+<button mat-flat-button color="primary" (click)="get()">Show Form</button>
+<tr></tr>
+<button mat-stroked-button color="primary" routerLink="/new">New Form</button>
+<tr></tr>
 <markdown class="variable-binding" [data]="markdown"></markdown>
+
