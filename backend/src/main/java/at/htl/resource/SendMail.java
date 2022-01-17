@@ -48,7 +48,9 @@ public class SendMail {
                     message.setFrom(new InternetAddress(from));
                     message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
                     message.setSubject("This is a test email!");
-                    message.setText("Hello World!");
+                    message.setText("Hallo " + rs.getString(3) + " "  + rs.getString(4)
+                            + " hier ist Ihr Formular zum ausfüllen \n"
+                            + "http://localhost:4200/show");
                     System.out.println("sending...");
 
                     Transport.send(message);
