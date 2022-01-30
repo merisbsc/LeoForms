@@ -15,6 +15,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import java.awt.*;
+import java.lang.annotation.Target;
 import java.net.URI;
 import java.util.List;
 
@@ -71,7 +73,15 @@ public class QuestionnaireService {
         return q.getMarkdown();
     }
 
-
+    @GET
+    @Operation(
+            summary = "Get Fieldnames of Questionnaire"
+    )
+    @Path("/{id}/fieldnames")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String[] getFieldnames(@PathParam("id") Long id) {
+        return qr.findById(id).getFieldNames();
+    }
 
     @POST
     @Operation(

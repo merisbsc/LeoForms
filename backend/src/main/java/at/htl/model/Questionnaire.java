@@ -27,6 +27,10 @@ public class Questionnaire {
     @Column(name = "QN_MARKDOWN")
     String markdown;
 
+    @Column(name = "QN_FIELDNAMES")
+    String[] fieldNames;
+
+
     public Questionnaire() {
     }
 
@@ -68,4 +72,13 @@ public class Questionnaire {
     public void setMarkdown(String markdown) {
         this.markdown = markdown;
     }
+
+    public String[] getFieldNames() {
+        return fieldNames;
+    }
+
+    public void setFieldNames(String[] fieldNames) {
+        this.fieldNames = fieldNames;
+    }
+
 }
