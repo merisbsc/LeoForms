@@ -1,5 +1,6 @@
 package at.htl.model;
 
+import javax.json.bind.annotation.JsonbProperty;
 import javax.persistence.*;
 
 @Entity
@@ -28,12 +29,16 @@ public class Student {
     String lastName;
     @Column(name = "S_EMAIL")
     String email;
+    @JsonbProperty
+    @Column(name = "S_MATNR")
+    String matNr;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     @JoinColumn(name = "G_ID")
     Group group;
 
-    public Student(String firstName, String lastName, String email, Group group) {
+    public Student(String matNr, String firstName, String lastName, String email, Group group) {
+        this.matNr = matNr;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -81,6 +86,14 @@ public class Student {
 
     public void setGroup(Group group) {
         this.group = group;
+    }
+
+    public String getMatNr() {
+        return matNr;
+    }
+
+    public void setMatNr(String matNr) {
+        this.matNr = matNr;
     }
 
     @Override
