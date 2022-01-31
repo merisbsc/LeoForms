@@ -23,10 +23,11 @@ public class SurveyRepository implements PanacheRepository<Survey> {
         try {
             con = DriverManager.getConnection(url, user, pass);
             Statement stm = con.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT * FROM LF_STUDENT");
+            ResultSet rsStudent = stm.executeQuery("SELECT * FROM LF_STUDENT");
+            ResultSet rsQuestionnaire = stm.executeQuery("SELECT * FROM LF_QUESTIONNAIRE");
 
-            while (rs.next()) {
-                String to = rs.getString(2);
+            while (rsStudent.next()) {
+                String to = rsStudent.getString(2);
                 String from = "florianklausner15@gmail.com";
                 String host = "smtp.gmail.com";
                 Properties properties = System.getProperties();
@@ -47,14 +48,15 @@ public class SurveyRepository implements PanacheRepository<Survey> {
 
                 session.setDebug(true);
 
-                String matrikelNo = rs.getString(5);
+                String matrikelNo = rsStudent.getString(5);
+                String questionnaireId = rsQuestionnaire.getString(4);
 
                 try {
                     MimeMessage message = new MimeMessage(session);
                     message.setFrom(new InternetAddress(from));
                     message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
                     message.setSubject("This is a test email!");
-                    message.setText("Hallo " + rs.getString(3) + " "  + rs.getString(4)
+                    message.setText("Hallo " + rsStudent.getString(3) + " "  + rsStudent.getString(4)
                             + " hier ist Ihr Formular zum ausfüllen \n"
                             + "http://localhost:4200/new/" + matrikelNo);
                     System.out.println("sending...");
