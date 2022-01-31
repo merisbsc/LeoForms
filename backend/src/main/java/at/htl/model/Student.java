@@ -12,6 +12,9 @@ import javax.persistence.*;
         ), @NamedQuery(
                 name = "Student.getStudentByGroupName",
                 query = "SELECT s from Student s where s.group= :GROUP"
+        ), @NamedQuery(
+                name = "Student.getStudentByMatNr",
+                query = "SELECT s from Student s where s.matNr= :MATNR"
         )
         }
 
