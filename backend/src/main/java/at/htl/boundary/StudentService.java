@@ -81,6 +81,24 @@ public class StudentService {
             return null;
         }
     }
+
+    @GET
+    @Operation(
+            summary = "Get Students by MatNumber"
+    )
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/{matNr}/matnr")
+    public Student getByMatNr(@PathParam("matNr") String matNr) {
+        try {
+            TypedQuery<Student> mat = em.createNamedQuery("Student.getStudentByMatNr", Student.class)
+                    .setParameter("MATNR", matNr);
+            Student s = mat.getSingleResult();
+
+            return s;
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
     //endregion
 
     //region POST-Endpoints

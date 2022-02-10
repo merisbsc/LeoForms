@@ -20,7 +20,6 @@ import java.lang.annotation.Target;
 import java.net.URI;
 import java.util.List;
 
-@ApplicationScoped
 @Path("/questionnaire")
 public class QuestionnaireService {
 
