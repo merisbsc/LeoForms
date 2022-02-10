@@ -1,22 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Pipe, PipeTransform} from '@angular/core';
 
 import {MarkdownModule, MarkdownModuleConfig, MarkdownService, MarkedOptions, MarkedRenderer} from 'ngx-markdown';
 import {HttpClient} from "@angular/common/http";
-import {Title} from "@angular/platform-browser";
+import {DomSanitizer, Title} from "@angular/platform-browser";
 
 import {DataService, GetFormInterface} from '../data.service'
 import {ActivatedRoute} from "@angular/router";
+import {HtmlSanitizerPipe} from "../app.component";
+
 
 @Component({
   selector: 'app-show-form',
   templateUrl: './show-form.component.html',
   styleUrls: ['./show-form.component.css']
 })
-export class ShowFormComponent implements OnInit {
+export class ShowFormComponent implements OnInit, PipeTransform {
 
   dataSource: GetFormInterface[];
   formId: number;
   formName: string;
+  safeHtml: HtmlSanitizerPipe;
   markdown = `## LeoForms hat __swag__!
 ---
 
@@ -26,6 +29,9 @@ export class ShowFormComponent implements OnInit {
    - Unordered list
    - Another unordered bullet
 `;
+  form = "";
+  formData: any;
+  formData_test1: any;
 
   constructor(private markdownService: MarkdownService,
               private titleService:Title,
@@ -35,18 +41,20 @@ export class ShowFormComponent implements OnInit {
 
 
    // this.dataSource = this.dataServ.mds;
-
-
-
   }
+
+  transform(value: any, ...args: any[]) {
+        throw new Error('Method not implemented.');
+    }
 
 
   get(): void {
     this.dataServ.getMds(this.formName).subscribe((value: any) => {
       this.dataSource = value;
-      console.log(this.dataSource)
-      console.log(this.dataSource[1].markdown)
-      this.markdown = value;
+      console.log('<div ng-app="formApp" ng-controller="formController">' + this.dataSource + '</div>')
+      // @ts-ignore
+      //document.getElementsByClassName("htmlLoad").item(0).innerHTML = this.dataSource;
+      this.form = '<div ng-app="formApp" ng-controller="formController">' + this.dataSource + '</div>';
     });
   }
 
@@ -60,12 +68,12 @@ export class ShowFormComponent implements OnInit {
       if (/^\s*\[[x ]\]\s*/.test(text)) {
 
         text = text
-          .replace(/^\s*\[ \]\s*/, '<input type="checkbox" checked="false"> ')
-          .replace(/^\s*\[x\]\s*/, '<input type="checkbox" checked="true"> ');
+          .replace(/^\s*\[ \]\s*/, '<input type="checkbox" checked="true"  name=" ' + text + '"> ')
+          .replace(/^\s*\[x\]\s*/, '<input type="checkbox" checked="false"  name="checkboxInput"> ');
         return '<li style="list-style: none">' + text + '</li>';
       } if (/^\s*\[[r ]\]\s*/.test(text)) {
         text = text
-          .replace(/^\s*\[r\]\s*/, '<input type="radio"> ');
+          .replace(/^\s*\[r\]\s*/, '<input type="radio" name="radioInput">');
         return '<li style="list-style: none">' + text + '</li>';
       } if (/^\s*\[[d ]\]\s*/.test(text)) {
         text = text
@@ -89,11 +97,6 @@ export class ShowFormComponent implements OnInit {
     };
 
 
-
-
-
-
-
     // ROUTER TINGS
     console.log(this.router.snapshot.params);
 
@@ -103,7 +106,17 @@ export class ShowFormComponent implements OnInit {
       this.formName = this.router.snapshot.params.name;
       this.get();
     }
-
   }
+
+  submit() {
+    if (document.querySelectorAll('input[name="test1"]') != null) {
+      console.log(document.querySelectorAll('input[name="test1"]').item(0).innerHTML);
+    }
+
+    console.log(this.formData_test1);
+  }
+
+
+
 
 }

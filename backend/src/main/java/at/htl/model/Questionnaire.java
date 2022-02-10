@@ -24,7 +24,7 @@ public class Questionnaire {
     @Column(name = "QN_CREATION_DATE")
     LocalDate creationDate;
 
-    @Column(name = "QN_MARKDOWN")
+    @Column(name = "QN_MARKDOWN" ,columnDefinition="TEXT")
     String markdown;
 
     @Column(name = "QN_FIELDNAMES")

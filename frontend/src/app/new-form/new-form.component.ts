@@ -24,6 +24,7 @@ export class NewFormComponent implements OnInit {
   fruitCtrl = new FormControl();
   filteredFruits: Observable<string[]>;
   fruits: string[] = [];
+  evaluateFields: string[] = [];
   allFruits: string[] = [];
   formName: string;
   // @ts-ignore
@@ -51,6 +52,7 @@ export class NewFormComponent implements OnInit {
     );
 
 
+
     this.dataSource = this.dataServ.groups;
 
     this.dataServ.getGroups().subscribe((value: any) => {
@@ -71,13 +73,24 @@ export class NewFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.markdownService.renderer.listitem = function (text) {
+
+    this.markdownService.renderer.listitem = function (text, ) {
       debugger;
+      let fieldName;
       if (/^\s*\[[x ]\]\s*/.test(text)) {
 
+        console.log(text)
+        console.log(text.substring(5, text.length))
+        fieldName = text.substring(5, text.length);
+
         text = text
-          .replace(/^\s*\[ \]\s*/, '<input type="checkbox" checked="false"> ')
-          .replace(/^\s*\[x\]\s*/, '<input type="checkbox" checked="true"> ');
+          .replace(/^\s*\[ \]\s*/, '<input type="checkbox" checked="true" id="boxal" name="' + fieldName + '" ngModel="formData.' + fieldName +'"> ')
+          .replace(/^\s*\[x\]\s*/, '<input type="checkbox" ' +
+            //'checked="false" ' +
+            'id="boxal" name="' +
+             fieldName + '" ' +
+            '[(ngModel)]="formData_' + fieldName +
+            '" ng-true-value="true" ng-false-value="false">');
         return '<li style="list-style: none">' + text + '</li>';
       } if (/^\s*\[[r ]\]\s*/.test(text)) {
         text = text
@@ -90,6 +103,8 @@ export class NewFormComponent implements OnInit {
       } else {
         return '<li>' + text + '</li>';
       }
+
+
     };
 
 
@@ -128,6 +143,12 @@ export class NewFormComponent implements OnInit {
     }
   }
 
+  testMd(markdown: string) {
+    if (/^\s*\[[x ]\]\s*/.test(markdown)) {
+      console.log(/^\s*\[[x ]\]\s*/.test(markdown))
+    }
+  }
+
   selected(event: MatAutocompleteSelectedEvent): void {
     this.fruits.push(event.option.viewValue);
     this.fruitInput.nativeElement.value = '';
@@ -141,10 +162,26 @@ export class NewFormComponent implements OnInit {
   }
 
   sendForm() {
-    this.dataServ.saveMd(this.formName, this.markdown)
+
+    // MD WAY
+    /*
+    this.testMd(this.markdown);
+    console.log(this.evaluateFields)
+    this.dataServ.saveMd(this.formName, this.markdown)*/
+
+    // @ts-ignore
+    const inputElement = document.getElementsByClassName("variable-binding").item(0).innerHTML;
+    console.log(inputElement);
+    this.dataServ.saveMd(this.formName, inputElement)
 
     this.markdown = "";
     this.formName = "";
+  }
+
+  getHTMLValue() {
+    const inputElement = document.getElementsByClassName("variable-binding");
+
+    console.log(inputElement.item(0))
   }
 
 }

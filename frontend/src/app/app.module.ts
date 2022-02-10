@@ -29,13 +29,19 @@ import {MatIconModule} from "@angular/material/icon";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import marked from 'marked';
 import { ShowFormComponent } from './show-form/show-form.component';
+import { InventoryComponent } from './inventory/inventory.component';
+import {HtmlSanitizerPipe} from "./app.component";
+import { SanitizehtmlPipe } from './sanitizehtml.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginPageComponent,
     NewFormComponent,
-    ShowFormComponent
+    ShowFormComponent,
+    InventoryComponent,
+    HtmlSanitizerPipe,
+    SanitizehtmlPipe
   ],
   imports: [
     BrowserModule,
@@ -64,7 +70,7 @@ import { ShowFormComponent } from './show-form/show-form.component';
     MatNativeDateModule,
     HttpClientModule,
     MaterialExampleModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
