@@ -3,12 +3,18 @@ package at.htl.repositories;
 import at.htl.model.Survey;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.enterprise.context.ApplicationScoped;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.security.*;
 import java.sql.*;
 import java.util.Properties;
+import java.util.StringTokenizer;
 
 @ApplicationScoped
 public class SurveyRepository implements PanacheRepository<Survey> {
@@ -24,7 +30,6 @@ public class SurveyRepository implements PanacheRepository<Survey> {
             con = DriverManager.getConnection(url, user, pass);
             Statement stm = con.createStatement();
             ResultSet rsStudent = stm.executeQuery("SELECT * FROM LF_STUDENT");
-            ResultSet rsQuestionnaire = stm.executeQuery("SELECT * FROM LF_QUESTIONNAIRE");
 
             while (rsStudent.next()) {
                 String to = rsStudent.getString(2);
@@ -49,20 +54,34 @@ public class SurveyRepository implements PanacheRepository<Survey> {
                 session.setDebug(true);
 
                 String matrikelNo = rsStudent.getString(5);
-                String questionnaireId = rsQuestionnaire.getString(4);
+                String firstname = rsStudent.getString(3);
+                String lastname = rsStudent.getString(4);
+
+                StringTokenizer stringTokenizer = new StringTokenizer(matrikelNo);
+
+                KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+                keyPairGenerator.initialize(2048);
+                KeyPair pair = keyPairGenerator.generateKeyPair();
+                PublicKey publicKey = pair.getPublic();
+                Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+                cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+                cipher.update(matrikelNo.getBytes());
+                byte[] cipherText = cipher.doFinal();
 
                 try {
                     MimeMessage message = new MimeMessage(session);
                     message.setFrom(new InternetAddress(from));
                     message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
                     message.setSubject("This is a test email!");
-                    message.setText("Hallo " + rsStudent.getString(3) + " "  + rsStudent.getString(4)
+                    message.setText("Hallo " + firstname + " " + lastname
                             + " hier ist Ihr Formular zum ausfüllen \n"
-                            + "http://localhost:4200/new/" + matrikelNo);
+                            + "http://localhost:4200/new/" + cipherText);
                     System.out.println("sending...");
 
                     Transport.send(message);
                     System.out.println("Sent message successfully....");
+                    System.out.println(stringTokenizer);
+                    System.out.println(cipherText);
                 } catch (MessagingException mex) {
                     mex.printStackTrace();
                 }
@@ -70,6 +89,16 @@ public class SurveyRepository implements PanacheRepository<Survey> {
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
         }
     }
 
