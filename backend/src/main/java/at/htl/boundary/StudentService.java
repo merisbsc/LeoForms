@@ -1,5 +1,6 @@
 package at.htl.boundary;
 
+import at.htl.model.Decryptor;
 import at.htl.model.Group;
 import at.htl.model.Student;
 import at.htl.repositories.GroupRepository;
@@ -89,6 +90,29 @@ public class StudentService {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/{matNr}/matnr")
     public Student getByMatNr(@PathParam("matNr") String matNr) {
+        //decode token
+        try {
+            TypedQuery<Student> mat = em.createNamedQuery("Student.getStudentByMatNr", Student.class)
+                    .setParameter("MATNR", matNr);
+            Student s = mat.getSingleResult();
+
+            return s;
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    @GET
+    @Operation(
+            summary = "Get Form + Student by Token"
+    )
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/{token}/token")
+    public Student getByToken(@PathParam("token") String token) {
+        //decode token
+
+        String matNr = Decryptor.decrypt(token);
+
         try {
             TypedQuery<Student> mat = em.createNamedQuery("Student.getStudentByMatNr", Student.class)
                     .setParameter("MATNR", matNr);

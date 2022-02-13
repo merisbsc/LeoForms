@@ -83,6 +83,7 @@ export class NewFormComponent implements OnInit {
         console.log(text.substring(5, text.length))
         fieldName = text.substring(5, text.length);
 
+
         text = text
           .replace(/^\s*\[ \]\s*/, '<input type="checkbox" checked="true" id="boxal" name="' + fieldName + '" ngModel="formData.' + fieldName +'"> ')
           .replace(/^\s*\[x\]\s*/, '<input type="checkbox" ' +
