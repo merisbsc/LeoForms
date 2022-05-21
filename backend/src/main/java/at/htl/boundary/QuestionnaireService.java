@@ -1,11 +1,9 @@
 package at.htl.boundary;
 
 import at.htl.model.Questionnaire;
-import at.htl.model.Student;
 import at.htl.repositories.QuestionnaireRepository;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -15,8 +13,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-import java.awt.*;
-import java.lang.annotation.Target;
 import java.net.URI;
 import java.util.List;
 
@@ -78,7 +74,7 @@ public class QuestionnaireService {
     )
     @Path("/{id}/fieldnames")
     @Produces(MediaType.APPLICATION_JSON)
-    public String[] getFieldnames(@PathParam("id") Long id) {
+    public List<String> getFieldnames(@PathParam("id") Long id) {
         return qr.findById(id).getFieldNames();
     }
 

@@ -2,6 +2,8 @@ package at.htl.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "LF_QUESTIONNAIRE")
@@ -27,8 +29,8 @@ public class Questionnaire {
     @Column(name = "QN_MARKDOWN" ,columnDefinition="TEXT")
     String markdown;
 
-    @Column(name = "QN_FIELDNAMES")
-    String[] fieldNames;
+    @ElementCollection
+    List<String> fieldNames;
 
 
     public Questionnaire() {
@@ -73,11 +75,11 @@ public class Questionnaire {
         this.markdown = markdown;
     }
 
-    public String[] getFieldNames() {
+    public List<String> getFieldNames() {
         return fieldNames;
     }
 
-    public void setFieldNames(String[] fieldNames) {
+    public void setFieldNames(List<String> fieldNames) {
         this.fieldNames = fieldNames;
     }
 
