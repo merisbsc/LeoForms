@@ -94,9 +94,9 @@ export class NewFormComponent implements OnInit {
              fieldName + '" ' +
             '> ');
         return '<li style="list-style: none">' + text + '</li>';
-      } if (/^\s*\[[r ]\]\s*/.test(text)) {
+      } if (/\s\[r:.{1,}\]\s/gi.test(text)) {
         text = text
-          .replace(/^\s*\[r\]\s*/, '<input type="radio"> ');
+          .replace(/\s\[r:.{1,}\]\s/gi, '<input type="radio"> ');
         return '<li style="list-style: none">' + text + '</li>';
       } if (/^\s*\[[d ]\]\s*/.test(text)) {
         text = text
