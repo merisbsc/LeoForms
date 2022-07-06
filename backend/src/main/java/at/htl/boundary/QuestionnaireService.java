@@ -14,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 @Path("/questionnaire")
@@ -72,10 +73,28 @@ public class QuestionnaireService {
     @Operation(
             summary = "Get Fieldnames of Questionnaire"
     )
-    @Path("/{id}/fieldnames")
+    @Path("/{id}/fieldnames-id")
     @Produces(MediaType.APPLICATION_JSON)
     public List<String> getFieldnames(@PathParam("id") Long id) {
         return qr.findById(id).getFieldNames();
+    }
+
+    @GET
+    @Operation(
+            summary = "Get Fieldnames of Questionnaire"
+    )
+    @Path("/{name}/fieldnames")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<List<String>> getFieldnamesByName(@PathParam("name") String name) {
+
+        TypedQuery<Questionnaire> tq = em.createNamedQuery("Questionnaire.getQuestionnaireByName", Questionnaire.class)
+                .setParameter("NAME", name);
+        List<Questionnaire> questionnaires = tq.getResultList();
+        List<List<String>> fieldnames = new ArrayList<>();
+
+        questionnaires.forEach(q -> fieldnames.add(q.getFieldNames()));
+
+        return fieldnames;
     }
 
     @POST
