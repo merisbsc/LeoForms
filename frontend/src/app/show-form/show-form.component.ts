@@ -69,39 +69,39 @@ export class ShowFormComponent implements OnInit, PipeTransform {
 
 
   ngOnInit(): void {
-
-    this.markdownService.renderer.listitem = function (text) {
-      debugger;
-      if (/^\s*\[[x ]\]\s*/.test(text)) {
-
-        text = text
-          .replace(/^\s*\[ \] \s*/, '<input type="checkbox" checked="true"  name=" ' + text + '"> ')
-          .replace(/^\s*\[x\] \s*/, '<input type="checkbox" checked="false"  name="checkboxInput"> ');
-        return '<li style="list-style: none">' + text + '</li>';
-      } if (/^\s*\[[r ]\]\s*/.test(text)) {
-        text = text
-          .replace(/^\s*\[r\]\s*/, '<input type="radio" name="radioInput">');
-        return '<li style="list-style: none">' + text + '</li>';
-      } if (/^\s*\[[d ]\]\s*/.test(text)) {
-        text = text
-          .replace(/^\s*\[[d ]\]\s*/, '<option> ' +text + '</option>>');
-        return '<select>' + text + '</select>';
-      } else {
-        return '<li>' + text + '</li>';
-      }
-    };
-
-
-    this.markdownService.renderer.table = function (header, body) {
-      if (body) body = '<option>' + body + '</option>';
-
-      return '<select>\n'
-        + '<option>\n'
-        + header
-        + '</option>\n'
-        + body
-        + '</select>\n';
-    };
+    //
+    // this.markdownService.renderer.listitem = function (text) {
+    //   debugger;
+    //   if (/^\s*\[[x ]\]\s*/.test(text)) {
+    //
+    //     text = text
+    //       .replace(/^\s*\[ \] \s*/, '<input type="checkbox" checked="true"  name=" ' + text + '"> ')
+    //       .replace(/^\s*\[x\] \s*/, '<input type="checkbox" checked="false"  name="checkboxInput"> ');
+    //     return '<li style="list-style: none">' + text + '</li>';
+    //   } if (/^\s*\[[r ]\]\s*/.test(text)) {
+    //     text = text
+    //       .replace(/^\s*\[r\]\s*/, '<input type="radio" name="radioInput">');
+    //     return '<li style="list-style: none">' + text + '</li>';
+    //   } if (/^\s*\[[d ]\]\s*/.test(text)) {
+    //     text = text
+    //       .replace(/^\s*\[[d ]\]\s*/, '<option> ' +text + '</option>>');
+    //     return '<select>' + text + '</select>';
+    //   } else {
+    //     return '<li>' + text + '</li>';
+    //   }
+    // };
+    //
+    //
+    // this.markdownService.renderer.table = function (header, body) {
+    //   if (body) body = '<option>' + body + '</option>';
+    //
+    //   return '<select>\n'
+    //     + '<option>\n'
+    //     + header
+    //     + '</option>\n'
+    //     + body
+    //     + '</select>\n';
+    // };
 
 
     // ROUTER TINGS

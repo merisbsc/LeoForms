@@ -81,19 +81,18 @@ export class NewFormComponent implements OnInit {
 
     this.markdownService.renderer.listitem = function (text, ) {
       let fieldName;
+      console.log("OUTER TEXT: " + text)
       if (/^\s*\[[x ]\]\s*/.test(text)) {
 
         fieldName = text.substring(3, text.length);
 
-
+        console.log("Text: " + text)
         text = text
-          .replace(/^\s*\[ \]\s*/, '<input class="boxerl" style="list-style: none" type="checkbox" checked="true" id="boxal" name="' + fieldName + '" ngModel="formData.' + fieldName +'"> ')
-          .replace(/^\s*\[x\]\s*/, '<input class="boxerl" style="list-style: none" type="checkbox" ' +
+          .replace(/^\s*\[[x ]\]\s*/, '<input type="checkbox" class="boxerl" style="list-style: none" ' +
             //'checked="false" ' +
             'id="boxal" name="' +
              fieldName + '" ' +
-            '[(ngModel)]="formData_' + fieldName +
-            '" ng-true-value="true" ng-false-value="false">');
+            '> ');
         return '<li style="list-style: none">' + text + '</li>';
       } if (/^\s*\[[r ]\]\s*/.test(text)) {
         text = text
