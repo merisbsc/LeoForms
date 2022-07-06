@@ -19,6 +19,10 @@ export interface GetFormInterface {
   markdown: string
 }
 
+export interface GetFieldNamesInterface {
+  fieldnames: string
+}
+
 const BASE_URL: string = 'http://localhost:8080/api'
 
 
@@ -36,15 +40,6 @@ export class DataService {
     this.forms = [];
   }
 
-  markdown = `## LeoForms hat __swag__!
----
-
-### Wahlfächer
-1. Ordered list
-2. Another bullet point
-   - Unordered list
-   - Another unordered bullet
-`;
 
   // @ts-ignore
   getItems(markdown): Observable<String> {
@@ -63,13 +58,19 @@ export class DataService {
     return this.http.get('http://localhost:8080/questionnaire/' + name + '/markdown/name', {responseType: 'text'});
   }
 
+  getFieldNames(): Observable<string> {
+    console.log(this.http.get<GetFieldNamesInterface[]>('http://localhost:8080/questionnaire/1/fieldnames'))
+    return this.http.get('http://localhost:8080/questionnaire/1/fieldnames', {responseType: 'text'});
+  }
 
-  saveMd(nameForm: string, markdownString: string) {
+
+  saveMd(nameForm: string, markdownString: string, fieldNames: string[]) {
 
     const form = {
       name: nameForm,
       creationDate: '2021-12-12',
-      markdown: markdownString
+      markdown: markdownString,
+      fieldNames: fieldNames
     };
 
     this.forms.push(form);
@@ -80,6 +81,5 @@ export class DataService {
     );
 
   }
-
 
 }

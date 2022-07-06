@@ -4,7 +4,7 @@ import {MarkdownModule, MarkdownModuleConfig, MarkdownService, MarkedOptions, Ma
 import {HttpClient} from "@angular/common/http";
 import {DomSanitizer, Title} from "@angular/platform-browser";
 
-import {DataService, GetFormInterface} from '../data.service'
+import {DataService, GetFieldNamesInterface, GetFormInterface} from '../data.service'
 import {ActivatedRoute} from "@angular/router";
 import {HtmlSanitizerPipe} from "../app.component";
 
@@ -17,6 +17,7 @@ import {HtmlSanitizerPipe} from "../app.component";
 export class ShowFormComponent implements OnInit, PipeTransform {
 
   dataSource: GetFormInterface[];
+  dataSourceFields: GetFieldNamesInterface[];
   formId: number;
   formName: string;
   safeHtml: HtmlSanitizerPipe;
@@ -36,6 +37,7 @@ export class ShowFormComponent implements OnInit, PipeTransform {
   constructor(private markdownService: MarkdownService,
               private titleService:Title,
               public dataServ: DataService,
+              public dataServFields: DataService,
               public router :ActivatedRoute) {
     this.titleService.setTitle("SHOW LEO FORM");
 
@@ -49,27 +51,32 @@ export class ShowFormComponent implements OnInit, PipeTransform {
 
 
   get(): void {
+
     this.dataServ.getMds(this.formName).subscribe((value: any) => {
       this.dataSource = value;
+      console.log(this.dataSource)
       console.log('<div ng-app="formApp" ng-controller="formController">' + this.dataSource + '</div>')
       // @ts-ignore
       //document.getElementsByClassName("htmlLoad").item(0).innerHTML = this.dataSource;
       this.form = '<div ng-app="formApp" ng-controller="formController">' + this.dataSource + '</div>';
     });
+
+
+    this.dataServ.getFieldNames().subscribe((value: any) => {
+      console.log(this.dataSource)
+    })
   }
 
 
   ngOnInit(): void {
-
-    // MD TINGS
 
     this.markdownService.renderer.listitem = function (text) {
       debugger;
       if (/^\s*\[[x ]\]\s*/.test(text)) {
 
         text = text
-          .replace(/^\s*\[ \]\s*/, '<input type="checkbox" checked="true"  name=" ' + text + '"> ')
-          .replace(/^\s*\[x\]\s*/, '<input type="checkbox" checked="false"  name="checkboxInput"> ');
+          .replace(/^\s*\[ \] \s*/, '<input type="checkbox" checked="true"  name=" ' + text + '"> ')
+          .replace(/^\s*\[x\] \s*/, '<input type="checkbox" checked="false"  name="checkboxInput"> ');
         return '<li style="list-style: none">' + text + '</li>';
       } if (/^\s*\[[r ]\]\s*/.test(text)) {
         text = text
@@ -109,11 +116,20 @@ export class ShowFormComponent implements OnInit, PipeTransform {
   }
 
   submit() {
-    if (document.querySelectorAll('input[name="test1"]') != null) {
-      console.log(document.querySelectorAll('input[name="test1"]').item(0).innerHTML);
+    if (document.querySelectorAll('input[name="check"]') != null) {
+      let checkboxes = document.querySelectorAll('input[name="check"]') as NodeListOf<HTMLInputElement>
+      checkboxes.forEach(c => console.log(c.checked))
     }
 
-    console.log(this.formData_test1);
+    this.dataServFields.getFieldNames().subscribe(value => {
+      let string = value.substring(2, value.length-2)
+      let array = value.split('","');
+
+
+      console.log(array)
+
+    });
+
   }
 
 
