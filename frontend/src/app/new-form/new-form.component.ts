@@ -81,12 +81,10 @@ export class NewFormComponent implements OnInit {
 
     this.markdownService.renderer.listitem = function (text, ) {
       let fieldName;
-      console.log("OUTER TEXT: " + text)
       if (/^\s*\[[x ]\]\s*/.test(text)) {
 
         fieldName = text.substring(3, text.length);
 
-        console.log("Text: " + text)
         text = text
           .replace(/^\s*\[[x ]\]\s*/, '<input type="checkbox" class="boxerl" style="list-style: none" ' +
             //'checked="false" ' +
@@ -94,9 +92,13 @@ export class NewFormComponent implements OnInit {
              fieldName + '" ' +
             '> ');
         return '<li style="list-style: none">' + text + '</li>';
-      } if (/\s\[r:.{1,}\]\s/gi.test(text)) {
-        text = text
-          .replace(/\s\[r:.{1,}\]\s/gi, '<input type="radio"> ');
+      } if (/\[r:.{1,}\]\s/gi.test(text)) {
+        console.log(text)
+        var name = text.substring(
+          text.indexOf(":") + 1,
+          text.lastIndexOf("]")
+        );        text = text
+          .replace(/\[r:.{1,}\]\s/gi, '<input type="radio" name="'+ name + '"> ');
         return '<li style="list-style: none">' + text + '</li>';
       } if (/^\s*\[[d ]\]\s*/.test(text)) {
         text = text
@@ -111,11 +113,8 @@ export class NewFormComponent implements OnInit {
 
 
     this.markdownService.renderer.table = function (header, body) {
-      console.log("HEADER: " + header);
-      console.log("BODY: " + body);
 
       let newBody = body.replace(/td/gi, 'option');
-      console.log(newBody);
 
       return '<select>\n'
         + '<option>\n'
