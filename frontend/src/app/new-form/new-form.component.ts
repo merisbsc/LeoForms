@@ -34,20 +34,20 @@ export class NewFormComponent implements OnInit {
   title = 'LeoFormsfe';
 
   markdown = `### Choose one
--  [r] test 1
--  [r] test 2
--  [r] test 3
+-  [r:test] Apfel
+-  [r:test] Birne
+-  [r:test] Schoko
 
 ### Choose Multiple
--  [x] test 1
--  [x] test 2
--  [x] test 3
+-  [x] Mathe
+-  [x] Deutsch
+-  [x] Englisch
 
-
-| First Option |
+### Fach Wählen
+| Recht |
 | -----------  |
-| Second Option|
-| Third Option |
+| Wirtschaft |
+| Chemie |
 `;
 
   constructor(private markdownService: MarkdownService, private titleService:Title, public dataServ: DataService) {
@@ -83,7 +83,7 @@ export class NewFormComponent implements OnInit {
       let fieldName;
       if (/^\s*\[[x ]\]\s*/.test(text)) {
 
-        fieldName = text.substring(3, text.length);
+        fieldName = text.substring(5, text.length);
 
         text = text
           .replace(/^\s*\[[x ]\]\s*/, '<input type="checkbox" class="boxerl" style="list-style: none" ' +
@@ -93,7 +93,7 @@ export class NewFormComponent implements OnInit {
             '> ');
         return '<li style="list-style: none">' + text + '</li>';
       } if (/\[r:.{1,}\]\s/gi.test(text)) {
-        console.log(text)
+        //console.log(text)
         var name = text.substring(
           text.indexOf(":") + 1,
           text.lastIndexOf("]")
@@ -115,9 +115,11 @@ export class NewFormComponent implements OnInit {
     this.markdownService.renderer.table = function (header, body) {
 
       let newBody = body.replace(/td/gi, 'option');
+      //console.log(header.substring(9, header.length - 12));
+      let fieldName = header.substring(9, header.length - 12);
 
-      return '<select>\n'
-        + '<option>\n'
+      return '<select name="' + fieldName + '">\n'
+        + '<option disabled selected>\n'
         + header
         + '</option>\n'
         + newBody
@@ -193,6 +195,15 @@ export class NewFormComponent implements OnInit {
     const inputElement = document.getElementsByClassName("boxerl");
 
     console.log(inputElement.item(0))
+    console.log(inputElement.item(1))
+    console.log(inputElement.item(2))
+    console.log(inputElement.length)
+
+    // @ts-ignore
+    let inputElement2 = document.getElementsByClassName("variable-binding").item(0).innerHTML;
+    console.log(inputElement2);
+    let fieldNames = inputElement2.toString().match(/(?<=name=")[A-z]+(?=")/g);
+    console.log(fieldNames);
   }
 
 }
