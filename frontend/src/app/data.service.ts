@@ -48,19 +48,19 @@ export class DataService {
 
 
   getGroups(): Observable<GroupInterface[]> {
-    console.log(this.http.get<GroupInterface[]>(`http://localhost:8080/groups`));
+    //console.log(this.http.get<GroupInterface[]>(`http://localhost:8080/groups`));
     return this.http.get<GroupInterface[]>(`http://localhost:8080/groups`);
   }
 
 
   getMds(name: string): Observable<string> {
-    console.log(this.http.get<GetFormInterface[]>('http://localhost:8080/questionnaire/' + name + '/markdown/name'));
+    //console.log(this.http.get<GetFormInterface[]>('http://localhost:8080/questionnaire/' + name + '/markdown/name'));
     return this.http.get('http://localhost:8080/questionnaire/' + name + '/markdown/name', {responseType: 'text'});
   }
 
-  getFieldNames(): Observable<string> {
-    console.log(this.http.get<GetFieldNamesInterface[]>('http://localhost:8080/questionnaire/1/fieldnames'))
-    return this.http.get('http://localhost:8080/questionnaire/1/fieldnames', {responseType: 'text'});
+  getFieldNames(name: string): Observable<string> {
+    //console.log(this.http.get<GetFieldNamesInterface[]>('http://localhost:8080/questionnaire/' + name + '/fieldnames'))
+    return this.http.get('http://localhost:8080/questionnaire/' + name + '/fieldnames', {responseType: 'text'});
   }
 
 

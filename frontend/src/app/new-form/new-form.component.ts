@@ -34,9 +34,9 @@ export class NewFormComponent implements OnInit {
   title = 'LeoFormsfe';
 
   markdown = `### Choose one
--  [r:test] Apfel
--  [r:test] Birne
--  [r:test] Schoko
+-  [r:obst] Apfel
+-  [r:obst] Birne
+-  [r:obst] Schoko
 
 ### Choose Multiple
 -  [x] Mathe
@@ -181,7 +181,6 @@ export class NewFormComponent implements OnInit {
     console.log(inputElement);
     let fieldNames = inputElement.toString().match(/(?<=name=")[A-z]+(?=")/g);
     console.log(fieldNames);
-
 
     // @ts-ignore
     this.dataServ.saveMd(this.formName, inputElement, fieldNames)
