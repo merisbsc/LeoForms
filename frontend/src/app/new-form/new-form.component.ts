@@ -98,8 +98,8 @@ export class NewFormComponent implements OnInit {
           text.indexOf(":") + 1,
           text.lastIndexOf("]")
         );        text = text
-          .replace(/\[r:.{1,}\]\s/gi, '<input type="radio" name="'+ name + '"> ');
-        return '<li style="list-style: none">' + text + '</li>';
+          .replace(/\[r:.{1,}\]\s/gi, '<input type="radio" name="'+ name + '" value="'+ text.substring(10) + '"> ');
+        return '<li style="list-style: none">' + text.substring(1) + '</li>';
       } if (/^\s*\[[d ]\]\s*/.test(text)) {
         text = text
           .replace(/^\s*\[[d ]\]\s*/, '<option> ' +text + '</option>>');

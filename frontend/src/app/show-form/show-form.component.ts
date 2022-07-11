@@ -77,8 +77,16 @@ export class ShowFormComponent implements OnInit, PipeTransform {
     this.dataServFields.getFieldNames(this.formName).subscribe(value => {
       let string = value.substring(3, value.length-3)
       this.fieldNames = string.split('","');
-      //console.log(this.fieldNames)
     });
+
+    for (let i = 0; i < this.fieldNames.length; i++) {
+      if (this.fieldNames[i] === this.fieldNames[i + 1]) {
+        console.log("Radio: " + this.fieldNames[i]);
+      } else {
+        console.log("Checkbox / Dd: " + this.fieldNames[i]);
+      }
+    }
+
 
     for (let i = 0; i < this.fieldNames?.length; i++) {
       let currentField = this.fieldNames[i];
@@ -91,6 +99,14 @@ export class ShowFormComponent implements OnInit, PipeTransform {
     console.log("-------------------------------")
 
 
+    //let obst = document.getElementsByName("obst")
+    let obst = document.querySelectorAll('input[name="obst"]') as NodeListOf<HTMLInputElement>
+    for (let i = 0; i < obst.length; i++) {
+      if (obst[i].checked) {
+        console.log(this.fieldNames[i] + ": " + obst[i].value)
+      }
+    }
+    console.log("-------------------------------")
 
   }
 
