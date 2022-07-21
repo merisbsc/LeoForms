@@ -62,10 +62,10 @@ export class ShowFormComponent implements OnInit, PipeTransform {
 
   ngOnInit(): void {
     // ROUTER TINGS
-    console.log(this.router.snapshot.params);
+    //console.log(this.router.snapshot.params);
 
     if (this.formName === "blank") {
-      console.log("STANDARD");
+      //console.log("STANDARD");
     } else {
       this.formName = this.router.snapshot.params.name;
       this.get();
@@ -74,26 +74,39 @@ export class ShowFormComponent implements OnInit, PipeTransform {
 
   submit() {
 
+    let obj = document.forms.item(0);
+    //console.log(obj?.childNodes);
+
+
+    if (obj !== null) {
+    for (let i = 0; i < obj.childNodes.length; i++) {
+      //console.log(obj.childNodes[i].nodeName);
+      if ( obj.childNodes[i].nodeName === "UL") {
+        let ul = obj.childNodes[i]
+        //console.log(ul.childNodes)
+        for (let j = 0; j < ul.childNodes.length; j++) {
+          if (ul.childNodes[j].nodeName === "LI") {
+            //console.log(ul.childNodes[j].childNodes.item(0))
+            let u2 = ul.childNodes[j].childNodes.item(0);
+            console.log(u2);
+          }
+        }
+      }
+    } }
+
+
     this.dataServFields.getFieldNames(this.formName).subscribe(value => {
       let string = value.substring(3, value.length-3)
       this.fieldNames = string.split('","');
     });
 
-    for (let i = 0; i < this.fieldNames.length; i++) {
-      if (this.fieldNames[i] === this.fieldNames[i + 1]) {
-        console.log("Radio: " + this.fieldNames[i]);
-      } else {
-        console.log("Checkbox / Dd: " + this.fieldNames[i]);
-      }
-    }
-
-
+    /*
     for (let i = 0; i < this.fieldNames?.length; i++) {
       let currentField = this.fieldNames[i];
       //console.log(currentField);
       if (document.querySelectorAll('input[name="' + this.fieldNames[i] + '"]') != null) {
         let checkboxes = document.querySelectorAll('input[name="' + this.fieldNames[i] + '"]') as NodeListOf<HTMLInputElement>
-        checkboxes.forEach(c => console.log(this.fieldNames[i] + ': ' +c.checked))
+        checkboxes.forEach(c => console.log(this.fieldNames[i] + ': ' + c.checked))
       }
     }
     console.log("-------------------------------")
@@ -103,10 +116,11 @@ export class ShowFormComponent implements OnInit, PipeTransform {
     let obst = document.querySelectorAll('input[name="obst"]') as NodeListOf<HTMLInputElement>
     for (let i = 0; i < obst.length; i++) {
       if (obst[i].checked) {
-        console.log(this.fieldNames[i] + ": " + obst[i].value)
+       // console.log(this.fieldNames[i] + ": " + obst[i].value)
       }
     }
-    console.log("-------------------------------")
+    //console.log("-------------------------------")
+    */
 
   }
 

@@ -170,17 +170,13 @@ export class NewFormComponent implements OnInit {
 
   sendForm() {
 
-    // MD WAY
-    /*
-    this.testMd(this.markdown);
-    console.log(this.evaluateFields)
-    this.dataServ.saveMd(this.formName, this.markdown)*/
-
     // @ts-ignore
-    let inputElement = document.getElementsByClassName("variable-binding").item(0).innerHTML;
+    let inputElement = "<form>" + document.getElementsByClassName("variable-binding").item(0).innerHTML + "</form>";
     console.log(inputElement);
     let fieldNames = inputElement.toString().match(/(?<=name=")[A-z]+(?=")/g);
-    console.log(fieldNames);
+    //console.log(fieldNames);
+
+
 
     // @ts-ignore
     this.dataServ.saveMd(this.formName, inputElement, fieldNames)
