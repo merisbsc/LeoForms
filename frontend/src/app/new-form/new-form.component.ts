@@ -82,13 +82,11 @@ export class NewFormComponent implements OnInit {
     this.markdownService.renderer.listitem = function (text, ) {
       let fieldName;
       if (/^\s*\[[x ]\]\s*/.test(text)) {
-
         fieldName = text.substring(5, text.length);
-
         text = text
           .replace(/^\s*\[[x ]\]\s*/, '<input type="checkbox" class="boxerl" style="list-style: none" ' +
             //'checked="false" ' +
-            'id="boxal" name="' +
+            'name="' +
              fieldName + '" ' +
             '> ');
         return '<li style="list-style: none">' + text + '</li>';
@@ -104,6 +102,10 @@ export class NewFormComponent implements OnInit {
         text = text
           .replace(/^\s*\[[d ]\]\s*/, '<option> ' +text + '</option>>');
         return '<select>' + text + '</select>';
+      } if (/^\s*\[[t ]\]\s*/.test(text)) {
+        text = text
+          .replace(/^\s*\[[t ]\]\s*/, '<input type="text"> ');
+        return '<li style="list-style: none">' + text + '</li>';
       } else {
         return '<li>' + text + '</li>';
       }
@@ -119,7 +121,7 @@ export class NewFormComponent implements OnInit {
       let fieldName = header.substring(9, header.length - 12);
 
       return '<select name="' + fieldName + '">\n'
-        + '<option disabled selected>\n'
+        + '<option>\n'
         + header
         + '</option>\n'
         + newBody

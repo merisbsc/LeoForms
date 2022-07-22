@@ -77,7 +77,7 @@ export class ShowFormComponent implements OnInit, PipeTransform {
     let obj = document.forms.item(0);
     //console.log(obj?.childNodes);
 
-
+    /*
     if (obj !== null) {
     for (let i = 0; i < obj.childNodes.length; i++) {
       //console.log(obj.childNodes[i].nodeName);
@@ -93,14 +93,14 @@ export class ShowFormComponent implements OnInit, PipeTransform {
         }
       }
     } }
-
+    */
 
     this.dataServFields.getFieldNames(this.formName).subscribe(value => {
       let string = value.substring(3, value.length-3)
       this.fieldNames = string.split('","');
     });
 
-    /*
+
     for (let i = 0; i < this.fieldNames?.length; i++) {
       let currentField = this.fieldNames[i];
       //console.log(currentField);
@@ -112,15 +112,8 @@ export class ShowFormComponent implements OnInit, PipeTransform {
     console.log("-------------------------------")
 
 
-    //let obst = document.getElementsByName("obst")
-    let obst = document.querySelectorAll('input[name="obst"]') as NodeListOf<HTMLInputElement>
-    for (let i = 0; i < obst.length; i++) {
-      if (obst[i].checked) {
-       // console.log(this.fieldNames[i] + ": " + obst[i].value)
-      }
-    }
-    //console.log("-------------------------------")
-    */
+
+
 
   }
 
