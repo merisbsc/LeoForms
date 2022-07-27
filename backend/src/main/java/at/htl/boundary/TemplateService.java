@@ -6,6 +6,7 @@ import org.eclipse.microprofile.openapi.annotations.Operation;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
@@ -63,10 +64,15 @@ public class TemplateService {
     @Produces(MediaType.TEXT_PLAIN)
     public String getMarkdownByName(@PathParam("name") String name) {
 
-        TypedQuery<Template> tq = em.createNamedQuery("Template.getTemplateByName", Template.class)
-                .setParameter("NAME", name);
-        Template q = tq.getSingleResult();
-        return q.getMarkdown();
+        try {
+            TypedQuery<Template> tq = em.createNamedQuery("Template.getTemplateByName", Template.class)
+                    .setParameter("NAME", name);
+            Template q = tq.getSingleResult();
+            return q.getMarkdown();
+        } catch (NoResultException e) {
+            return "Cannot find Template \"" + name + "\"";
+        }
+
     }
 
     @GET
