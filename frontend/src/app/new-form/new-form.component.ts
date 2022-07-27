@@ -33,14 +33,21 @@ export class NewFormComponent implements OnInit {
 
   title = 'LeoFormsfe';
 
-  markdown = `## LeoForms hat __swag__!
----
+  markdown = `### Choose one
+-  [r:obst] Apfel
+-  [r:obst] Birne
+-  [r:obst] Schoko
 
-### Wahlfächer
-1. Ordered list
-2. Another bullet point
-   - Unordered list
-   - Another unordered bullet
+### Choose Multiple
+-  [x] Mathe
+-  [x] Deutsch
+-  [x] Englisch
+
+### Fach Wählen
+| Recht |
+| -----------  |
+| Wirtschaft |
+| Chemie |
 `;
 
   constructor(private markdownService: MarkdownService, private titleService:Title, public dataServ: DataService) {
@@ -58,11 +65,9 @@ export class NewFormComponent implements OnInit {
     this.dataServ.getGroups().subscribe((value: any) => {
       this.dataSource = value;
       // @ts-ignore
-      console.log(this.dataSource[1].name)
       let i = 0;
       this.dataSource.forEach(item => {
         // @ts-ignore
-        console.log(this.dataSource[i].name)
         // @ts-ignore
         this.allFruits.push(this.dataSource[i].name)
         i++;
@@ -75,32 +80,32 @@ export class NewFormComponent implements OnInit {
   ngOnInit(): void {
 
     this.markdownService.renderer.listitem = function (text, ) {
-      debugger;
       let fieldName;
       if (/^\s*\[[x ]\]\s*/.test(text)) {
-
-        console.log(text)
-        console.log(text.substring(5, text.length))
         fieldName = text.substring(5, text.length);
-
-
         text = text
-          .replace(/^\s*\[ \]\s*/, '<input type="checkbox" checked="true" id="boxal" name="' + fieldName + '" ngModel="formData.' + fieldName +'"> ')
-          .replace(/^\s*\[x\]\s*/, '<input type="checkbox" ' +
+          .replace(/^\s*\[[x ]\]\s*/, '<input type="checkbox" class="boxerl" style="list-style: none" ' +
             //'checked="false" ' +
-            'id="boxal" name="' +
+            'name="' +
              fieldName + '" ' +
-            '[(ngModel)]="formData_' + fieldName +
-            '" ng-true-value="true" ng-false-value="false">');
+            '> ');
         return '<li style="list-style: none">' + text + '</li>';
-      } if (/^\s*\[[r ]\]\s*/.test(text)) {
-        text = text
-          .replace(/^\s*\[r\]\s*/, '<input type="radio"> ');
-        return '<li style="list-style: none">' + text + '</li>';
+      } if (/\[r:.{1,}\]\s/gi.test(text)) {
+        //console.log(text)
+        var name = text.substring(
+          text.indexOf(":") + 1,
+          text.lastIndexOf("]")
+        );        text = text
+          .replace(/\[r:.{1,}\]\s/gi, '<input type="radio" name="'+ name + '" value="'+ text.substring(10) + '"> ');
+        return '<li style="list-style: none">' + text.substring(1) + '</li>';
       } if (/^\s*\[[d ]\]\s*/.test(text)) {
         text = text
           .replace(/^\s*\[[d ]\]\s*/, '<option> ' +text + '</option>>');
         return '<select>' + text + '</select>';
+      } if (/^\s*\[[t ]\]\s*/.test(text)) {
+        text = text
+          .replace(/^\s*\[[t ]\]\s*/, '<input type="text"> ');
+        return '<li style="list-style: none">' + text + '</li>';
       } else {
         return '<li>' + text + '</li>';
       }
@@ -110,13 +115,16 @@ export class NewFormComponent implements OnInit {
 
 
     this.markdownService.renderer.table = function (header, body) {
-      if (body) body = '<option>' + body + '</option>';
 
-      return '<select>\n'
+      let newBody = body.replace(/td/gi, 'option');
+      //console.log(header.substring(9, header.length - 12));
+      let fieldName = header.substring(9, header.length - 12);
+
+      return '<select name="' + fieldName + '">\n'
         + '<option>\n'
         + header
         + '</option>\n'
-        + body
+        + newBody
         + '</select>\n';
     };
   }
@@ -164,25 +172,35 @@ export class NewFormComponent implements OnInit {
 
   sendForm() {
 
-    // MD WAY
-    /*
-    this.testMd(this.markdown);
-    console.log(this.evaluateFields)
-    this.dataServ.saveMd(this.formName, this.markdown)*/
+    // @ts-ignore
+    let inputElement = "<form>" + document.getElementsByClassName("variable-binding").item(0).innerHTML + "</form>";
+    console.log(inputElement);
+    let fieldNames = inputElement.toString().match(/(?<=name=")[A-z]+(?=")/g);
+    //console.log(fieldNames);
+
+
 
     // @ts-ignore
-    const inputElement = document.getElementsByClassName("variable-binding").item(0).innerHTML;
-    console.log(inputElement);
-    this.dataServ.saveMd(this.formName, inputElement)
+    this.dataServ.saveMd(this.formName, inputElement, fieldNames)
 
     this.markdown = "";
     this.formName = "";
+
   }
 
   getHTMLValue() {
-    const inputElement = document.getElementsByClassName("variable-binding");
+    const inputElement = document.getElementsByClassName("boxerl");
 
     console.log(inputElement.item(0))
+    console.log(inputElement.item(1))
+    console.log(inputElement.item(2))
+    console.log(inputElement.length)
+
+    // @ts-ignore
+    let inputElement2 = document.getElementsByClassName("variable-binding").item(0).innerHTML;
+    console.log(inputElement2);
+    let fieldNames = inputElement2.toString().match(/(?<=name=")[A-z]+(?=")/g);
+    console.log(fieldNames);
   }
 
 }

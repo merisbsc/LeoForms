@@ -4,7 +4,7 @@ import {MarkdownModule, MarkdownModuleConfig, MarkdownService, MarkedOptions, Ma
 import {HttpClient} from "@angular/common/http";
 import {DomSanitizer, Title} from "@angular/platform-browser";
 
-import {DataService, GetFormInterface} from '../data.service'
+import {DataService, GetFieldNamesInterface, GetFormInterface} from '../data.service'
 import {ActivatedRoute} from "@angular/router";
 import {HtmlSanitizerPipe} from "../app.component";
 
@@ -17,18 +17,12 @@ import {HtmlSanitizerPipe} from "../app.component";
 export class ShowFormComponent implements OnInit, PipeTransform {
 
   dataSource: GetFormInterface[];
+  dataSourceFields: GetFieldNamesInterface[];
   formId: number;
   formName: string;
   safeHtml: HtmlSanitizerPipe;
-  markdown = `## LeoForms hat __swag__!
----
+  fieldNames: any;
 
-### Mahlwächer
-1. Ordered list
-2. Another bullet point
-   - Unordered list
-   - Another unordered bullet
-`;
   form = "";
   formData: any;
   formData_test1: any;
@@ -36,11 +30,9 @@ export class ShowFormComponent implements OnInit, PipeTransform {
   constructor(private markdownService: MarkdownService,
               private titleService:Title,
               public dataServ: DataService,
+              public dataServFields: DataService,
               public router :ActivatedRoute) {
     this.titleService.setTitle("SHOW LEO FORM");
-
-
-   // this.dataSource = this.dataServ.mds;
   }
 
   transform(value: any, ...args: any[]) {
@@ -49,59 +41,31 @@ export class ShowFormComponent implements OnInit, PipeTransform {
 
 
   get(): void {
+
     this.dataServ.getMds(this.formName).subscribe((value: any) => {
       this.dataSource = value;
-      console.log('<div ng-app="formApp" ng-controller="formController">' + this.dataSource + '</div>')
+      //console.log(this.dataSource)
+      //console.log('<div ng-app="formApp" ng-controller="formController">' + this.dataSource + '</div>')
       // @ts-ignore
       //document.getElementsByClassName("htmlLoad").item(0).innerHTML = this.dataSource;
       this.form = '<div ng-app="formApp" ng-controller="formController">' + this.dataSource + '</div>';
     });
+
+    /*
+    this.dataServ.getFieldNames(this.formName).subscribe((value: any) => {
+      console.log(value);
+    });
+    */
+
   }
 
 
   ngOnInit(): void {
-
-    // MD TINGS
-
-    this.markdownService.renderer.listitem = function (text) {
-      debugger;
-      if (/^\s*\[[x ]\]\s*/.test(text)) {
-
-        text = text
-          .replace(/^\s*\[ \]\s*/, '<input type="checkbox" checked="true"  name=" ' + text + '"> ')
-          .replace(/^\s*\[x\]\s*/, '<input type="checkbox" checked="false"  name="checkboxInput"> ');
-        return '<li style="list-style: none">' + text + '</li>';
-      } if (/^\s*\[[r ]\]\s*/.test(text)) {
-        text = text
-          .replace(/^\s*\[r\]\s*/, '<input type="radio" name="radioInput">');
-        return '<li style="list-style: none">' + text + '</li>';
-      } if (/^\s*\[[d ]\]\s*/.test(text)) {
-        text = text
-          .replace(/^\s*\[[d ]\]\s*/, '<option> ' +text + '</option>>');
-        return '<select>' + text + '</select>';
-      } else {
-        return '<li>' + text + '</li>';
-      }
-    };
-
-
-    this.markdownService.renderer.table = function (header, body) {
-      if (body) body = '<option>' + body + '</option>';
-
-      return '<select>\n'
-        + '<option>\n'
-        + header
-        + '</option>\n'
-        + body
-        + '</select>\n';
-    };
-
-
     // ROUTER TINGS
-    console.log(this.router.snapshot.params);
+    //console.log(this.router.snapshot.params);
 
     if (this.formName === "blank") {
-      console.log("STANDARD");
+      //console.log("STANDARD");
     } else {
       this.formName = this.router.snapshot.params.name;
       this.get();
@@ -109,11 +73,48 @@ export class ShowFormComponent implements OnInit, PipeTransform {
   }
 
   submit() {
-    if (document.querySelectorAll('input[name="test1"]') != null) {
-      console.log(document.querySelectorAll('input[name="test1"]').item(0).innerHTML);
-    }
 
-    console.log(this.formData_test1);
+    let obj = document.forms.item(0);
+    //console.log(obj?.childNodes);
+
+    /*
+    if (obj !== null) {
+    for (let i = 0; i < obj.childNodes.length; i++) {
+      //console.log(obj.childNodes[i].nodeName);
+      if ( obj.childNodes[i].nodeName === "UL") {
+        let ul = obj.childNodes[i]
+        //console.log(ul.childNodes)
+        for (let j = 0; j < ul.childNodes.length; j++) {
+          if (ul.childNodes[j].nodeName === "LI") {
+            //console.log(ul.childNodes[j].childNodes.item(0))
+            let u2 = ul.childNodes[j].childNodes.item(0);
+            console.log(u2);
+          }
+        }
+      }
+    } }
+    */
+
+    this.dataServFields.getFieldNames(this.formName).subscribe(value => {
+      let string = value.substring(3, value.length-3)
+      this.fieldNames = string.split('","');
+    });
+
+
+    for (let i = 0; i < this.fieldNames?.length; i++) {
+      let currentField = this.fieldNames[i];
+      //console.log(currentField);
+      if (document.querySelectorAll('input[name="' + this.fieldNames[i] + '"]') != null) {
+        let checkboxes = document.querySelectorAll('input[name="' + this.fieldNames[i] + '"]') as NodeListOf<HTMLInputElement>
+        checkboxes.forEach(c => console.log(this.fieldNames[i] + ': ' + c.checked))
+      }
+    }
+    console.log("-------------------------------")
+
+
+
+
+
   }
 
 
