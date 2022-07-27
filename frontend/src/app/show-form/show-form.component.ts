@@ -75,7 +75,7 @@ export class ShowFormComponent implements OnInit, PipeTransform {
   submit() {
 
     let obj = document.forms.item(0);
-    //console.log(obj?.childNodes);
+    console.log(obj?.childNodes);
 
     /*
     if (obj !== null) {
@@ -109,15 +109,7 @@ export class ShowFormComponent implements OnInit, PipeTransform {
         checkboxes.forEach(c => console.log(this.fieldNames[i] + ': ' + c.checked))
       }
     }
-    console.log("-------------------------------")
-
-
-
-
+    //console.log("-------------------------------")
 
   }
-
-
-
-
 }

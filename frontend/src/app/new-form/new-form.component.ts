@@ -43,7 +43,10 @@ export class NewFormComponent implements OnInit {
 -  [x] Deutsch
 -  [x] Englisch
 
-### Fach Wählen
+### Write Text
+-  [t]
+
+### Dropdown
 | Recht |
 | -----------  |
 | Wirtschaft |
