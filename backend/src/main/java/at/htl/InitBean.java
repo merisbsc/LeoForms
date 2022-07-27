@@ -3,10 +3,8 @@ package at.htl;
 import at.htl.model.Group;
 import at.htl.model.Student;
 import at.htl.repositories.GroupRepository;
-import at.htl.repositories.QuestionnaireRepository;
+import at.htl.repositories.TemplateRepository;
 import at.htl.repositories.StudentRepository;
-import com.opencsv.CSVReader;
-import com.opencsv.exceptions.CsvException;
 import io.quarkus.runtime.StartupEvent;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -14,13 +12,8 @@ import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class InitBean {
@@ -34,7 +27,7 @@ public class InitBean {
     StudentRepository studentRepository;
 
     @Inject
-    QuestionnaireRepository questionnaireRepository;
+    TemplateRepository templateRepository;
 
     @Transactional
     void onStart(@Observes StartupEvent event) throws IOException {

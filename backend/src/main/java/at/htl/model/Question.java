@@ -1,7 +1,6 @@
 package at.htl.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "LF_QUESTION")
@@ -19,16 +18,16 @@ public class Question {
     String fieldname;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    Questionnaire questionnaire;
+    Template template;
 
     public Question() {
     }
 
-    public Question(Long id, String questionText, String fieldname, Questionnaire questionnaire) {
+    public Question(Long id, String questionText, String fieldname, Template template) {
         this.id = id;
         this.questionText = questionText;
         this.fieldname = fieldname;
-        this.questionnaire = questionnaire;
+        this.template = template;
     }
 
     public Long getId() {
@@ -55,11 +54,11 @@ public class Question {
         this.fieldname = fieldname;
     }
 
-    public Questionnaire getQuestionnaire() {
-        return questionnaire;
+    public Template getTemplate() {
+        return template;
     }
 
-    public void setQuestionnaire(Questionnaire questionnaire) {
-        this.questionnaire = questionnaire;
+    public void setTemplate(Template template) {
+        this.template = template;
     }
 }

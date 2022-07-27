@@ -2,41 +2,40 @@ package at.htl.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "LF_QUESTIONNAIRE")
+@Table(name = "LF_TEMPLATE")
 @NamedQueries(
         @NamedQuery(
-                name = "Questionnaire.getQuestionnaireByName",
-                query = "select q from Questionnaire q where q.name = :NAME"
+                name = "Template.getTemplateByName",
+                query = "select t from Template t where t.name = :NAME"
         )
 )
-public class Questionnaire {
+public class Template {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "QN_ID")
+    @Column(name = "T_ID")
     Long id;
 
-    @Column(name = "QN_NAME")
+    @Column(name = "T_NAME")
     String name;
 
-    @Column(name = "QN_CREATION_DATE")
+    @Column(name = "T_CREATION_DATE")
     LocalDate creationDate;
 
-    @Column(name = "QN_MARKDOWN" ,columnDefinition="TEXT")
+    @Column(name = "T_MARKDOWN" ,columnDefinition="TEXT")
     String markdown;
 
     @ElementCollection
     List<String> fieldNames;
 
 
-    public Questionnaire() {
+    public Template() {
     }
 
-    public Questionnaire(Long id, String name, LocalDate creationDate, String markdown) {
+    public Template(Long id, String name, LocalDate creationDate, String markdown) {
         this.id = id;
         this.name = name;
         this.creationDate = creationDate;
