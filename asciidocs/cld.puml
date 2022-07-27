@@ -35,7 +35,7 @@ QuestionType questionType
 String fieldname
 }
 
-class Questionnaire {
+class Template {
 Long id
 String name
 LocalDate creationDate
@@ -46,7 +46,7 @@ class Survey {
 String name
 LocalDate creationDate
 LocalDate endDate
-Questionnaire questionnaire
+Template template
 }
 
 enum Status {
@@ -68,8 +68,8 @@ Student "1" -- "*" Poll
 Poll "*" -right- "1" Survey
 Poll "1" --> "*" Answer
 Survey "1" -up-> "1" Status
-Survey "*" -right-> "1" Questionnaire
-Questionnaire "1" --> "*" Question
+Survey "*" -right-> "1" Template
+Template "1" --> "*" Question
 Question -left- Answer
 Question "1" -right- "1" QuestionType
 
