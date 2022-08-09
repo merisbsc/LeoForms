@@ -45,11 +45,10 @@ export class ShowFormComponent implements OnInit, PipeTransform {
 
     this.dataServ.getMds(this.formName).subscribe((value: any) => {
       this.dataSource = value;
-      //console.log(this.dataSource)
-      //console.log('<div ng-app="formApp" ng-controller="formController">' + this.dataSource + '</div>')
-      // @ts-ignore
-      //document.getElementsByClassName("htmlLoad").item(0).innerHTML = this.dataSource;
+
       this.form = '<div ng-app="formApp" ng-controller="formController">' + this.dataSource + '</div>';
+
+
     });
 
     /*
@@ -75,9 +74,7 @@ export class ShowFormComponent implements OnInit, PipeTransform {
 
   submit() {
 
-    let datenow = new Date();
-    console.log(datenow);
-
+    console.log("dkwadpkwa")
     let form = document.getElementById("daform");
 
     // @ts-ignore

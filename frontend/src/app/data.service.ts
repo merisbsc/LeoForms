@@ -65,9 +65,12 @@ export class DataService {
 
   saveMd(nameForm: string, markdownString: string, fieldNames: string[]) {
 
+    let datenow = new Date().toISOString().substring(0,10);
+    console.log(datenow);
+
     const form = {
       name: nameForm,
-      creationDate: '2021-12-12',
+      creationDate: datenow.toString(),
       markdown: markdownString,
       fieldNames: fieldNames
     };

@@ -175,12 +175,21 @@ export class NewFormComponent implements OnInit {
 
   sendForm() {
     // @ts-ignore
-    let inputElement = "<form id='daform'>" + document.getElementsByClassName("variable-binding").item(0).innerHTML + "</form>";
-    console.log(inputElement);
+    let inputElement = "<form id='daform'>" + document.getElementsByClassName("variable-binding").item(0).innerHTML + "<button>Serialize form values</button></form>";
+
+    let finalForm = '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>\n' +
+      '<script>\n' +
+      '$(document).ready(function(){\n' +
+      '  $("button").click(function(){\n' +
+      '    $("div").text($("form").serialize());\n' +
+      '  });\n' +
+      '});\n' +
+      '</script>' + inputElement;
+    console.log(finalForm);
     let fieldNames = inputElement.toString().match(/(?<=name=")[A-z]+(?=")/g);
 
     // @ts-ignore
-    this.dataServ.saveMd(this.formName, inputElement, fieldNames)
+    this.dataServ.saveMd(this.formName, finalForm, fieldNames)
 
     this.markdown = "";
     this.formName = "";
