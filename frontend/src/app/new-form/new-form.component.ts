@@ -174,21 +174,16 @@ export class NewFormComponent implements OnInit {
   }
 
   sendForm() {
-
     // @ts-ignore
-    let inputElement = "<form>" + document.getElementsByClassName("variable-binding").item(0).innerHTML + "</form>";
+    let inputElement = "<form id='daform'>" + document.getElementsByClassName("variable-binding").item(0).innerHTML + "</form>";
     console.log(inputElement);
     let fieldNames = inputElement.toString().match(/(?<=name=")[A-z]+(?=")/g);
-    //console.log(fieldNames);
-
-
 
     // @ts-ignore
     this.dataServ.saveMd(this.formName, inputElement, fieldNames)
 
     this.markdown = "";
     this.formName = "";
-
   }
 
   getHTMLValue() {
@@ -207,6 +202,3 @@ export class NewFormComponent implements OnInit {
   }
 
 }
-
-
-
