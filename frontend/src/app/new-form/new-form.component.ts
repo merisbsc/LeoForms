@@ -44,7 +44,7 @@ export class NewFormComponent implements OnInit {
 -  [x] Englisch
 
 ### Write Text
--  [t]
+-  [t:textfield]
 
 ### Dropdown
 | Recht |
@@ -105,9 +105,14 @@ export class NewFormComponent implements OnInit {
         text = text
           .replace(/^\s*\[[d ]\]\s*/, '<option> ' +text + '</option>>');
         return '<select>' + text + '</select>';
-      } if (/^\s*\[[t ]\]\s*/.test(text)) {
+      } if (/\[t:.{1,}\]\s/gi.test(text)) {
+        var name = text.substring(
+          text.indexOf(":") + 1,
+          text.lastIndexOf("]")
+        );
+        console.log(name);
         text = text
-          .replace(/^\s*\[[t ]\]\s*/, '<input type="text"> ');
+          .replace(/\[t:.{1,}\]\s/gi, '<input type="text" name="' + name + '"> ');
         return '<li style="list-style: none">' + text + '</li>';
       } else {
         return '<li>' + text + '</li>';
