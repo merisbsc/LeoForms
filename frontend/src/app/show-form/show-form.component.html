@@ -1,3 +1,12 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+  $(document).ready(function(){
+    $("button").click(function(){
+      $("div").text($("form").serialize());
+    });
+  });
+</script>
+
 <p id="header">
   <mat-toolbar>
     <span>LeoForms</span>
@@ -12,8 +21,8 @@
 <tr></tr>
 <button mat-stroked-button color="primary" routerLink="/new">New Form</button>
 <tr></tr>
-<div [innerHtml]="form | sanitizehtml">
 
+<div [innerHtml]="form | sanitizehtml">
 </div>
-<h2>Checkbox 1: {{formData_test1}}</h2>
+
 <button mat-flat-button color="primary" (click)="submit()">Submit</button>

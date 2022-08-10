@@ -8,6 +8,7 @@ import {DataService, GetFieldNamesInterface, GetFormInterface} from '../data.ser
 import {ActivatedRoute} from "@angular/router";
 import {HtmlSanitizerPipe} from "../app.component";
 
+declare function myMethod(): void;
 
 @Component({
   selector: 'app-show-form',
@@ -44,11 +45,10 @@ export class ShowFormComponent implements OnInit, PipeTransform {
 
     this.dataServ.getMds(this.formName).subscribe((value: any) => {
       this.dataSource = value;
-      //console.log(this.dataSource)
-      //console.log('<div ng-app="formApp" ng-controller="formController">' + this.dataSource + '</div>')
-      // @ts-ignore
-      //document.getElementsByClassName("htmlLoad").item(0).innerHTML = this.dataSource;
+
       this.form = '<div ng-app="formApp" ng-controller="formController">' + this.dataSource + '</div>';
+
+
     });
 
     /*
@@ -74,32 +74,20 @@ export class ShowFormComponent implements OnInit, PipeTransform {
 
   submit() {
 
-    let obj = document.forms.item(0);
-    //console.log(obj?.childNodes);
+    console.log("dkwadpkwa")
+    let form = document.getElementById("daform");
+
+    // @ts-ignore
+    console.log(form);
 
     /*
-    if (obj !== null) {
-    for (let i = 0; i < obj.childNodes.length; i++) {
-      //console.log(obj.childNodes[i].nodeName);
-      if ( obj.childNodes[i].nodeName === "UL") {
-        let ul = obj.childNodes[i]
-        //console.log(ul.childNodes)
-        for (let j = 0; j < ul.childNodes.length; j++) {
-          if (ul.childNodes[j].nodeName === "LI") {
-            //console.log(ul.childNodes[j].childNodes.item(0))
-            let u2 = ul.childNodes[j].childNodes.item(0);
-            console.log(u2);
-          }
-        }
-      }
-    } }
-    */
+    let obj = document.forms.item(0);
+    console.log(obj?.childNodes);
 
     this.dataServFields.getFieldNames(this.formName).subscribe(value => {
       let string = value.substring(3, value.length-3)
       this.fieldNames = string.split('","');
     });
-
 
     for (let i = 0; i < this.fieldNames?.length; i++) {
       let currentField = this.fieldNames[i];
@@ -109,15 +97,6 @@ export class ShowFormComponent implements OnInit, PipeTransform {
         checkboxes.forEach(c => console.log(this.fieldNames[i] + ': ' + c.checked))
       }
     }
-    console.log("-------------------------------")
-
-
-
-
-
+    */
   }
-
-
-
-
 }

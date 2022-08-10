@@ -48,34 +48,36 @@ export class DataService {
 
 
   getGroups(): Observable<GroupInterface[]> {
-    //console.log(this.http.get<GroupInterface[]>(`http://localhost:8080/groups`));
     return this.http.get<GroupInterface[]>(`http://localhost:8080/groups`);
   }
 
 
   getMds(name: string): Observable<string> {
     //console.log(this.http.get<GetFormInterface[]>('http://localhost:8080/questionnaire/' + name + '/markdown/name'));
-    return this.http.get('http://localhost:8080/questionnaire/' + name + '/markdown/name', {responseType: 'text'});
+    return this.http.get('http://localhost:8080/template/' + name + '/markdown/name', {responseType: 'text'});
   }
 
   getFieldNames(name: string): Observable<string> {
     //console.log(this.http.get<GetFieldNamesInterface[]>('http://localhost:8080/questionnaire/' + name + '/fieldnames'))
-    return this.http.get('http://localhost:8080/questionnaire/' + name + '/fieldnames', {responseType: 'text'});
+    return this.http.get('http://localhost:8080/template/' + name + '/fieldnames', {responseType: 'text'});
   }
 
 
   saveMd(nameForm: string, markdownString: string, fieldNames: string[]) {
 
+    let datenow = new Date().toISOString().substring(0,10);
+    console.log(datenow);
+
     const form = {
       name: nameForm,
-      creationDate: '2021-12-12',
+      creationDate: datenow.toString(),
       markdown: markdownString,
       fieldNames: fieldNames
     };
 
     this.forms.push(form);
 
-    this.http.post(`http://localhost:8080/questionnaire`, form).subscribe(value => {
+    this.http.post(`http://localhost:8080/template`, form).subscribe(value => {
         console.log(value);
       }
     );
