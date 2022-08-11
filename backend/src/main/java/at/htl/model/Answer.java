@@ -19,6 +19,10 @@ public class Answer {
     public Answer() {
     }
 
+    public Answer(String value) {
+        this.value = value;
+    }
+
     public Answer(Long id, String value, Question question) {
         this.id = id;
         this.value = value;
