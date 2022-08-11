@@ -23,7 +23,7 @@ public class AnswerService {
 
     @Transactional
     @POST
-    @Consumes(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response saveAnswer(String answer) {
         Answer a = new Answer(answer);

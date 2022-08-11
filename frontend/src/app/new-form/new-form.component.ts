@@ -44,7 +44,7 @@ export class NewFormComponent implements OnInit {
 -  [x] Englisch
 
 ### Write Text
--  [t:textfield]
+-  [t:spitzname]
 
 ### Dropdown
 | Recht |
