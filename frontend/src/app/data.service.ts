@@ -34,18 +34,10 @@ export class DataService {
 
   readonly groups: GroupInterface[];
   readonly forms: FormInterface[];
-  readonly mds: GetFormInterface[];
 
   constructor(private http: HttpClient) {
     this.forms = [];
   }
-
-
-  // @ts-ignore
-  getItems(markdown): Observable<String> {
-    return markdown;
-  }
-
 
   getGroups(): Observable<GroupInterface[]> {
     return this.http.get<GroupInterface[]>(`http://localhost:8080/groups`);
@@ -55,11 +47,6 @@ export class DataService {
   getMds(name: string): Observable<string> {
     //console.log(this.http.get<GetFormInterface[]>('http://localhost:8080/questionnaire/' + name + '/markdown/name'));
     return this.http.get('http://localhost:8080/template/' + name + '/markdown/name', {responseType: 'text'});
-  }
-
-  getFieldNames(name: string): Observable<string> {
-    //console.log(this.http.get<GetFieldNamesInterface[]>('http://localhost:8080/questionnaire/' + name + '/fieldnames'))
-    return this.http.get('http://localhost:8080/template/' + name + '/fieldnames', {responseType: 'text'});
   }
 
 
