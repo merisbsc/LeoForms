@@ -72,7 +72,24 @@ public class TemplateService {
         } catch (NoResultException e) {
             return "Cannot find Template \"" + name + "\"";
         }
+    }
 
+    @GET
+    @Operation(
+            summary = "Get Markdown Text of the Template by Name of it as HTML"
+    )
+    @Path("/{name}/markdown/name")
+    @Produces(MediaType.TEXT_HTML)
+    public String getMarkdownByNameAsHTML(@PathParam("name") String name) {
+
+        try {
+            TypedQuery<Template> tq = em.createNamedQuery("Template.getTemplateByName", Template.class)
+                    .setParameter("NAME", name);
+            Template q = tq.getSingleResult();
+            return q.getMarkdown();
+        } catch (NoResultException e) {
+            return "Cannot find Template \"" + name + "\"";
+        }
     }
 
     @GET

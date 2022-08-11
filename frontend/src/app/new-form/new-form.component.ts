@@ -180,15 +180,25 @@ export class NewFormComponent implements OnInit {
 
   sendForm() {
     // @ts-ignore
-    let inputElement = "<form id='daform'>" + document.getElementsByClassName("variable-binding").item(0).innerHTML + "<button>Serialize form values</button></form>";
+    let inputElement = "<form id='daform'>" + document.getElementsByClassName("variable-binding").item(0).innerHTML + '<button onclick="submitData()">Serialize form values</button></form>';
 
     let finalForm = '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>\n' +
-      '<script>\n' +
-      '$(document).ready(function(){\n' +
-      '  $("button").click(function(){\n' +
-      '    $("div").text($("form").serialize());\n' +
-      '  });\n' +
-      '});\n' +
+      "<script>function submitData() {\n" +
+      "    var data = $(\"form\").serialize();\n" +
+      "    console.log(data);\n" +
+      "    alert(data);\n" +
+      "    $.ajax({\n" +
+      "        type: 'POST',\n" +
+      "        url: 'http://localhost:8080/answer',\n" +
+      "        dataType: 'json',\n" +
+      "        contentType: 'application/json; charset=utf-8',\n" +
+      "        data: JSON.stringify(data),\n" +
+      "        success: function (result) {\n" +
+      "            console.log('Data received: ');\n" +
+      "            console.log(result);\n" +
+      "        }\n" +
+      "    })\n" +
+      "}" +
       '</script>' + inputElement;
     console.log(finalForm);
     let fieldNames = inputElement.toString().match(/(?<=name=")[A-z]+(?=")/g);
