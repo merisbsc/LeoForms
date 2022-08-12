@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
+import {TemplateModel} from "./model/template.model";
 
 
 export interface GroupInterface {
@@ -23,9 +24,6 @@ export interface GetFieldNamesInterface {
   fieldnames: string
 }
 
-const BASE_URL: string = 'http://localhost:8080/api'
-
-
 @Injectable({
   providedIn: 'root'
 })
@@ -43,10 +41,12 @@ export class DataService {
     return this.http.get<GroupInterface[]>(`http://localhost:8080/groups`);
   }
 
-
-  getMds(name: string): Observable<string> {
-    //console.log(this.http.get<GetFormInterface[]>('http://localhost:8080/questionnaire/' + name + '/markdown/name'));
+  getTemplate(name: string): Observable<string> {
     return this.http.get('http://localhost:8080/template/' + name + '/markdown/name', {responseType: 'text'});
+  }
+
+  getAllTemplates(): Observable<TemplateModel[]> {
+    return this.http.get<TemplateModel[]>('http://localhost:8080/template/');
   }
 
 

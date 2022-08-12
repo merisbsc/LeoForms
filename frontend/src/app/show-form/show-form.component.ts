@@ -43,7 +43,7 @@ export class ShowFormComponent implements OnInit, PipeTransform {
 
   get(): void {
 
-    this.dataServ.getMds(this.formName).subscribe((value: any) => {
+    this.dataServ.getTemplate(this.formName).subscribe((value: any) => {
       this.dataSource = value;
 
       this.form = '<div ng-app="formApp" ng-controller="formController">' + this.dataSource + '</div>';

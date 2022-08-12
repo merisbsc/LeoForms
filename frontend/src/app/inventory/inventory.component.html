@@ -1,1 +1,14 @@
-<p>inventory works!</p>
+<table class="table">
+  <thead>
+  <th>Name</th>
+  <th>Datum</th>
+  <th>HTML</th>
+  </thead>
+
+  <tr *ngFor="let template of allTemplates">
+    <td>{{template.name}}</td>
+    <td>{{template.datum}}</td>
+    <td>{{template.markdown}}</td>
+  </tr>
+
+</table>
