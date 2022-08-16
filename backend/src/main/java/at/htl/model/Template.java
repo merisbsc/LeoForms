@@ -28,6 +28,9 @@ public class Template {
     @Column(name = "T_MARKDOWN" ,columnDefinition="TEXT")
     String markdown;
 
+    @Column(name = "T_DESCRIPTION")
+    String description;
+
     @ElementCollection
     List<String> fieldNames;
 
@@ -72,6 +75,14 @@ public class Template {
 
     public void setMarkdown(String markdown) {
         this.markdown = markdown;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public List<String> getFieldNames() {
