@@ -27,6 +27,7 @@ export class NewFormComponent implements OnInit {
   evaluateFields: string[] = [];
   allFruits: string[] = [];
   formName: string;
+  formDesc: string;
   // @ts-ignore
   @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
   dataSource: GroupInterface[];
