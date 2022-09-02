@@ -106,14 +106,14 @@ export class NewFormComponent implements OnInit {
         text = text
           .replace(/^\s*\[[d ]\]\s*/, '<option> ' +text + '</option>>');
         return '<select>' + text + '</select>';
-      } if (/\[t:.{1,}\]\s/gi.test(text)) {
+      } if (/\[t:.{1,}\]/gi.test(text)) {
         var name = text.substring(
           text.indexOf(":") + 1,
           text.lastIndexOf("]")
         );
         console.log(name);
         text = text
-          .replace(/\[t:.{1,}\]\s/gi, '<input type="text" name="' + name + '"> ');
+          .replace(/\[t:.{1,}\]/gi, '<input type="text" name="' + name + '"> ');
         return '<li style="list-style: none">' + text + '</li>';
       } else {
         return '<li>' + text + '</li>';
@@ -200,15 +200,17 @@ export class NewFormComponent implements OnInit {
       "        }\n" +
       "    })\n" +
       "}" +
-      '</script>' + inputElement;
+      '</script>' +
+      '<div id="formNameDiv"><h1 id="formName">' + this.formName + '</h1></div>' + inputElement;
     console.log(finalForm);
     let fieldNames = inputElement.toString().match(/(?<=name=")[A-z]+(?=")/g);
 
     // @ts-ignore
-    this.dataServ.saveMd(this.formName, finalForm, fieldNames)
+    this.dataServ.saveMd(this.formName, finalForm, this.formDesc, fieldNames)
 
     this.markdown = "";
     this.formName = "";
+    this.formDesc = "";
   }
 
   getHTMLValue() {
