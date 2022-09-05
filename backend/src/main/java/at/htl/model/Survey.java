@@ -62,4 +62,12 @@ public class Survey {
     public void setStatus(Status status) {
         this.status = status;
     }
+
+    public Template getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(Template template) {
+        this.template = template;
+    }
 }
