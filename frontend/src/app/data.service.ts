@@ -50,7 +50,7 @@ export class DataService {
   }
 
 
-  saveMd(nameForm: string, markdownString: string, fieldNames: string[]) {
+  saveMd(nameForm: string, markdownString: string, descForm: string, fieldNames: string[]) {
 
     let datenow = new Date().toISOString().substring(0,10);
     console.log(datenow);
@@ -59,6 +59,7 @@ export class DataService {
       name: nameForm,
       creationDate: datenow.toString(),
       markdown: markdownString,
+      description: descForm,
       fieldNames: fieldNames
     };
 
