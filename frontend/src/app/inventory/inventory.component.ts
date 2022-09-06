@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {DataService, GetFormInterface} from "../data.service";
 import {TemplateModel} from "../model/template.model";
 import {Title} from "@angular/platform-browser";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-inventory',
@@ -16,7 +17,7 @@ export class InventoryComponent implements OnInit {
 
   allTemplates: TemplateModel[] = [];
 
-  constructor(public dataServ: DataService, private titleService:Title,) {
+  constructor(public dataServ: DataService, private titleService:Title, private route: Router) {
     this.titleService.setTitle("INVENTORY");
   }
 
@@ -25,20 +26,7 @@ export class InventoryComponent implements OnInit {
     console.log(this.allTemplates)
   }
 
-  get(): void {
-
-    this.dataServ.getTemplate(this.formName).subscribe((value: any) => {
-      this.dataSource = value;
-
-      this.form = '<div ng-app="formApp" ng-controller="formController">' + this.dataSource + '</div>';
-    });
-
-    /*
-    this.dataServ.getFieldNames(this.formName).subscribe((value: any) => {
-      console.log(value);
-    });
-    */
-
+  createSurvey() {
+    this.route.navigate(["/cs"])
   }
-
 }

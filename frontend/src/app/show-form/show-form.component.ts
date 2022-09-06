@@ -51,12 +51,6 @@ export class ShowFormComponent implements OnInit, PipeTransform {
 
     });
 
-    /*
-    this.dataServ.getFieldNames(this.formName).subscribe((value: any) => {
-      console.log(value);
-    });
-    */
-
   }
 
 
@@ -80,23 +74,5 @@ export class ShowFormComponent implements OnInit, PipeTransform {
     // @ts-ignore
     console.log(form);
 
-    /*
-    let obj = document.forms.item(0);
-    console.log(obj?.childNodes);
-
-    this.dataServFields.getFieldNames(this.formName).subscribe(value => {
-      let string = value.substring(3, value.length-3)
-      this.fieldNames = string.split('","');
-    });
-
-    for (let i = 0; i < this.fieldNames?.length; i++) {
-      let currentField = this.fieldNames[i];
-      //console.log(currentField);
-      if (document.querySelectorAll('input[name="' + this.fieldNames[i] + '"]') != null) {
-        let checkboxes = document.querySelectorAll('input[name="' + this.fieldNames[i] + '"]') as NodeListOf<HTMLInputElement>
-        checkboxes.forEach(c => console.log(this.fieldNames[i] + ': ' + c.checked))
-      }
-    }
-    */
   }
 }

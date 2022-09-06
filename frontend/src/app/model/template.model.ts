@@ -1,6 +1,7 @@
 export interface TemplateModel {
+  id?: number;
   name?: string;
-  datum?: string;
+  creationDate?: string;
   markdown?: string;
   description?: string;
 }
