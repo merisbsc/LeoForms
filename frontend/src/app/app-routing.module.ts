@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'show/:name', component: ShowFormComponent },
   { path: 'inventory', component: InventoryComponent },
   { path: 'surveys', component: SurveysComponent },
-  { path: 'cs/:name', component: CreateSurveyComponent }
+  { path: 'cs/:id', component: CreateSurveyComponent }
 ];
 
 @NgModule({

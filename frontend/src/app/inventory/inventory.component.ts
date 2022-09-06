@@ -26,7 +26,8 @@ export class InventoryComponent implements OnInit {
     console.log(this.allTemplates)
   }
 
-  createSurvey() {
-    this.route.navigate(["/cs"])
+  createSurvey(id: any) {
+    console.log(id)
+    this.route.navigate(["/cs/" + id]);
   }
 }

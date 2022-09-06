@@ -49,6 +49,10 @@ export class DataService {
     return this.http.get<TemplateModel[]>('http://localhost:8080/template/');
   }
 
+  getTemplateById(id: any): Observable<TemplateModel> {
+    return this.http.get<TemplateModel>('http://localhost:8080/template/' + id);
+  }
+
 
   saveMd(nameForm: string, markdownString: string, descForm: string, fieldNames: string[]) {
 

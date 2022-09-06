@@ -31,7 +31,6 @@ export class ShowFormComponent implements OnInit, PipeTransform {
   constructor(private markdownService: MarkdownService,
               private titleService:Title,
               public dataServ: DataService,
-              public dataServFields: DataService,
               public router :ActivatedRoute) {
     this.titleService.setTitle("SHOW LEO FORM");
   }
@@ -56,7 +55,6 @@ export class ShowFormComponent implements OnInit, PipeTransform {
 
   ngOnInit(): void {
     // ROUTER TINGS
-    //console.log(this.router.snapshot.params);
 
     if (this.formName === "blank") {
       //console.log("STANDARD");
@@ -67,12 +65,8 @@ export class ShowFormComponent implements OnInit, PipeTransform {
   }
 
   submit() {
-
-    console.log("dkwadpkwa")
     let form = document.getElementById("daform");
-
     // @ts-ignore
     console.log(form);
-
   }
 }

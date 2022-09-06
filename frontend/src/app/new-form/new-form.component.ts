@@ -180,33 +180,9 @@ export class NewFormComponent implements OnInit {
   }
 
   sendForm() {
+    let fieldNames = ["figojdagf", "gdsagfdsg"];
     // @ts-ignore
-    let inputElement = "<form id='daform'>" + document.getElementsByClassName("variable-binding").item(0).innerHTML + '<button onclick="submitData()">Serialize form values</button></form>';
-
-    let finalForm = '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>\n' +
-      "<script>function submitData() {\n" +
-      "    var data = $(\"form\").serialize();\n" +
-      "    console.log(data);\n" +
-      "    alert(data);\n" +
-      "    $.ajax({\n" +
-      "        type: 'POST',\n" +
-      "        url: 'http://localhost:8080/answer',\n" +
-      "        dataType: 'json',\n" +
-      "        contentType: 'application/json; charset=utf-8',\n" +
-      "        data: JSON.stringify(data),\n" +
-      "        success: function (result) {\n" +
-      "            console.log('Data received: ');\n" +
-      "            console.log(result);\n" +
-      "        }\n" +
-      "    })\n" +
-      "}" +
-      '</script>' +
-      '<div id="formNameDiv"><h1 id="formName">' + this.formName + '</h1></div>' + inputElement;
-    console.log(finalForm);
-    let fieldNames = inputElement.toString().match(/(?<=name=")[A-z]+(?=")/g);
-
-    // @ts-ignore
-    this.dataServ.saveMd(this.formName, finalForm, this.formDesc, fieldNames)
+    this.dataServ.saveMd(this.formName, this.markdown, this.formDesc, fieldNames)
 
     this.markdown = "";
     this.formName = "";
@@ -215,17 +191,9 @@ export class NewFormComponent implements OnInit {
 
   getHTMLValue() {
     const inputElement = document.getElementsByClassName("boxerl");
-
-    console.log(inputElement.item(0))
-    console.log(inputElement.item(1))
-    console.log(inputElement.item(2))
-    console.log(inputElement.length)
-
     // @ts-ignore
     let inputElement2 = document.getElementsByClassName("variable-binding").item(0).innerHTML;
-    console.log(inputElement2);
     let fieldNames = inputElement2.toString().match(/(?<=name=")[A-z]+(?=")/g);
-    console.log(fieldNames);
   }
 
 }
