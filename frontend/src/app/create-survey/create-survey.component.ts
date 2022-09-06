@@ -17,11 +17,11 @@ import {MatChipInputEvent} from "@angular/material/chips";
 export class CreateSurveyComponent implements OnInit {
 
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  fruitCtrl = new FormControl();
-  filteredFruits: Observable<string[]>;
-  fruits: string[] = [];
+  groupControl = new FormControl();
+  filteredGroups: Observable<string[]>;
+  groups: string[] = [];
   evaluateFields: string[] = [];
-  allFruits: string[] = [];
+  allGroups: string[] = [];
   dataSource: GroupInterface[];
   @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
 
@@ -29,9 +29,9 @@ export class CreateSurveyComponent implements OnInit {
               public dataServ: DataService,
               private markdownService: MarkdownService) {
 
-    this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
+    this.filteredGroups = this.groupControl.valueChanges.pipe(
       startWith(null),
-      map((fruit: string | null) => (fruit ? this._filter(fruit) : this.allFruits.slice())),
+      map((group: string | null) => (group ? this._filter(group) : this.allGroups.slice())),
     );
 
     this.dataSource = this.dataServ.groups;
@@ -43,7 +43,7 @@ export class CreateSurveyComponent implements OnInit {
       this.dataSource.forEach(item => {
         // @ts-ignore
         // @ts-ignore
-        this.allFruits.push(this.dataSource[i].name)
+        this.allGroups.push(this.dataSource[i].name)
         i++;
       });
 
@@ -159,13 +159,13 @@ export class CreateSurveyComponent implements OnInit {
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
-    return this.allFruits.filter(fruit => fruit.toLowerCase().includes(filterValue));
+    return this.allGroups.filter(fruit => fruit.toLowerCase().includes(filterValue));
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-    this.fruits.push(event.option.viewValue);
+    this.groups.push(event.option.viewValue);
     this.fruitInput.nativeElement.value = '';
-    this.fruitCtrl.setValue(null);
+    this.groupControl.setValue(null);
   }
 
   add(event: MatChipInputEvent): void {
@@ -173,20 +173,20 @@ export class CreateSurveyComponent implements OnInit {
 
     // Add our fruit
     if (value) {
-      this.fruits.push(value);
+      this.groups.push(value);
     }
 
     // Clear the input value
     event.chipInput!.clear();
 
-    this.fruitCtrl.setValue(null);
+    this.groupControl.setValue(null);
   }
 
   remove(fruit: string): void {
-    const index = this.fruits.indexOf(fruit);
+    const index = this.groups.indexOf(fruit);
 
     if (index >= 0) {
-      this.fruits.splice(index, 1);
+      this.groups.splice(index, 1);
     }
   }
 

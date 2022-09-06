@@ -28,7 +28,7 @@
   <mat-label>Zielgruppen wählen</mat-label>
   <mat-chip-list #chipList aria-label="Fruit selection">
     <mat-chip
-      *ngFor="let fruit of fruits"
+      *ngFor="let fruit of groups"
       (removed)="remove(fruit)">
       {{fruit}}
       <button matChipRemove>
@@ -38,14 +38,14 @@
     <input
       placeholder="Gruppe hinzufügen..."
       #fruitInput
-      [formControl]="fruitCtrl"
+      [formControl]="groupControl"
       [matAutocomplete]="auto"
       [matChipInputFor]="chipList"
       [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
       (matChipInputTokenEnd)="add($event)">
   </mat-chip-list>
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-    <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit">
+    <mat-option *ngFor="let fruit of filteredGroups | async" [value]="fruit">
       {{fruit}}
     </mat-option>
   </mat-autocomplete>

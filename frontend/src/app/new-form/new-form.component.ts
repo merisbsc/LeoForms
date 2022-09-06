@@ -21,15 +21,10 @@ export class NewFormComponent implements OnInit {
 
   // CHIPS FIELDS
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  fruitCtrl = new FormControl();
-  filteredFruits: Observable<string[]>;
-  fruits: string[] = [];
   evaluateFields: string[] = [];
-  allFruits: string[] = [];
   formName: string;
   formDesc: string;
   // @ts-ignore
-  @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
   dataSource: GroupInterface[];
 
   title = 'LeoFormsfe';
@@ -57,25 +52,7 @@ export class NewFormComponent implements OnInit {
   constructor(private markdownService: MarkdownService, private titleService:Title, public dataServ: DataService) {
     this.titleService.setTitle("Create Template");
 
-    this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
-      startWith(null),
-      map((fruit: string | null) => (fruit ? this._filter(fruit) : this.allFruits.slice())),
-    );
-
     this.dataSource = this.dataServ.groups;
-
-    this.dataServ.getGroups().subscribe((value: any) => {
-      this.dataSource = value;
-      // @ts-ignore
-      let i = 0;
-      this.dataSource.forEach(item => {
-        // @ts-ignore
-        // @ts-ignore
-        this.allFruits.push(this.dataSource[i].name)
-        i++;
-      });
-
-    });
 
   }
 
@@ -133,45 +110,10 @@ export class NewFormComponent implements OnInit {
 
   }
 
-
-  add(event: MatChipInputEvent): void {
-    const value = (event.value || '').trim();
-
-    // Add our fruit
-    if (value) {
-      this.fruits.push(value);
-    }
-
-    // Clear the input value
-    event.chipInput!.clear();
-
-    this.fruitCtrl.setValue(null);
-  }
-
-  remove(fruit: string): void {
-    const index = this.fruits.indexOf(fruit);
-
-    if (index >= 0) {
-      this.fruits.splice(index, 1);
-    }
-  }
-
   testMd(markdown: string) {
     if (/^\s*\[[x ]\]\s*/.test(markdown)) {
       console.log(/^\s*\[[x ]\]\s*/.test(markdown))
     }
-  }
-
-  selected(event: MatAutocompleteSelectedEvent): void {
-    this.fruits.push(event.option.viewValue);
-    this.fruitInput.nativeElement.value = '';
-    this.fruitCtrl.setValue(null);
-  }
-
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.allFruits.filter(fruit => fruit.toLowerCase().includes(filterValue));
   }
 
   sendForm() {
