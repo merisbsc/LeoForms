@@ -1,61 +1,33 @@
-import {Component, ElementRef, OnInit, SecurityContext, ViewChild} from '@angular/core';
-
-import {MarkdownModule, MarkdownModuleConfig, MarkdownService, MarkedOptions, MarkedRenderer} from 'ngx-markdown';
-import {HttpClient} from "@angular/common/http";
-import {Title} from "@angular/platform-browser";
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
+import {DataService, GetFormInterface, GroupInterface} from "../data.service";
+import {TemplateModel} from "../model/template.model";
+import {MarkdownService} from "ngx-markdown";
+import {map, Observable, single, startWith} from "rxjs";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {FormControl} from "@angular/forms";
-import {map, Observable, startWith, window} from "rxjs";
-import {MatChipInputEvent} from "@angular/material/chips";
 import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
-
-import {DataService, GroupInterface} from '../data.service'
-
+import {MatChipInputEvent} from "@angular/material/chips";
 
 @Component({
-  selector: 'app-new-form',
-  templateUrl: './new-form.component.html',
-  styleUrls: ['./new-form.component.css']
+  selector: 'app-create-survey',
+  templateUrl: './create-survey.component.html',
+  styleUrls: ['./create-survey.component.css']
 })
-export class NewFormComponent implements OnInit {
+export class CreateSurveyComponent implements OnInit {
 
-  // CHIPS FIELDS
   separatorKeysCodes: number[] = [ENTER, COMMA];
   fruitCtrl = new FormControl();
   filteredFruits: Observable<string[]>;
   fruits: string[] = [];
   evaluateFields: string[] = [];
   allFruits: string[] = [];
-  formName: string;
-  formDesc: string;
-  // @ts-ignore
-  @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
   dataSource: GroupInterface[];
+  @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
 
-  title = 'LeoFormsfe';
-
-  markdown = `### Choose one
--  [r:obst] Apfel
--  [r:obst] Birne
--  [r:obst] Schoko
-
-### Choose Multiple
--  [x] Mathe
--  [x] Deutsch
--  [x] Englisch
-
-### Write Text
--  [t:spitzname]
-
-### Dropdown
-| Recht |
-| -----------  |
-| Wirtschaft |
-| Chemie |
-`;
-
-  constructor(private markdownService: MarkdownService, private titleService:Title, public dataServ: DataService) {
-    this.titleService.setTitle("Create Template");
+  constructor(public router :ActivatedRoute,
+              public dataServ: DataService,
+              private markdownService: MarkdownService) {
 
     this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
       startWith(null),
@@ -79,7 +51,20 @@ export class NewFormComponent implements OnInit {
 
   }
 
+  templateId: any;
+  singleTemplate: TemplateModel | undefined;
+  form = "";
+  formName: any;
+  markdown: any;
+  formDesc: any;
+
   ngOnInit(): void {
+    this.templateId = this.router.snapshot.params.id;
+    this.dataServ.getTemplateById(this.templateId).subscribe(template => this.singleTemplate = template)
+    this.dataServ.getTemplateById(this.templateId).subscribe(template => this.markdown = template.markdown)
+    this.dataServ.getTemplateById(this.templateId).subscribe(template => this.formName = template.name)
+    this.dataServ.getTemplateById(this.templateId).subscribe(template => this.formDesc = template.description)
+
 
     this.markdownService.renderer.listitem = function (text, ) {
       let fieldName;
@@ -89,7 +74,7 @@ export class NewFormComponent implements OnInit {
           .replace(/^\s*\[[x ]\]\s*/, '<input type="checkbox" class="boxerl" style="list-style: none" ' +
             //'checked="false" ' +
             'name="' +
-             fieldName + '" ' +
+            fieldName + '" ' +
             '> ');
         return '<li style="list-style: none">' + text + '</li>';
       } if (/\[r:.{1,}\]\s/gi.test(text)) {
@@ -133,6 +118,55 @@ export class NewFormComponent implements OnInit {
 
   }
 
+  saveSurvey() {
+    // @ts-ignore
+    let inputElement = "<form id='daform'>" + document.getElementsByClassName("variable-binding").item(0).innerHTML + '<button onclick="submitData()">Serialize form values</button></form>';
+
+    let finalForm = '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>\n' +
+      "<script>function submitData() {\n" +
+      "    var data = $(\"form\").serialize();\n" +
+      "    console.log(data);\n" +
+      "    alert(data);\n" +
+      "    $.ajax({\n" +
+      "        type: 'POST',\n" +
+      "        url: 'http://localhost:8080/answer',\n" +
+      "        dataType: 'json',\n" +
+      "        contentType: 'application/json; charset=utf-8',\n" +
+      "        data: JSON.stringify(data),\n" +
+      "        success: function (result) {\n" +
+      "            console.log('Data received: ');\n" +
+      "            console.log(result);\n" +
+      "        }\n" +
+      "    })\n" +
+      "}" +
+      '</script>' +
+      '<div id="formNameDiv"><h1 id="formName">' + this.formName + '</h1></div>' + inputElement;
+    console.log(finalForm);
+    let fieldNames = inputElement.toString().match(/(?<=name=")[A-z]+(?=")/g);
+
+    // @ts-ignore
+    this.dataServ.saveMd(this.formName, finalForm, this.formDesc, fieldNames)
+
+    /*
+    this.markdown = "";
+    this.formName = "";
+    this.formDesc = "";*/
+  }
+
+
+
+  // CHIP GROUP SELECT
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.allFruits.filter(fruit => fruit.toLowerCase().includes(filterValue));
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.fruits.push(event.option.viewValue);
+    this.fruitInput.nativeElement.value = '';
+    this.fruitCtrl.setValue(null);
+  }
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
@@ -154,41 +188,6 @@ export class NewFormComponent implements OnInit {
     if (index >= 0) {
       this.fruits.splice(index, 1);
     }
-  }
-
-  testMd(markdown: string) {
-    if (/^\s*\[[x ]\]\s*/.test(markdown)) {
-      console.log(/^\s*\[[x ]\]\s*/.test(markdown))
-    }
-  }
-
-  selected(event: MatAutocompleteSelectedEvent): void {
-    this.fruits.push(event.option.viewValue);
-    this.fruitInput.nativeElement.value = '';
-    this.fruitCtrl.setValue(null);
-  }
-
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.allFruits.filter(fruit => fruit.toLowerCase().includes(filterValue));
-  }
-
-  sendForm() {
-    let fieldNames = ["figojdagf", "gdsagfdsg"];
-    // @ts-ignore
-    this.dataServ.saveMd(this.formName, this.markdown, this.formDesc, fieldNames)
-
-    this.markdown = "";
-    this.formName = "";
-    this.formDesc = "";
-  }
-
-  getHTMLValue() {
-    const inputElement = document.getElementsByClassName("boxerl");
-    // @ts-ignore
-    let inputElement2 = document.getElementsByClassName("variable-binding").item(0).innerHTML;
-    let fieldNames = inputElement2.toString().match(/(?<=name=")[A-z]+(?=")/g);
   }
 
 }
