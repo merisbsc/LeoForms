@@ -30,4 +30,10 @@ export class InventoryComponent implements OnInit {
     console.log(id)
     this.route.navigate(["/cs/" + id]);
   }
+
+  deleteTemplate(id: any) {
+    this.dataServ.deleteTemplateById(id).subscribe( () => {
+      this.dataServ.getAllTemplates().subscribe(template => this.allTemplates = template)
+    });
+  }
 }

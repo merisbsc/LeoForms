@@ -17,7 +17,7 @@
     <td>{{template.description}}</td>
     <td>
       <button mat-flat-button color="primary" (click)="createSurvey(template.id)">Template Benutzen</button>
-      <button mat-stroked-button color="primary" routerLink="/new">Löschen</button>
+      <button mat-stroked-button color="primary" (click)="deleteTemplate(template.id)" >Löschen</button>
     </td>
   </tr>
 

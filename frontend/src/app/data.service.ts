@@ -54,6 +54,10 @@ export class DataService {
   }
 
 
+  deleteTemplateById(id: any): Observable<null> {
+    return this.http.delete<null>('http://localhost:8080/template/' + id + '/template-id');
+  }
+
   saveMd(nameForm: string, markdownString: string, descForm: string, fieldNames: string[]) {
 
     let datenow = new Date().toISOString().substring(0,10);
@@ -75,5 +79,4 @@ export class DataService {
     );
 
   }
-
 }
