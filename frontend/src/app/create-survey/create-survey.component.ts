@@ -147,6 +147,8 @@ export class CreateSurveyComponent implements OnInit {
     // @ts-ignore
     this.dataServ.saveMd(this.formName, finalForm, this.formDesc, fieldNames)
 
+    this.dataServ.saveSurvey();
+
     /*
     this.markdown = "";
     this.formName = "";

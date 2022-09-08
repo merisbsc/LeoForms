@@ -51,7 +51,13 @@
   </mat-autocomplete>
 </mat-form-field>
 
-
+<mat-form-field appearance="fill">
+  <mat-label>Deadline wählen</mat-label>
+  <input matInput [matDatepicker]="picker">
+  <!--<mat-hint>MM/DD/YYYY</mat-hint>-->
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>
 
 <tr></tr>
 <button mat-flat-button color="primary" >Abschicken</button>

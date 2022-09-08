@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {TemplateModel} from "./model/template.model";
+import {SurveyModel} from "./model/survey.model";
 
 
 export interface GroupInterface {
@@ -58,6 +59,26 @@ export class DataService {
     return this.http.delete<null>('http://localhost:8080/template/' + id + '/template-id');
   }
 
+  saveSurvey(): Observable<null> {
+
+    const survey = {
+      creationDate: "2022-09-07",
+      endDate: "2022-09-07",
+      template: {
+        id: 0,
+        name: "NAME NAME OK NAME",
+        creationDate: "2022-09-07",
+        markdown: "string",
+        description: "so a guade soch",
+        fieldNames: [
+          "string"
+        ]
+      }
+    }
+
+    return this.http.post<null>('', survey);
+  }
+
   saveMd(nameForm: string, markdownString: string, descForm: string, fieldNames: string[]) {
 
     let datenow = new Date().toISOString().substring(0,10);
@@ -79,4 +100,5 @@ export class DataService {
     );
 
   }
+
 }

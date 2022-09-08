@@ -1,1 +1,28 @@
-<p>surveys works!</p>
+<h2>Alle Suveys</h2>
+
+<head>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<table class="w3-table-all">
+  <thead class="w3-deep-purple">
+  <th>Datum</th>
+  <th>Name</th>
+  <th>Empfänger</th>
+  <th>Status</th>
+  <th>Aktionen</th>
+  </thead>
+
+  <tr *ngFor="let template" >
+    <td>{{template.name}}</td>
+    <td>{{template.creationDate}}</td>
+    <td>{{template.description}}</td>
+    <td>/</td>
+    <td>/</td>
+  </tr>
+
+</table>
+
+<tr></tr>
+<button mat-flat-button color="primary" routerLink="/new">Neues Template erstellen</button>
+<tr></tr>
+<button mat-stroked-button color="primary" routerLink="/surveys">Survey Inventar</button>
