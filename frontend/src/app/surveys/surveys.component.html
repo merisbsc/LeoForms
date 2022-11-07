@@ -1,24 +1,23 @@
-<h2>Alle Templates</h2>
+<h2>Alle Suveys</h2>
 
 <head>
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <table class="w3-table-all">
   <thead class="w3-deep-purple">
+  <th>Datum</th>
   <th>Name</th>
-  <th>Erstellt</th>
-  <th>Beschreibung</th>
+  <th>Empfänger</th>
+  <th>Status</th>
   <th>Aktionen</th>
   </thead>
 
-  <tr *ngFor="let template of allTemplates" >
+  <tr *ngFor="let template" >
     <td>{{template.name}}</td>
     <td>{{template.creationDate}}</td>
     <td>{{template.description}}</td>
-    <td>
-      <button mat-flat-button color="primary" (click)="createSurvey(template.id)">Template Benutzen</button>
-      <button mat-stroked-button color="primary" (click)="deleteTemplate(template.id)" >Löschen</button>
-    </td>
+    <td>/</td>
+    <td>/</td>
   </tr>
 
 </table>

@@ -32,6 +32,8 @@ import { ShowFormComponent } from './show-form/show-form.component';
 import { InventoryComponent } from './inventory/inventory.component';
 import {HtmlSanitizerPipe} from "./app.component";
 import { SanitizehtmlPipe } from './sanitizehtml.pipe';
+import { SurveysComponent } from './surveys/surveys.component';
+import { CreateSurveyComponent } from './create-survey/create-survey.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import { SanitizehtmlPipe } from './sanitizehtml.pipe';
     ShowFormComponent,
     InventoryComponent,
     HtmlSanitizerPipe,
-    SanitizehtmlPipe
+    SanitizehtmlPipe,
+    SurveysComponent,
+    CreateSurveyComponent
   ],
   imports: [
     BrowserModule,

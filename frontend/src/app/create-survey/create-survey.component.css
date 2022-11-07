@@ -1,0 +1,32 @@
+.variable-binding,
+.variable-textarea {
+  width: 49%;
+}
+
+.variable-textarea {
+  border-radius: 5px;
+  box-shadow: 0 1px 2px rgba(0,0,0,.07);
+  min-height: 420px;
+  padding: 8px;
+  transition: all 300ms ease-out;
+  resize: none;
+}
+
+.example-chip-list {
+  width: 100%;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 6fr 6fr;
+  grid-gap: -10px;
+}
+
+.grid-child-purple {
+  width: 70vw;
+  margin-right: -500px;
+}
+
+.grid-child-green {
+  width: 50vw;
+}

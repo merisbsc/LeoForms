@@ -21,15 +21,10 @@ export class NewFormComponent implements OnInit {
 
   // CHIPS FIELDS
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  fruitCtrl = new FormControl();
-  filteredFruits: Observable<string[]>;
-  fruits: string[] = [];
   evaluateFields: string[] = [];
-  allFruits: string[] = [];
   formName: string;
   formDesc: string;
   // @ts-ignore
-  @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
   dataSource: GroupInterface[];
 
   title = 'LeoFormsfe';
@@ -55,29 +50,9 @@ export class NewFormComponent implements OnInit {
 `;
 
   constructor(private markdownService: MarkdownService, private titleService:Title, public dataServ: DataService) {
-    this.titleService.setTitle("NEW LEO FORM");
-
-    this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
-      startWith(null),
-      map((fruit: string | null) => (fruit ? this._filter(fruit) : this.allFruits.slice())),
-    );
-
-
+    this.titleService.setTitle("Create Template");
 
     this.dataSource = this.dataServ.groups;
-
-    this.dataServ.getGroups().subscribe((value: any) => {
-      this.dataSource = value;
-      // @ts-ignore
-      let i = 0;
-      this.dataSource.forEach(item => {
-        // @ts-ignore
-        // @ts-ignore
-        this.allFruits.push(this.dataSource[i].name)
-        i++;
-      });
-
-    });
 
   }
 
@@ -118,13 +93,9 @@ export class NewFormComponent implements OnInit {
       } else {
         return '<li>' + text + '</li>';
       }
-
-
     };
 
-
     this.markdownService.renderer.table = function (header, body) {
-
       let newBody = body.replace(/td/gi, 'option');
       //console.log(header.substring(9, header.length - 12));
       let fieldName = header.substring(9, header.length - 12);
@@ -136,29 +107,7 @@ export class NewFormComponent implements OnInit {
         + newBody
         + '</select>\n';
     };
-  }
 
-
-  add(event: MatChipInputEvent): void {
-    const value = (event.value || '').trim();
-
-    // Add our fruit
-    if (value) {
-      this.fruits.push(value);
-    }
-
-    // Clear the input value
-    event.chipInput!.clear();
-
-    this.fruitCtrl.setValue(null);
-  }
-
-  remove(fruit: string): void {
-    const index = this.fruits.indexOf(fruit);
-
-    if (index >= 0) {
-      this.fruits.splice(index, 1);
-    }
   }
 
   testMd(markdown: string) {
@@ -167,46 +116,10 @@ export class NewFormComponent implements OnInit {
     }
   }
 
-  selected(event: MatAutocompleteSelectedEvent): void {
-    this.fruits.push(event.option.viewValue);
-    this.fruitInput.nativeElement.value = '';
-    this.fruitCtrl.setValue(null);
-  }
-
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.allFruits.filter(fruit => fruit.toLowerCase().includes(filterValue));
-  }
-
   sendForm() {
+    let fieldNames = ["figojdagf", "gdsagfdsg"];
     // @ts-ignore
-    let inputElement = "<form id='daform'>" + document.getElementsByClassName("variable-binding").item(0).innerHTML + '<button onclick="submitData()">Serialize form values</button></form>';
-
-    let finalForm = '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>\n' +
-      "<script>function submitData() {\n" +
-      "    var data = $(\"form\").serialize();\n" +
-      "    console.log(data);\n" +
-      "    alert(data);\n" +
-      "    $.ajax({\n" +
-      "        type: 'POST',\n" +
-      "        url: 'http://localhost:8080/answer',\n" +
-      "        dataType: 'json',\n" +
-      "        contentType: 'application/json; charset=utf-8',\n" +
-      "        data: JSON.stringify(data),\n" +
-      "        success: function (result) {\n" +
-      "            console.log('Data received: ');\n" +
-      "            console.log(result);\n" +
-      "        }\n" +
-      "    })\n" +
-      "}" +
-      '</script>' +
-      '<div id="formNameDiv"><h1 id="formName">' + this.formName + '</h1></div>' + inputElement;
-    console.log(finalForm);
-    let fieldNames = inputElement.toString().match(/(?<=name=")[A-z]+(?=")/g);
-
-    // @ts-ignore
-    this.dataServ.saveMd(this.formName, finalForm, this.formDesc, fieldNames)
+    this.dataServ.saveMd(this.formName, this.markdown, this.formDesc, fieldNames)
 
     this.markdown = "";
     this.formName = "";
@@ -215,17 +128,9 @@ export class NewFormComponent implements OnInit {
 
   getHTMLValue() {
     const inputElement = document.getElementsByClassName("boxerl");
-
-    console.log(inputElement.item(0))
-    console.log(inputElement.item(1))
-    console.log(inputElement.item(2))
-    console.log(inputElement.length)
-
     // @ts-ignore
     let inputElement2 = document.getElementsByClassName("variable-binding").item(0).innerHTML;
-    console.log(inputElement2);
     let fieldNames = inputElement2.toString().match(/(?<=name=")[A-z]+(?=")/g);
-    console.log(fieldNames);
   }
 
 }

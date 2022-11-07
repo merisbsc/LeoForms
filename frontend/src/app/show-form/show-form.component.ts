@@ -31,7 +31,6 @@ export class ShowFormComponent implements OnInit, PipeTransform {
   constructor(private markdownService: MarkdownService,
               private titleService:Title,
               public dataServ: DataService,
-              public dataServFields: DataService,
               public router :ActivatedRoute) {
     this.titleService.setTitle("SHOW LEO FORM");
   }
@@ -51,18 +50,11 @@ export class ShowFormComponent implements OnInit, PipeTransform {
 
     });
 
-    /*
-    this.dataServ.getFieldNames(this.formName).subscribe((value: any) => {
-      console.log(value);
-    });
-    */
-
   }
 
 
   ngOnInit(): void {
     // ROUTER TINGS
-    //console.log(this.router.snapshot.params);
 
     if (this.formName === "blank") {
       //console.log("STANDARD");
@@ -73,30 +65,8 @@ export class ShowFormComponent implements OnInit, PipeTransform {
   }
 
   submit() {
-
-    console.log("dkwadpkwa")
     let form = document.getElementById("daform");
-
     // @ts-ignore
     console.log(form);
-
-    /*
-    let obj = document.forms.item(0);
-    console.log(obj?.childNodes);
-
-    this.dataServFields.getFieldNames(this.formName).subscribe(value => {
-      let string = value.substring(3, value.length-3)
-      this.fieldNames = string.split('","');
-    });
-
-    for (let i = 0; i < this.fieldNames?.length; i++) {
-      let currentField = this.fieldNames[i];
-      //console.log(currentField);
-      if (document.querySelectorAll('input[name="' + this.fieldNames[i] + '"]') != null) {
-        let checkboxes = document.querySelectorAll('input[name="' + this.fieldNames[i] + '"]') as NodeListOf<HTMLInputElement>
-        checkboxes.forEach(c => console.log(this.fieldNames[i] + ': ' + c.checked))
-      }
-    }
-    */
   }
 }
