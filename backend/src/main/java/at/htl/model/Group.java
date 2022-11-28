@@ -1,6 +1,9 @@
 package at.htl.model;
 
+import io.vertx.codegen.annotations.Nullable;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "LF_GROUP")
@@ -26,6 +29,8 @@ public class Group {
     @Id
     @Column(name = "G_ID", insertable = false, updatable = false)
     String id;
+    @ManyToMany @Nullable
+    List<Survey> surveys;
 
     public Group() {
     }
@@ -60,4 +65,15 @@ public class Group {
         this.year = year;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public List<Survey> getSurveys() {
+        return surveys;
+    }
+
+    public void setSurveys(List<Survey> surveys) {
+        this.surveys = surveys;
+    }
 }

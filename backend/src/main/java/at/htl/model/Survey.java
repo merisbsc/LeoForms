@@ -1,7 +1,11 @@
 package at.htl.model;
 
+import io.vertx.codegen.annotations.Nullable;
+
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "LF_SURVEY")
@@ -15,11 +19,12 @@ public class Survey {
     LocalDate creationDate;
     @Column(name = "SU_END_DATE")
     LocalDate endDate;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     Template template;
     @Column(name = "SU_STATUS")
     @Enumerated(EnumType.STRING)
     Status status;
+
 
     public Survey() {
     }
@@ -28,6 +33,14 @@ public class Survey {
         this.id = id;
         this.creationDate = creationDate;
         this.endDate = endDate;
+        this.status = status;
+    }
+
+    public Survey(Long id, LocalDate creationDate, LocalDate endDate, Template template, Status status) {
+        this.id = id;
+        this.creationDate = creationDate;
+        this.endDate = endDate;
+        this.template = template;
         this.status = status;
     }
 
@@ -70,4 +83,5 @@ public class Survey {
     public void setTemplate(Template template) {
         this.template = template;
     }
+
 }

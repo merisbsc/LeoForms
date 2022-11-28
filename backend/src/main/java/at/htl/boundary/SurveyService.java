@@ -26,6 +26,7 @@ public class SurveyService {
 
     @Transactional
     @POST
+    @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
     public Response saveSurvey(Survey survey) {
         surveyRepository.persist(survey);
