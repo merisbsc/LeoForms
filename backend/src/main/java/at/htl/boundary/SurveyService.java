@@ -24,7 +24,6 @@ public class SurveyService {
         return surveyRepository.listAll();
     }
 
-    @Transactional
     @POST
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
