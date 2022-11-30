@@ -19,30 +19,31 @@ public class Survey {
     LocalDate creationDate;
     @Column(name = "SU_END_DATE")
     LocalDate endDate;
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     Template template;
     @Column(name = "SU_STATUS")
     @Enumerated(EnumType.STRING)
     Status status;
 
+    @Column(name = "SU_NAME")
+    String name;
+
+    @Column(name = "SU_DESCRIPTION")
+    String description;
+
 
     public Survey() {
     }
 
-    public Survey(Long id, LocalDate creationDate, LocalDate endDate, Status status) {
-        this.id = id;
-        this.creationDate = creationDate;
-        this.endDate = endDate;
-        this.status = status;
-    }
-
-    public Survey(Long id, LocalDate creationDate, LocalDate endDate, Template template, Status status) {
-        this.id = id;
+    public Survey(LocalDate creationDate, LocalDate endDate, Template template, Status status, String name, String description) {
         this.creationDate = creationDate;
         this.endDate = endDate;
         this.template = template;
         this.status = status;
+        this.name = name;
+        this.description = description;
     }
+
 
     public Long getId() {
         return id;
@@ -84,4 +85,19 @@ public class Survey {
         this.template = template;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }
