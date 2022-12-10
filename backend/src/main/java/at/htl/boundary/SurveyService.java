@@ -11,6 +11,7 @@ import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.*;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -37,7 +38,6 @@ public class SurveyService {
         //surveyRepository.persist(survey);
         Template t;
 
-
         if (survey.templateId != null) {
             t = templateRepository.findById(survey.templateId);
         } else {
@@ -45,9 +45,38 @@ public class SurveyService {
             return Response.serverError().build();
         }
 
+        String content = "<html><h1>Working!</h1></html>";
+
         Survey s = new Survey(survey.creationDate, survey.endDate, t, survey.status, survey.name, survey.description);
         surveyRepository.persist(s);
+        saveHTML(s, content);
 
         return Response.ok().build();
+    }
+
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.TEXT_HTML)
+    public InputStream getHTML(@PathParam("id") Long id) {
+        File f = new File("src/main/resources/survey-html/" + id + ".html");
+        try {
+            return new FileInputStream(f);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    private void saveHTML(Survey survey, String content) {
+
+        File html = new File("src/main/resources/survey-html/" + survey.getId() + ".html");
+        try {
+            FileWriter writer = new FileWriter(html);
+            writer.write(content);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

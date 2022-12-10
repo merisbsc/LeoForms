@@ -31,8 +31,8 @@ public class Survey {
     @Column(name = "SU_DESCRIPTION")
     String description;
 
-
     public Survey() {
+
     }
 
     public Survey(LocalDate creationDate, LocalDate endDate, Template template, Status status, String name, String description) {

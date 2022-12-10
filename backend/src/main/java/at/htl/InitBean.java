@@ -6,12 +6,14 @@ import at.htl.repositories.GroupRepository;
 import at.htl.repositories.TemplateRepository;
 import at.htl.repositories.StudentRepository;
 import io.quarkus.runtime.StartupEvent;
+import org.apache.commons.io.FileUtils;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.stream.Collectors;
@@ -32,6 +34,8 @@ public class InitBean {
 
     @Transactional
     void onStart(@Observes StartupEvent event) throws IOException {
+        FileUtils.cleanDirectory(new File("src/main/resources/survey-html"));
+
         BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/students.csv"));
 
         reader.lines().skip(1)
