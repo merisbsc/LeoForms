@@ -31,9 +31,6 @@ public class Template {
     @Column(name = "T_DESCRIPTION")
     String description;
 
-    @ElementCollection
-    List<String> fieldNames;
-
 
     public Template() {
     }
@@ -85,12 +82,5 @@ public class Template {
         this.description = description;
     }
 
-    public List<String> getFieldNames() {
-        return fieldNames;
-    }
-
-    public void setFieldNames(List<String> fieldNames) {
-        this.fieldNames = fieldNames;
-    }
 
 }
