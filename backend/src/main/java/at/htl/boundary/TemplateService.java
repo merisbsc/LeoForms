@@ -92,34 +92,6 @@ public class TemplateService {
         }
     }
 
-    @GET
-    @Operation(
-            summary = "Get Fieldnames of Template"
-    )
-    @Path("/{id}/fieldnames-id")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<String> getFieldnames(@PathParam("id") Long id) {
-        return qr.findById(id).getFieldNames();
-    }
-
-    @GET
-    @Operation(
-            summary = "Get Fieldnames of Template"
-    )
-    @Path("/{name}/fieldnames")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<List<String>> getFieldnamesByName(@PathParam("name") String name) {
-
-        TypedQuery<Template> tq = em.createNamedQuery("Template.getTemplateByName", Template.class)
-                .setParameter("NAME", name);
-        List<Template> templates = tq.getResultList();
-        List<List<String>> fieldnames = new ArrayList<>();
-
-        templates.forEach(q -> fieldnames.add(q.getFieldNames()));
-
-        return fieldnames;
-    }
-
     @POST
     @Operation(
             summary = "Create a new Template",

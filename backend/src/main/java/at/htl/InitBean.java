@@ -14,11 +14,12 @@ import javax.transaction.Transactional;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class InitBean {
 
-    final String FILE_NAME = "src/main/resources/students.csv";
+    //final String FILE_NAME = "src/main/resources/students.csv";
 
     @Inject
     GroupRepository groupRepository;
@@ -31,7 +32,7 @@ public class InitBean {
 
     @Transactional
     void onStart(@Observes StartupEvent event) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME));
+        BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/students.csv"));
 
         reader.lines().skip(1)
                 .distinct()
@@ -41,7 +42,17 @@ public class InitBean {
                     Group g = new Group(x[5], x[4]);
                     Student s = new Student(x[0], x[1], x[2],x[3], g);
                     studentRepository.merge(s);
-                    System.out.println("Saved: " + x[0] + " " + x[1]);
+                })
+                .count();
+
+        BufferedReader reader2 = new BufferedReader(new FileReader("src/main/resources/groups.csv"));
+
+        reader2.lines().skip(1)
+                .distinct()
+                .peek(x -> {
+                    Group g = new Group(x, "202223");
+                    groupRepository.persist(g);
+
                 })
                 .count();
     }
