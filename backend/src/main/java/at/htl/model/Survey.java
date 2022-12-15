@@ -2,6 +2,7 @@ package at.htl.model;
 
 import io.vertx.codegen.annotations.Nullable;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
@@ -29,6 +30,7 @@ public class Survey {
     @Column(name = "SU_DESCRIPTION")
     String description;
 
+    @JsonbTransient
     @ManyToMany
     @JoinTable(
             name = "LF_SURVEY_GROUP",

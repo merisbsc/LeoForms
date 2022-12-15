@@ -2,6 +2,7 @@ package at.htl.model;
 
 import io.vertx.codegen.annotations.Nullable;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.util.Set;
 
@@ -29,6 +30,7 @@ public class Group {
     @Id
     @Column(name = "G_ID", insertable = false, updatable = false)
     String id;
+    @JsonbTransient
     @ManyToMany(mappedBy = "groups")
     @Nullable
     Set<Survey> surveys;
