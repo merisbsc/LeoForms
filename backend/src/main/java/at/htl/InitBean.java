@@ -12,10 +12,9 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.stream.Collectors;
 
 @ApplicationScoped
@@ -34,7 +33,11 @@ public class InitBean {
 
     @Transactional
     void onStart(@Observes StartupEvent event) throws IOException {
+
+        Files.createDirectories(Paths.get("src/main/resources/survey-html"));
         FileUtils.cleanDirectory(new File("src/main/resources/survey-html"));
+
+
 
         BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/students.csv"));
 

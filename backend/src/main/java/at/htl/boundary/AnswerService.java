@@ -1,6 +1,7 @@
 package at.htl.boundary;
 
 import at.htl.model.Answer;
+import at.htl.model.Question;
 import at.htl.repositories.AnswerRepository;
 
 import javax.inject.Inject;
@@ -32,4 +33,5 @@ public class AnswerService {
         return Response.ok().build();
 
     }
+
 }
