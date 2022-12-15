@@ -24,24 +24,32 @@ public class Survey {
     @Column(name = "SU_STATUS")
     @Enumerated(EnumType.STRING)
     Status status;
-
     @Column(name = "SU_NAME")
     String name;
-
     @Column(name = "SU_DESCRIPTION")
     String description;
+
+    @ManyToMany
+    @JoinTable(
+            name = "LF_SURVEY_GROUP",
+            joinColumns = @JoinColumn(name = "LF_SG_SURVEY_ID"),
+            inverseJoinColumns = @JoinColumn(name = "LF_SG_GROUP_ID")
+    )
+    Set<Group> groups;
 
     public Survey() {
 
     }
 
-    public Survey(LocalDate creationDate, LocalDate endDate, Template template, Status status, String name, String description) {
+    public Survey(LocalDate creationDate, LocalDate endDate, Template template,
+                  Status status, String name, String description, Set<Group> groups) {
         this.creationDate = creationDate;
         this.endDate = endDate;
         this.template = template;
         this.status = status;
         this.name = name;
         this.description = description;
+        this.groups = groups;
     }
 
 
@@ -99,5 +107,13 @@ public class Survey {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Set<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(Set<Group> groups) {
+        this.groups = groups;
     }
 }

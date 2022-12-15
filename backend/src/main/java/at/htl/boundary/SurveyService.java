@@ -48,7 +48,8 @@ public class SurveyService {
 
         String content = "<html><h1>Working!</h1></html>";
 
-        Survey s = new Survey(survey.creationDate, survey.endDate, t, survey.status, survey.name, survey.description);
+        Survey s = new Survey(survey.creationDate, survey.endDate, t, survey.status,
+                survey.name, survey.description, survey.groups);
         surveyRepository.persist(s);
         saveHTML(s, content);
 

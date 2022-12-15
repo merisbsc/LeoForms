@@ -3,7 +3,7 @@ package at.htl.model;
 import io.vertx.codegen.annotations.Nullable;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "LF_GROUP")
@@ -29,8 +29,9 @@ public class Group {
     @Id
     @Column(name = "G_ID", insertable = false, updatable = false)
     String id;
-    @ManyToMany @Nullable
-    List<Survey> surveys;
+    @ManyToMany(mappedBy = "groups")
+    @Nullable
+    Set<Survey> surveys;
 
     public Group() {
     }
@@ -69,11 +70,11 @@ public class Group {
         this.id = id;
     }
 
-    public List<Survey> getSurveys() {
+    public @Nullable Set<Survey> getSurveys() {
         return surveys;
     }
 
-    public void setSurveys(List<Survey> surveys) {
+    public void setSurveys(@Nullable Set<Survey> surveys) {
         this.surveys = surveys;
     }
 }

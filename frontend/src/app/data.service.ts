@@ -65,7 +65,6 @@ export class DataService {
       creationDate: "2022-09-07",
       endDate: "2022-09-07",
       template: {
-        id: 0,
         name: "NAME NAME OK NAME",
         creationDate: "2022-09-07",
         markdown: "string",
