@@ -1,13 +1,14 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {DataService, GetFormInterface, GroupInterface} from "../data.service";
+import {MatChipInputEvent} from "@angular/material/chips";
+import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
 import {TemplateModel} from "../model/template.model";
-import {MarkdownService} from "ngx-markdown";
-import {map, Observable, single, startWith} from "rxjs";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {FormControl} from "@angular/forms";
-import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
-import {MatChipInputEvent} from "@angular/material/chips";
+import {Observable, startWith} from "rxjs";
+import {ActivatedRoute, Router} from "@angular/router";
+import {DataService, GroupInterface} from "../data.service";
+import {MarkdownService} from "ngx-markdown";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-create-survey',
@@ -22,12 +23,15 @@ export class CreateSurveyComponent implements OnInit {
   groups: string[] = [];
   evaluateFields: string[] = [];
   allGroups: string[] = [];
-  dataSource: GroupInterface[];
+  dataSource: GroupInterface[] | undefined;
+  // @ts-ignore
   @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
+  todayDate:Date = new Date();
 
   constructor(public router :ActivatedRoute,
               public dataServ: DataService,
-              private markdownService: MarkdownService) {
+              private markdownService: MarkdownService,
+              private route: Router) {
 
     this.filteredGroups = this.groupControl.valueChanges.pipe(
       startWith(null),
@@ -40,8 +44,7 @@ export class CreateSurveyComponent implements OnInit {
       this.dataSource = value;
       // @ts-ignore
       let i = 0;
-      this.dataSource.forEach(item => {
-        // @ts-ignore
+      this.dataSource?.forEach(item => {
         // @ts-ignore
         this.allGroups.push(this.dataSource[i].name)
         i++;
@@ -57,21 +60,26 @@ export class CreateSurveyComponent implements OnInit {
   formName: any;
   markdown: any;
   formDesc: any;
+  endDate?: Date;
 
   ngOnInit(): void {
-    this.templateId = this.router.snapshot.params.id;
+
+    this.templateId = this.router.snapshot.params['id'];
+
     this.dataServ.getTemplateById(this.templateId).subscribe(template => this.singleTemplate = template)
     this.dataServ.getTemplateById(this.templateId).subscribe(template => this.markdown = template.markdown)
     this.dataServ.getTemplateById(this.templateId).subscribe(template => this.formName = template.name)
     this.dataServ.getTemplateById(this.templateId).subscribe(template => this.formDesc = template.description)
 
 
-    this.markdownService.renderer.listitem = function (text, ) {
+    console.log(this.markdown)
+
+    this.markdownService.renderer.listitem = function (text ) {
       let fieldName;
-      if (/^\s*\[[x ]\]\s*/.test(text)) {
-        fieldName = text.substring(5, text.length);
+      if (/\[x\]\s*/.test(text)) {
+        fieldName = text.substring(3, text.length);
         text = text
-          .replace(/^\s*\[[x ]\]\s*/, '<input type="checkbox" class="boxerl" style="list-style: none" ' +
+          .replace(/\[x\]\s*/, '<input type="checkbox" class="boxerl" style="list-style: none" ' +
             //'checked="false" ' +
             'name="' +
             fieldName + '" ' +
@@ -83,8 +91,8 @@ export class CreateSurveyComponent implements OnInit {
           text.indexOf(":") + 1,
           text.lastIndexOf("]")
         );        text = text
-          .replace(/\[r:.{1,}\]\s/gi, '<input type="radio" name="'+ name + '" value="'+ text.substring(10) + '"> ');
-        return '<li style="list-style: none">' + text.substring(1) + '</li>';
+          .replace(/\[r:.{1,}\]\s/gi, '<input type="radio" name="'+ name + '" value="'+ text.substring(9) + '"> ');
+        return '<li style="list-style: none">' + text + '</li>';
       } if (/^\s*\[[d ]\]\s*/.test(text)) {
         text = text
           .replace(/^\s*\[[d ]\]\s*/, '<option> ' +text + '</option>>');
@@ -94,7 +102,6 @@ export class CreateSurveyComponent implements OnInit {
           text.indexOf(":") + 1,
           text.lastIndexOf("]")
         );
-        console.log(name);
         text = text
           .replace(/\[t:.{1,}\]/gi, '<input type="text" name="' + name + '"> ');
         return '<li style="list-style: none">' + text + '</li>';
@@ -107,10 +114,10 @@ export class CreateSurveyComponent implements OnInit {
       let newBody = body.replace(/td/gi, 'option');
       //console.log(header.substring(9, header.length - 12));
       let fieldName = header.substring(9, header.length - 12);
-
+      console.log(fieldName);
       return '<select name="' + fieldName + '">\n'
-        + '<option>\n'
-        + header
+        + '<option disabled selected hidden>\n'
+        + header + 'wählen...'
         + '</option>\n'
         + newBody
         + '</select>\n';
@@ -141,20 +148,23 @@ export class CreateSurveyComponent implements OnInit {
       "}" +
       '</script>' +
       '<div id="formNameDiv"><h1 id="formName">' + this.formName + '</h1></div>' + inputElement;
-    console.log(finalForm);
-    let fieldNames = inputElement.toString().match(/(?<=name=")[A-z]+(?=")/g);
+    //console.log(finalForm);
+
 
     // @ts-ignore
-    this.dataServ.saveMd(this.formName, finalForm, this.formDesc, fieldNames)
+    let date = this.endDate?.getFullYear() + "-" + (this.endDate?.getMonth().valueOf() + 1) + "-" + this.endDate?.getDate();
 
-    this.dataServ.saveSurvey();
+    // @ts-ignore
+    this.dataServ.saveSurvey(date, this.formName, this.formDesc, finalForm, this.templateId);
 
-    /*
+    console.log(finalForm);
+
     this.markdown = "";
     this.formName = "";
-    this.formDesc = "";*/
-  }
+    this.formDesc = "";
+    //this.route.navigate(["/survey_inv"]);
 
+  }
 
 
   // CHIP GROUP SELECT
@@ -192,4 +202,9 @@ export class CreateSurveyComponent implements OnInit {
     }
   }
 
+  showDate() {
+    // @ts-ignore
+    //console.log(this.endDate?.getDate() + "-" + (this.endDate?.getMonth().valueOf() + 1) + "-" + this.endDate?.getFullYear());
+    console.log(this.formName + " - " + this.formDesc)
+  }
 }

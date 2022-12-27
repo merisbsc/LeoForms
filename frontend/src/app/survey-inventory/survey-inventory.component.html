@@ -1,0 +1,29 @@
+<h2>Alle Suveys</h2>
+
+<head>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<table class="w3-table-all">
+  <thead class="w3-deep-purple">
+  <th>Erstellt</th>
+  <th>Name</th>
+  <th>Deadline</th>
+  <th>Empfänger</th>
+  <th>Status</th>
+  <th>Aktionen</th>
+  </thead>
+
+  <tr *ngFor="let survey of allSurveys" >
+    <td>{{survey.creationDate}}</td>
+    <td>{{survey.name}}</td>
+    <td>{{survey.endDate}}</td>
+    <td>5AHTIM</td>
+    <td>{{survey.status}}</td>
+    <td>
+      <button mat-flat-button color="primary" >Senden</button>
+    </td>
+  </tr>
+
+</table>
+
+

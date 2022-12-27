@@ -11,9 +11,7 @@ describe('ShowFormComponent', () => {
       declarations: [ ShowFormComponent ]
     })
     .compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(ShowFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

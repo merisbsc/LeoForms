@@ -1,7 +1,7 @@
 <h2>Alle Templates</h2>
 
 <head>
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <table class="w3-table-all">
   <thead class="w3-deep-purple">
@@ -13,7 +13,7 @@
 
   <tr *ngFor="let template of allTemplates" >
     <td>{{template.name}}</td>
-    <td>{{template.creationDate}}</td>
+    <td>{{template.creationDate | date: 'dd.MM.yyyy'}}</td>
     <td>{{template.description}}</td>
     <td>
       <button mat-flat-button color="primary" (click)="createSurvey(template.id)">Template Benutzen</button>
@@ -23,7 +23,3 @@
 
 </table>
 
-<tr></tr>
-<button mat-flat-button color="primary" routerLink="/new">Neues Template erstellen</button>
-<tr></tr>
-<button mat-stroked-button color="primary" routerLink="/surveys">Survey Inventar</button>

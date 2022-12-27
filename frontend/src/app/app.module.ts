@@ -1,55 +1,54 @@
 import {NgModule, SecurityContext} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import {MarkdownModule, MarkedOptions, MarkdownService, MarkedRenderer, MarkdownModuleConfig} from 'ngx-markdown';
-
 import { AppComponent } from './app.component';
-import {FormsModule} from "@angular/forms";
-import {MatButtonModule} from "@angular/material/button";
-import {MatToolbarModule} from '@angular/material/toolbar';
-
-
-import 'prismjs';
-import 'prismjs/components/prism-typescript.min.js';
-import 'prismjs/plugins/line-numbers/prism-line-numbers.js';
-import 'prismjs/plugins/line-highlight/prism-line-highlight.js';
-import { AppRoutingModule } from './app-routing.module';
-import { LoginPageComponent } from './login-page/login-page.component';
-import {NewFormComponent} from './new-form/new-form.component';
-
-// MAT CHIP INPUT IMPORTS
-import {MaterialExampleModule} from '../material.module';
-import {ReactiveFormsModule} from '@angular/forms';
-import {MatNativeDateModule} from '@angular/material/core';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
-import {MatChipsModule} from "@angular/material/chips";
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatAutocompleteModule} from "@angular/material/autocomplete";
-import {MatIconModule} from "@angular/material/icon";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import marked from 'marked';
+import { MenuComponent } from './menu/menu.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { AppRoutingModule } from './app-routing.module';
 import { ShowFormComponent } from './show-form/show-form.component';
-import { InventoryComponent } from './inventory/inventory.component';
-import {HtmlSanitizerPipe} from "./app.component";
-import { SanitizehtmlPipe } from './sanitizehtml.pipe';
-import { SurveysComponent } from './surveys/surveys.component';
+import {MarkdownModule, MarkedOptions} from "ngx-markdown";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import { TemplateInventoryComponent } from './template-inventory/template-inventory.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import {MatInputModule} from "@angular/material/input";
+import { SurveyInventoryComponent } from './survey-inventory/survey-inventory.component';
+import {HttpClientModule} from "@angular/common/http";
 import { CreateSurveyComponent } from './create-survey/create-survey.component';
+import { CreateTemplateComponent } from './create-template/create-template.component';
+import {MatChipsModule} from "@angular/material/chips";
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginPageComponent,
-    NewFormComponent,
+    MenuComponent,
     ShowFormComponent,
-    InventoryComponent,
-    HtmlSanitizerPipe,
-    SanitizehtmlPipe,
-    SurveysComponent,
-    CreateSurveyComponent
+    TemplateInventoryComponent,
+    SurveyInventoryComponent,
+    CreateSurveyComponent,
+    CreateTemplateComponent
   ],
   imports: [
     BrowserModule,
-    FormsModule,
+    BrowserAnimationsModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
+    AppRoutingModule,
     MarkdownModule.forRoot({
       markedOptions: {
         provide: MarkedOptions,
@@ -63,24 +62,20 @@ import { CreateSurveyComponent } from './create-survey/create-survey.component';
       },
       sanitize: SecurityContext.NONE // disable sanitization
     }),
-    MatButtonModule,
-    MatToolbarModule,
-    AppRoutingModule,
-    MatChipsModule,
+    FormsModule,
     MatFormFieldModule,
-    MatAutocompleteModule,
-    MatIconModule,
-    ReactiveFormsModule,
-    MatNativeDateModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatInputModule,
     HttpClientModule,
-    MaterialExampleModule,
-    BrowserAnimationsModule,
+    MatChipsModule,
+    ReactiveFormsModule,
+    MatAutocompleteModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-
-
-
-

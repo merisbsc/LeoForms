@@ -1,6 +1,18 @@
+h2 {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-weight: bold;
+  font-size: 1.5em;
+  text-align: center;
+}
+
+h3 {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  text-align: center;
+}
+
 .variable-binding,
 .variable-textarea {
-  width: 49%;
+
 }
 
 .variable-textarea {
@@ -16,11 +28,11 @@
   width: 100%;
 }
 
-.grid-container {
+/*.grid-container {
   display: grid;
   grid-template-columns: 6fr 6fr;
   grid-gap: -10px;
-}
+}*/
 
 .grid-child-purple {
   width: 70vw;
@@ -28,5 +40,11 @@
 }
 
 .grid-child-green {
-  width: 50vw;
+  margin: auto;
+  width: 30%;
+  background: #f3f3f3;
+  padding: 2%;
+  border-radius: 15px;
 }
+
+

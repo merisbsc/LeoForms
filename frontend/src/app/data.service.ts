@@ -1,15 +1,8 @@
 import { Injectable } from '@angular/core';
-import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
+import {Observable} from "rxjs";
 import {TemplateModel} from "./model/template.model";
 import {SurveyModel} from "./model/survey.model";
-
-
-export interface GroupInterface {
-  name: string;
-  year: string;
-  id: string;
-}
 
 export interface FormInterface {
   name: string;
@@ -17,12 +10,10 @@ export interface FormInterface {
   markdown: string;
 }
 
-export interface GetFormInterface {
-  markdown: string
-}
-
-export interface GetFieldNamesInterface {
-  fieldnames: string
+export interface GroupInterface {
+  name: string;
+  year: string;
+  id: string;
 }
 
 @Injectable({
@@ -30,52 +21,29 @@ export interface GetFieldNamesInterface {
 })
 export class DataService {
 
-
-  readonly groups: GroupInterface[];
+  readonly groups?: GroupInterface[];
   readonly forms: FormInterface[];
 
   constructor(private http: HttpClient) {
     this.forms = [];
   }
 
-  getGroups(): Observable<GroupInterface[]> {
-    return this.http.get<GroupInterface[]>(`http://localhost:8080/groups`);
-  }
-
-  getTemplate(name: string): Observable<string> {
-    return this.http.get('http://localhost:8080/template/' + name + '/markdown/name', {responseType: 'text'});
-  }
-
   getAllTemplates(): Observable<TemplateModel[]> {
+    console.log(this.http.get<TemplateModel[]>('http://localhost:8080/template/'));
     return this.http.get<TemplateModel[]>('http://localhost:8080/template/');
   }
 
-  getTemplateById(id: any): Observable<TemplateModel> {
-    return this.http.get<TemplateModel>('http://localhost:8080/template/' + id);
+  getAllSurveys(): Observable<SurveyModel[]> {
+    console.log(this.http.get<SurveyModel[]>('http://localhost:8080/survey/'));
+    return this.http.get<SurveyModel[]>('http://localhost:8080/survey/');
   }
-
 
   deleteTemplateById(id: any): Observable<null> {
     return this.http.delete<null>('http://localhost:8080/template/' + id + '/template-id');
   }
 
-  saveSurvey(): Observable<null> {
-
-    const survey = {
-      creationDate: "2022-09-07",
-      endDate: "2022-09-07",
-      template: {
-        name: "NAME NAME OK NAME",
-        creationDate: "2022-09-07",
-        markdown: "string",
-        description: "so a guade soch",
-        fieldNames: [
-          "string"
-        ]
-      }
-    }
-
-    return this.http.post<null>('', survey);
+  getTemplateById(id: any): Observable<TemplateModel> {
+    return this.http.get<TemplateModel>('http://localhost:8080/template/' + id);
   }
 
   saveMd(nameForm: string, markdownString: string, descForm: string, fieldNames: string[]) {
@@ -97,7 +65,32 @@ export class DataService {
         console.log(value);
       }
     );
+  }
 
+  getGroups(): Observable<GroupInterface[]> {
+    return this.http.get<GroupInterface[]>(`http://localhost:8080/groups`);
+  }
+
+  saveSurvey(endDate: string, name: string, description: string, finalForm: string, templateId: number) {
+
+    console.log(finalForm);
+
+    console.log(name + " - " + description)
+    let datenow = new Date().toISOString().substring(0,10);
+
+    const survey = {
+      "creationDate": datenow.toString(),
+      "endDate": endDate,
+      "templateId": templateId,
+      "status": "CREATED",
+      "name": name,
+      "description": description
+    }
+
+    this.http.post('http://localhost:8080/survey', survey).subscribe(value => {
+        console.log(value);
+      }
+    );
   }
 
 }

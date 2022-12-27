@@ -1,0 +1,14 @@
+* {
+  font-family: "Helvetica Neue", sans-serif;
+}
+
+.full-width-table {
+  width: 100%;
+}
+
+h2 {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-weight: bold;
+  text-align: center;
+  font-size: 1.5em;
+}

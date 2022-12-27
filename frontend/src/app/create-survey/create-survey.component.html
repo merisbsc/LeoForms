@@ -1,22 +1,27 @@
 <h2>Survey Erstellen</h2>
 
-<h2>{{singleTemplate?.name}}</h2>
+<h3>Template Name: {{singleTemplate?.name}}</h3>
 
 <div class="grid-container">
-  <div class="grid-child-purple">
+
+<!--  <div class="grid-child-purple">
     <textarea class="variable-textarea" [(ngModel)]="markdown"></textarea>
-  </div>
+  </div>-->
 
   <div class="grid-child-green">
     <markdown class="variable-binding" [data]="markdown"></markdown>
   </div>
+
 </div>
+
+
+<div class="footer">
 
 <mat-form-field class="name_field_form" appearance="fill">
   <mat-label>Name eingeben...</mat-label>
   <input [(ngModel)]="formName" matInput placeholder="LeoForm name..." >
 </mat-form-field>
-<br>
+
 <mat-form-field class="name_field_form" appearance="fill">
   <mat-label>Beschreiben Sie ihr Form...</mat-label>
   <input [(ngModel)]="formDesc" matInput placeholder="LeoForm description..." >
@@ -53,17 +58,12 @@
 
 <mat-form-field appearance="fill">
   <mat-label>Deadline wählen</mat-label>
-  <input matInput [matDatepicker]="picker">
-  <!--<mat-hint>MM/DD/YYYY</mat-hint>-->
+  <input matInput [matDatepicker]="picker" [(ngModel)]="endDate" [min]="todayDate">
   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-  <mat-datepicker #picker></mat-datepicker>
+  <mat-datepicker #picker ></mat-datepicker>
 </mat-form-field>
 
 <tr></tr>
-<button mat-flat-button color="primary" >Abschicken</button>
+<button mat-flat-button color="primary" (click)="saveSurvey()">Abschicken</button>
 <tr></tr>
-<button mat-flat-button color="primary" routerLink="/inventory">Template Inventory</button>
-<tr></tr>
-<button mat-flat-button color="primary" routerLink="/surveys">Survey Inventory</button>
-<tr></tr>
-<button mat-stroked-button color="primary" routerLink="/show/w">Show Specific</button>
+</div>

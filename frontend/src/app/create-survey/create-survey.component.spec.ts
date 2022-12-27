@@ -11,9 +11,7 @@ describe('CreateSurveyComponent', () => {
       declarations: [ CreateSurveyComponent ]
     })
     .compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(CreateSurveyComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

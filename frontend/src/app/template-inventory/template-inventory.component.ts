@@ -1,29 +1,34 @@
-import { Component, OnInit } from '@angular/core';
-import {DataService, GetFormInterface} from "../data.service";
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTable } from '@angular/material/table';
 import {TemplateModel} from "../model/template.model";
+import {DataService} from "../data.service";
 import {Title} from "@angular/platform-browser";
 import {Router} from "@angular/router";
 
 @Component({
-  selector: 'app-inventory',
-  templateUrl: './inventory.component.html',
-  styleUrls: ['./inventory.component.css']
+  selector: 'app-template-inventory',
+  templateUrl: './template-inventory.component.html',
+  styleUrls: ['./template-inventory.component.css']
 })
-export class InventoryComponent implements OnInit {
+export class TemplateInventoryComponent {
 
-  formName: string;
-  dataSource: GetFormInterface[];
   form = "";
 
   allTemplates: TemplateModel[] = [];
 
   constructor(public dataServ: DataService, private titleService:Title, private route: Router) {
-    this.titleService.setTitle("INVENTORY");
+    this.titleService.setTitle("TEMPLATE INVENTORY");
   }
 
   ngOnInit(): void {
     this.dataServ.getAllTemplates().subscribe(template => this.allTemplates = template)
     console.log(this.allTemplates)
+  }
+
+  loadAll() {
+    this.dataServ.getAllTemplates().subscribe(template => this.allTemplates = template)
   }
 
   createSurvey(id: any) {

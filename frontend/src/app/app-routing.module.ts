@@ -1,20 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {LoginPageComponent} from "./login-page/login-page.component";
-import { Routes, RouterModule } from '@angular/router';
-import {NewFormComponent} from "./new-form/new-form.component";
+import {RouterModule, Routes} from "@angular/router";
 import {ShowFormComponent} from "./show-form/show-form.component";
-import {InventoryComponent} from "./inventory/inventory.component";
-import {SurveysComponent} from "./surveys/surveys.component";
+import {TemplateInventoryComponent} from "./template-inventory/template-inventory.component";
+import {SurveyInventoryComponent} from "./survey-inventory/survey-inventory.component";
 import {CreateSurveyComponent} from "./create-survey/create-survey.component";
+import {CreateTemplateComponent} from "./create-template/create-template.component";
 
 const routes: Routes = [
-  { path: '', component: LoginPageComponent },
-  { path: 'new', component: NewFormComponent },
-  { path: 'show/:name', component: ShowFormComponent },
-  { path: 'inventory', component: InventoryComponent },
-  { path: 'surveys', component: SurveysComponent },
-  { path: 'cs/:id', component: CreateSurveyComponent }
+  { path: '', component: CreateTemplateComponent },
+  { path: 'template_inv', component: TemplateInventoryComponent },
+  { path: 'survey_inv', component: SurveyInventoryComponent },
+  { path: 'cs/:id', component: CreateSurveyComponent },
 ];
 
 @NgModule({
