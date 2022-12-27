@@ -30,7 +30,7 @@ public class Survey {
     @Column(name = "SU_DESCRIPTION")
     String description;
 
-    @Column(name = "SU_HTML")
+    @Column(name = "SU_HTML", columnDefinition = "varchar(8168)")
     String html;
 
     @JsonbTransient
