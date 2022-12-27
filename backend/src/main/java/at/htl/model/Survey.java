@@ -47,7 +47,8 @@ public class Survey {
     }
 
     public Survey(LocalDate creationDate, LocalDate endDate, Template template,
-                  Status status, String name, String description, Set<Group> groups) {
+                  Status status, String name, String description, Set<Group> groups,
+                  String html) {
         this.creationDate = creationDate;
         this.endDate = endDate;
         this.template = template;
@@ -55,6 +56,7 @@ public class Survey {
         this.name = name;
         this.description = description;
         this.groups = groups;
+        this.html = html;
     }
 
 

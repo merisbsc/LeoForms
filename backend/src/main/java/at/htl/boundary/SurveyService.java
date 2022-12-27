@@ -49,7 +49,7 @@ public class SurveyService {
         String content = survey.html;
 
         Survey s = new Survey(survey.creationDate, survey.endDate, t, survey.status,
-                survey.name, survey.description, survey.groups);
+                survey.name, survey.description, survey.groups, survey.html);
         surveyRepository.persist(s);
         saveHTML(s, content);
 
