@@ -30,6 +30,9 @@ public class Survey {
     @Column(name = "SU_DESCRIPTION")
     String description;
 
+    @Column(name = "SU_HTML")
+    String html;
+
     @JsonbTransient
     @ManyToMany
     @JoinTable(
@@ -117,5 +120,13 @@ public class Survey {
 
     public void setGroups(Set<Group> groups) {
         this.groups = groups;
+    }
+
+    public String getHtml() {
+        return html;
+    }
+
+    public void setHtml(String html) {
+        this.html = html;
     }
 }

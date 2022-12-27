@@ -11,4 +11,5 @@ public class SurveyDTO {
     public String name;
     public String description;
     public Set<Group> groups;
+    public String html;
 }
