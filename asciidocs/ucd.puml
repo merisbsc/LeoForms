@@ -1,0 +1,24 @@
+@startuml
+left to right direction
+actor Lehrkraft as l
+actor SchülerIn as s
+
+package Beantwortung {
+usecase "Formular ausfüllen" as UC5
+}
+
+package Befragung {
+usecase "Formular erstellen" as UC1
+usecase "Aussenden der Umfrage" as UC2
+usecase "Erheben der Daten" as UC3
+}
+
+
+
+s --> UC5
+l --> UC1
+l --> UC2
+l --> UC3
+
+
+@enduml
