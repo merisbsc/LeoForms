@@ -1,5 +1,6 @@
 package at.htl;
 
+import at.htl.controller.InviteController;
 import at.htl.model.Group;
 import at.htl.model.Student;
 import at.htl.repositories.GroupRepository;
@@ -15,6 +16,7 @@ import javax.transaction.Transactional;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @ApplicationScoped
@@ -31,13 +33,14 @@ public class InitBean {
     @Inject
     TemplateRepository templateRepository;
 
+    @Inject
+    InviteController inviteController;
+
     @Transactional
     void onStart(@Observes StartupEvent event) throws IOException {
 
         Files.createDirectories(Paths.get("src/main/resources/survey-html"));
         FileUtils.cleanDirectory(new File("src/main/resources/survey-html"));
-
-
 
         BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/students.csv"));
 
@@ -62,6 +65,11 @@ public class InitBean {
 
                 })
                 .count();
+
+        inviteController.invite(1, List.of(
+                new Group("7ACIF", "202223"),
+                new Group("7AKIF", "202223")
+        ));
     }
 
 }

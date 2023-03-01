@@ -1,5 +1,6 @@
 package at.htl.boundary;
 
+import at.htl.controller.InviteController;
 import at.htl.model.Survey;
 import at.htl.model.SurveyDTO;
 import at.htl.model.Template;
@@ -25,6 +26,9 @@ public class SurveyService {
 
     @Inject
     TemplateRepository templateRepository;
+
+    @Inject
+    InviteController inviteController;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -52,6 +56,8 @@ public class SurveyService {
                 survey.name, survey.description, survey.groups, survey.html);
         surveyRepository.persist(s);
         saveHTML(s, content);
+
+//        inviteController.invite(survey.templateId, survey.groups);
 
         return Response.ok().build();
     }

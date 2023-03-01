@@ -76,15 +76,15 @@ export class DataService {
     console.log(finalForm);
 
     console.log(name + " - " + description)
-    let datenow = new Date().toISOString().substring(0,10);
 
     const survey = {
-      "creationDate": datenow.toString(),
-      "endDate": endDate,
+      "creationDate": new Date().toISOString().substring(0,10),
+      "endDate": new Date(endDate).toISOString().substring(0,10),
       "templateId": templateId,
       "status": "CREATED",
       "name": name,
-      "description": description
+      "description": description,
+      "groups":
     }
 
     this.http.post('http://localhost:8080/survey', survey).subscribe(value => {
