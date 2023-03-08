@@ -1,24 +1,32 @@
 @startuml
 left to right direction
-actor Lehrkraft as l
-actor SchülerIn as s
+actor Befragender as l
+actor Beantwortender as s
 
 package Beantwortung {
-usecase "Formular ausfüllen" as UC5
+usecase "Umfrage beantworten" as UC5
+usecase "Über E-Mail-Token einsteigen" as UC6
+usecase "Formular ausfüllen" as UC7
+usecase "Antwort abschicken" as UC8
 }
 
 package Befragung {
-usecase "Formular erstellen" as UC1
-usecase "Aussenden der Umfrage" as UC2
-usecase "Erheben der Daten" as UC3
+usecase "Umgrage erstellen" as UC1
+usecase "Formular erstellen" as UC2
+usecase "Adressdaten auswählen" as UC3
+usecase "Umfrage aussenden" as UC4
 }
 
 
 
 s --> UC5
+UC5 .. UC6 : <<include>>
+UC5 .. UC7 : <<include>>
+UC5 .. UC8 : <<include>>
 l --> UC1
-l --> UC2
-l --> UC3
+UC1 .. UC2 : <<include>>
+UC1 .. UC3 : <<include>>
+UC1 .. UC4 : <<include>>
 
 
 @enduml

@@ -2,6 +2,7 @@ package at.htl.model;
 
 import io.vertx.codegen.annotations.Nullable;
 
+import javax.json.bind.annotation.JsonbDateFormat;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -34,7 +35,7 @@ public class Survey {
     String html;
 
     @JsonbTransient
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "LF_SURVEY_GROUP",
             joinColumns = @JoinColumn(name = "LF_SG_SURVEY_ID"),

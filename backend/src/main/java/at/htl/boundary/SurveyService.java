@@ -1,8 +1,10 @@
 package at.htl.boundary;
 
+import at.htl.model.Group;
 import at.htl.model.Survey;
 import at.htl.model.SurveyDTO;
 import at.htl.model.Template;
+import at.htl.repositories.GroupRepository;
 import at.htl.repositories.SurveyRepository;
 import at.htl.repositories.TemplateRepository;
 
@@ -26,6 +28,9 @@ public class SurveyService {
     @Inject
     TemplateRepository templateRepository;
 
+    @Inject
+    GroupRepository groupRepository;
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Survey> getAllSurveys() {
@@ -36,7 +41,6 @@ public class SurveyService {
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
     public Response saveSurvey(SurveyDTO survey) {
-        //surveyRepository.persist(survey);
         Template t;
 
         if (survey.templateId != null) {
