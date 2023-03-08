@@ -8,6 +8,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class StudentRepository implements PanacheRepository<Student> {
@@ -24,6 +25,14 @@ public class StudentRepository implements PanacheRepository<Student> {
 //        }
 
         return getEntityManager().merge(student);
+    }
+
+    public List<Student> findStudentsByGroupIds(List<String> groupIds) {
+        List<Student> students = new ArrayList<>();
+
+        groupIds.forEach(id -> students.addAll(find("group.id", id).list()));
+
+        return students;
     }
 
 }

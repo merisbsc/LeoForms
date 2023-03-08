@@ -35,11 +35,12 @@ public class Template {
     public Template() {
     }
 
-    public Template(Long id, String name, LocalDate creationDate, String markdown) {
+    public Template(Long id, String name, LocalDate creationDate, String markdown, String description) {
         this.id = id;
         this.name = name;
         this.creationDate = creationDate;
         this.markdown = markdown;
+        this.description = description;
     }
 
     public Long getId() {
