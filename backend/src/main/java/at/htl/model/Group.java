@@ -31,7 +31,7 @@ public class Group {
     @Column(name = "G_ID", insertable = false, updatable = false)
     String id;
     @JsonbTransient
-    @ManyToMany(mappedBy = "groups", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "groups")
     @Nullable
     Set<Survey> surveys;
 

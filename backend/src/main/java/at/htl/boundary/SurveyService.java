@@ -1,10 +1,9 @@
 package at.htl.boundary;
 
-import at.htl.model.Group;
-import at.htl.model.Survey;
-import at.htl.model.SurveyDTO;
-import at.htl.model.Template;
-import at.htl.repositories.GroupRepository;
+import at.htl.controller.InviteController;
+import at.htl.model.*;
+import at.htl.repositories.PollRepository;
+import at.htl.repositories.StudentRepository;
 import at.htl.repositories.SurveyRepository;
 import at.htl.repositories.TemplateRepository;
 
@@ -15,7 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.*;
 import java.util.List;
-import java.util.ResourceBundle;
+import java.util.Set;
 
 
 @Path("/survey")
@@ -29,7 +28,13 @@ public class SurveyService {
     TemplateRepository templateRepository;
 
     @Inject
-    GroupRepository groupRepository;
+    InviteController inviteController;
+
+    @Inject
+    StudentRepository studentRepository;
+
+    @Inject
+    PollRepository pollRepository;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -46,25 +51,40 @@ public class SurveyService {
         if (survey.templateId != null) {
             t = templateRepository.findById(survey.templateId);
         } else {
-            t = null;
             return Response.serverError().build();
         }
 
         String content = survey.html;
-
-        Survey s = new Survey(survey.creationDate, survey.endDate, t, survey.status,
-                survey.name, survey.description, survey.groups, survey.html);
+        Survey s = new Survey(survey.creationDate, survey.endDate, t, Status.STARTED,
+            survey.name, survey.description, survey.groups, survey.html);
         surveyRepository.persist(s);
+
         saveHTML(s, content);
+
+//        inviteController.invite(survey.templateId, survey.groups);
+        inviteController.invite(survey.templateId, Set.of(
+                new Group("7ACIF", "202223"),
+                new Group("7AKIF", "202223")
+        ));
 
         return Response.ok().build();
     }
 
     @GET
-    @Path("/{id}")
     @Produces(MediaType.TEXT_HTML)
-    public InputStream getHTML(@PathParam("id") Long id) {
-        File f = new File("src/main/resources/survey-html/" + id + ".html");
+    @Transactional
+    public InputStream getHTML(@QueryParam("token") String token) {
+        String[] parts = inviteController.decode(token).split("&");
+        long surveyId = Long.parseLong(parts[0]);
+        String matNr = parts[1];
+
+        Student student = studentRepository.find("matNr", matNr).firstResult();
+        Survey survey = surveyRepository.findById(surveyId);
+
+        pollRepository.persist(new Poll(token, student, survey));
+
+        File f = new File(String.format("src/main/resources/survey-html/%s.html", surveyId));
+
         try {
             return new FileInputStream(f);
         } catch (FileNotFoundException e) {

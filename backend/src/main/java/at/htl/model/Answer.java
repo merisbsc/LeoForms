@@ -13,8 +13,10 @@ public class Answer {
 
     @Column(name = "A_VALUE")
     String value;
-    @ManyToOne
-    Question question;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    @JoinColumn(name = "P_ID")
+    Poll poll;
 
     public Answer() {
     }
@@ -23,10 +25,9 @@ public class Answer {
         this.value = value;
     }
 
-    public Answer(Long id, String value, Question question) {
-        this.id = id;
+    public Answer(String value, Poll poll) {
         this.value = value;
-        this.question = question;
+        this.poll = poll;
     }
 
     public Long getId() {
@@ -45,11 +46,11 @@ public class Answer {
         this.value = value;
     }
 
-    public Question getQuestion() {
-        return question;
+    public Poll getPoll() {
+        return poll;
     }
 
-    public void setQuestion(Question question) {
-        this.question = question;
+    public void setPoll(Poll poll) {
+        this.poll = poll;
     }
 }
