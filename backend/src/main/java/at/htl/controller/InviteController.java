@@ -35,7 +35,7 @@ public class InviteController {
     }
 
     public String createLink(long templateId, String matNr) {
-        return "https://leo-forms.htl-leonding.ac.at/survey?token=" + encode(templateId + "&" + matNr);
+        return "https://localhost:4200/survey?token=" + encode(templateId + "&" + matNr);
     }
 
     public String encode(String data) {
@@ -47,3 +47,4 @@ public class InviteController {
     }
 
 }
+
