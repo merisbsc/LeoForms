@@ -49,6 +49,7 @@ export class CreateSurveyComponent implements OnInit {
 
     this.dataServ.getGroups().subscribe((value: any) => {
       this.dataSource = value;
+      this.dataServ.groups = value;
       // @ts-ignore
       let i = 0;
       this.dataSource?.forEach(item => {
@@ -62,7 +63,6 @@ export class CreateSurveyComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.templateId = this.router.snapshot.params['id'];
 
     this.dataServ.getTemplateById(this.templateId).subscribe(template => this.singleTemplate = template);
@@ -129,7 +129,7 @@ export class CreateSurveyComponent implements OnInit {
 
   saveSurvey() {
     // @ts-ignore
-    let inputElement = '<form id=\'daform\'>' + document.getElementsByClassName('variable-binding').item(0).innerHTML + '<button onclick="submitData()">Serialize form values</button></form>';
+    let inputElement = '<form action="#" id=\'daform\'>' + document.getElementsByClassName('variable-binding').item(0).innerHTML + '<button onclick="submitData()">Serialize form values</button></form>';
 
     let finalForm = '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>\n' +
       '<script>function submitData() {\n' +
@@ -138,13 +138,14 @@ export class CreateSurveyComponent implements OnInit {
       '    alert(data);\n' +
       '    $.ajax({\n' +
       '        type: \'POST\',\n' +
-      '        url: \'http://localhost:8080/answer\',\n' +
+      '        url: \'http://localhost:8080/answer\' + window.location.search,\n' +
       '        dataType: \'json\',\n' +
       '        contentType: \'application/json; charset=utf-8\',\n' +
       '        data: JSON.stringify(data),\n' +
       '        success: function (result) {\n' +
       '            console.log(\'Data received: \');\n' +
       '            console.log(result);\n' +
+      '            window.location.href = "http://localhost:4200"\n' +
       '        }\n' +
       '    })\n' +
       '}' +
@@ -152,12 +153,11 @@ export class CreateSurveyComponent implements OnInit {
       '<div id="formNameDiv"><h1 id="formName">' + this.formName + '</h1></div>' + inputElement;
     //console.log(finalForm);
 
-
     // @ts-ignore
     let date = this.endDate?.getFullYear() + '-' + (this.endDate?.getMonth().valueOf() + 1) + '-' + this.endDate?.getDate();
 
     // @ts-ignore
-    this.dataServ.saveSurvey(date, this.formName, this.formDesc, finalForm, this.templateId);
+    this.dataServ.saveSurvey(date, this.formName, this.formDesc, finalForm, this.templateId, this.groups);
 
     console.log(finalForm);
 

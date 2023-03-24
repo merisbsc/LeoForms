@@ -30,7 +30,7 @@ export interface UserData {
 })
 export class DataService {
 
-  readonly groups?: GroupInterface[];
+  groups?: GroupInterface[];
   readonly forms: FormInterface[];
 
   constructor(private http: HttpClient) {
@@ -80,11 +80,11 @@ export class DataService {
     return this.http.get<GroupInterface[]>(`http://localhost:8080/groups`);
   }
 
-  saveSurvey(endDate: string, name: string, description: string, finalForm: string, templateId: number) {
+  saveSurvey(endDate: string, name: string, description: string, finalForm: string, templateId: number, groups: string[]) {
 
-    console.log(finalForm);
+    // console.log(finalForm);
 
-    console.log(name + ' - ' + description);
+    // console.log(name + ' - ' + description);
 
     const survey = {
       'creationDate': new Date().toISOString().substring(0, 10),
@@ -93,11 +93,12 @@ export class DataService {
       'status': 'CREATED',
       'name': name,
       'description': description,
-      html: finalForm
+      html: finalForm,
+      // groups: this.groups!.filter(g => groups.includes(g.name))
     };
 
     this.http.post('http://localhost:8080/survey', survey).subscribe(value => {
-        console.log(value);
+        // console.log(value);
       }
     );
   }

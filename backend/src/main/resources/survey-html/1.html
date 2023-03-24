@@ -1,0 +1,40 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>function submitData() {
+    var data = $("form").serialize();
+    console.log(data);
+    alert(data);
+    $.ajax({
+        type: 'POST',
+        url: 'http://localhost:8080/answer',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify(data),
+        success: function (result) {
+            console.log('Data received: ');
+            console.log(result);
+        }
+    })
+}</script><div id="formNameDiv"><h1 id="formName">Mochma</h1></div><form id='daform'><h3 id="choose-one">Choose one</h3>
+<ul>
+<li style="list-style: none"><input type="radio" name="obst" value="Apfel"> Apfel</li><li style="list-style: none"><input type="radio" name="obst" value="Birne"> Birne</li><li style="list-style: none"><input type="radio" name="obst" value="Schoko"> Schoko</li></ul>
+<h3 id="choose-multiple">Choose Multiple</h3>
+<ul>
+<li style="list-style: none"><input type="checkbox" class="boxerl" style="list-style: none" name="Mathe"> Mathe</li><li style="list-style: none"><input type="checkbox" class="boxerl" style="list-style: none" name="Deutsch"> Deutsch</li><li style="list-style: none"><input type="checkbox" class="boxerl" style="list-style: none" name="Englisch"> Englisch</li></ul>
+<h3 id="write-text">Write Text</h3>
+<ul>
+<li style="list-style: none"><input type="text" name="spitzname"> </li></ul>
+<h3 id="dropdown">Dropdown</h3>
+<select name="Extrafach">
+<option disabled="" selected="" hidden="">
+
+Extrafach
+
+wählen...</option>
+
+<option>Wirtschaft</option>
+
+
+<option>Chemie</option>
+
+</select>
+<button onclick="submitData()">Serialize form values</button></form>
