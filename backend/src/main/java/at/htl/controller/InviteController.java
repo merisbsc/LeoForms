@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @ApplicationScoped
@@ -20,10 +21,8 @@ public class InviteController {
     @Inject
     EmailController emailController;
 
-    public void invite(long templateId, List<Group> groups) {
-
+    public void invite(long templateId, Set<Group> groups) {
         List<String> groupIds = groups.stream().map(Group::getId).collect(Collectors.toList());
-
         List<Student> students = studentRepository.findStudentsByGroupIds(groupIds);
 
         students.forEach(s -> {
@@ -35,7 +34,11 @@ public class InviteController {
     }
 
     public String createLink(long templateId, String matNr) {
+<<<<<<< HEAD
+        return "http://localhost:8080/survey?token=" + encode(templateId + "&" + matNr);
+=======
         return "https://localhost:4200/survey?token=" + encode(templateId + "&" + matNr);
+>>>>>>> 8ef73c285c220b49602181ad20886993661c78ee
     }
 
     public String encode(String data) {

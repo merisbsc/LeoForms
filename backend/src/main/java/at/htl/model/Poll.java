@@ -21,8 +21,7 @@ public class Poll {
     public Poll() {
     }
 
-    public Poll(Long id, String token, Student student, Survey survey) {
-        this.id = id;
+    public Poll(String token, Student student, Survey survey) {
         this.token = token;
         this.student = student;
         this.survey = survey;

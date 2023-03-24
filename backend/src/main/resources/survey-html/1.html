@@ -5,16 +5,17 @@
     alert(data);
     $.ajax({
         type: 'POST',
-        url: 'http://localhost:8080/answer',
+        url: 'http://localhost:8080/answer' + window.location.search,
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(data),
         success: function (result) {
             console.log('Data received: ');
             console.log(result);
+            window.location.href = "http://localhost:4200"
         }
     })
-}</script><div id="formNameDiv"><h1 id="formName">Mochma</h1></div><form id='daform'><h3 id="choose-one">Choose one</h3>
+}</script><div id="formNameDiv"><h1 id="formName">asd</h1></div><form method="post" action="#" id='daform'><h3 id="choose-one">Choose one</h3>
 <ul>
 <li style="list-style: none"><input type="radio" name="obst" value="Apfel"> Apfel</li><li style="list-style: none"><input type="radio" name="obst" value="Birne"> Birne</li><li style="list-style: none"><input type="radio" name="obst" value="Schoko"> Schoko</li></ul>
 <h3 id="choose-multiple">Choose Multiple</h3>
