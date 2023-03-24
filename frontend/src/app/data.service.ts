@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {TemplateModel} from "./model/template.model";
-import {SurveyModel} from "./model/survey.model";
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { TemplateModel } from './model/template.model';
+import { SurveyModel } from './model/survey.model';
 
 export interface FormInterface {
   name: string;
@@ -14,6 +14,15 @@ export interface GroupInterface {
   name: string;
   year: string;
   id: string;
+}
+
+export interface UserData {
+  email_verified: boolean;
+  family_name: string;
+  given_name: string;
+  name: string;
+  preferred_username: string;
+  sub: string;
 }
 
 @Injectable({
@@ -48,7 +57,7 @@ export class DataService {
 
   saveMd(nameForm: string, markdownString: string, descForm: string, fieldNames: string[]) {
 
-    let datenow = new Date().toISOString().substring(0,10);
+    let datenow = new Date().toISOString().substring(0, 10);
     console.log(datenow);
 
     const form = {
@@ -75,17 +84,17 @@ export class DataService {
 
     console.log(finalForm);
 
-    console.log(name + " - " + description)
+    console.log(name + ' - ' + description);
 
     const survey = {
-      "creationDate": new Date().toISOString().substring(0,10),
-      "endDate": new Date(endDate).toISOString().substring(0,10),
-      "templateId": templateId,
-      "status": "CREATED",
-      "name": name,
-      "description": description,
-      "groups":
-    }
+      'creationDate': new Date().toISOString().substring(0, 10),
+      'endDate': new Date(endDate).toISOString().substring(0, 10),
+      'templateId': templateId,
+      'status': 'CREATED',
+      'name': name,
+      'description': description,
+      html: finalForm
+    };
 
     this.http.post('http://localhost:8080/survey', survey).subscribe(value => {
         console.log(value);

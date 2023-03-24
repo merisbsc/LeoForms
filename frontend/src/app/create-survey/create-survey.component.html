@@ -4,9 +4,9 @@
 
 <div class="grid-container">
 
-<!--  <div class="grid-child-purple">
-    <textarea class="variable-textarea" [(ngModel)]="markdown"></textarea>
-  </div>-->
+  <!--  <div class="grid-child-purple">
+      <textarea class="variable-textarea" [(ngModel)]="markdown"></textarea>
+    </div>-->
 
   <div class="grid-child-green">
     <markdown class="variable-binding" [data]="markdown"></markdown>
@@ -17,53 +17,53 @@
 
 <div class="footer">
 
-<mat-form-field class="name_field_form" appearance="fill">
-  <mat-label>Name eingeben...</mat-label>
-  <input [(ngModel)]="formName" matInput placeholder="LeoForm name..." >
-</mat-form-field>
+  <mat-form-field class="name_field_form" appearance="fill">
+    <mat-label>Name eingeben...</mat-label>
+    <input [(ngModel)]="formName" matInput placeholder="LeoForm name..." >
+  </mat-form-field>
 
-<mat-form-field class="name_field_form" appearance="fill">
-  <mat-label>Beschreiben Sie ihr Form...</mat-label>
-  <input [(ngModel)]="formDesc" matInput placeholder="LeoForm description..." >
-</mat-form-field>
+  <mat-form-field class="name_field_form" appearance="fill">
+    <mat-label>Beschreiben Sie ihr Form...</mat-label>
+    <input [(ngModel)]="formDesc" matInput placeholder="LeoForm description..." >
+  </mat-form-field>
 
 
 
-<mat-form-field class="example-chip-list" appearance="fill">
-  <mat-label>Zielgruppen wählen</mat-label>
-  <mat-chip-list #chipList aria-label="Fruit selection">
-    <mat-chip
-      *ngFor="let fruit of groups"
-      (removed)="remove(fruit)">
-      {{fruit}}
-      <button matChipRemove>
-        <mat-icon>cancel</mat-icon>
-      </button>
-    </mat-chip>
-    <input
-      placeholder="Gruppe hinzufügen..."
-      #fruitInput
-      [formControl]="groupControl"
-      [matAutocomplete]="auto"
-      [matChipInputFor]="chipList"
-      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-      (matChipInputTokenEnd)="add($event)">
-  </mat-chip-list>
-  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-    <mat-option *ngFor="let fruit of filteredGroups | async" [value]="fruit">
-      {{fruit}}
-    </mat-option>
-  </mat-autocomplete>
-</mat-form-field>
+  <mat-form-field class="example-chip-list" appearance="fill">
+    <mat-label>Zielgruppen wählen</mat-label>
+    <mat-chip-grid #chipList aria-label="Fruit selection">
+      <mat-chip
+        *ngFor="let fruit of groups"
+        (removed)="remove(fruit)">
+        {{fruit}}
+        <button matChipRemove>
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip>
+      <input
+        placeholder="Gruppe hinzufügen..."
+        #fruitInput
+        [formControl]="groupControl"
+        [matAutocomplete]="auto"
+        [matChipInputFor]="chipList"
+        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        (matChipInputTokenEnd)="add($event)">
+    </mat-chip-grid>
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+      <mat-option *ngFor="let fruit of filteredGroups | async" [value]="fruit">
+        {{fruit}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
 
-<mat-form-field appearance="fill">
-  <mat-label>Deadline wählen</mat-label>
-  <input matInput [matDatepicker]="picker" [(ngModel)]="endDate" [min]="todayDate">
-  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-  <mat-datepicker #picker ></mat-datepicker>
-</mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Deadline wählen</mat-label>
+    <input matInput [matDatepicker]="picker" [(ngModel)]="endDate" [min]="todayDate">
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
 
-<tr></tr>
-<button mat-flat-button color="primary" (click)="saveSurvey()">Abschicken</button>
-<tr></tr>
+  <tr></tr>
+  <button mat-flat-button color="primary" (click)="saveSurvey()">Abschicken</button>
+  <tr></tr>
 </div>

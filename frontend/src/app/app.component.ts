@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import {Routes} from "@angular/router";
-
 
 @Component({
   selector: 'app-root',
@@ -8,5 +6,5 @@ import {Routes} from "@angular/router";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'frontend';
+  title = 'leoforms';
 }

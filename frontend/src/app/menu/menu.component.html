@@ -1,28 +1,43 @@
-<mat-sidenav-container class="sidenav-container">
+<mat-sidenav-container class="sidenav-container" *ngIf="oidcSecurityService.isAuthenticated() | async">
   <mat-sidenav #drawer class="sidenav" fixedInViewport
-      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [mode]="(isHandset$ | async) ? 'over' : 'side'"
-      [opened]="(isHandset$ | async) === false">
+               [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+               [mode]="(isHandset$ | async) ? 'over' : 'side'"
+               [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
       <a mat-list-item href="/">New Template</a>
       <a mat-list-item href="/template_inv">Template Inventory</a>
       <a mat-list-item href="/survey_inv">Survey Inventory</a>
-<!--      <a mat-list-item href="#" disabled="true">View Status</a>-->
+      <a mat-list-item href="" (click)="logout()">Abmelden</a>
+      <!--      <a mat-list-item href="#" disabled="true">View Status</a>-->
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
-      <button
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        (click)="drawer.toggle()"
-        *ngIf="isHandset$ | async">
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      <div>
+        <button
+          type="button"
+          aria-label="Toggle sidenav"
+          mat-icon-button
+          (click)="drawer.toggle()"
+          *ngIf="isHandset$ | async">
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+        <span>LeoForms</span>
+      </div>
+      <button mat-button [matMenuTriggerFor]="menu" *ngIf="userData">
+        <span>{{ userData.name.charAt(0) | uppercase }}{{ userData.family_name.charAt(0) | uppercase }}</span>
       </button>
-      <span>LeoForms</span>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="logout()">Abmelden</button>
+      </mat-menu>
     </mat-toolbar>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+<div class="login-wrapper" *ngIf="!(oidcSecurityService.isAuthenticated() | async)">
+  <h1>LeoForms</h1>
+
+  <button mat-raised-button (click)="login()" color="primary">Anmelden</button>
+</div>

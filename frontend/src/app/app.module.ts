@@ -1,54 +1,57 @@
-import {NgModule, SecurityContext} from '@angular/core';
+import { NgModule, SecurityContext } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MenuComponent } from './menu/menu.component';
-import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
 import { AppRoutingModule } from './app-routing.module';
-import { ShowFormComponent } from './show-form/show-form.component';
-import {MarkdownModule, MarkedOptions} from "ngx-markdown";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {MatFormFieldModule} from "@angular/material/form-field";
-import { TemplateInventoryComponent } from './template-inventory/template-inventory.component';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
-import {MatInputModule} from "@angular/material/input";
-import { SurveyInventoryComponent } from './survey-inventory/survey-inventory.component';
-import {HttpClientModule} from "@angular/common/http";
+import { AppComponent } from './app.component';
+import { MenuComponent } from './menu/menu.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
 import { CreateSurveyComponent } from './create-survey/create-survey.component';
+import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatButtonModule } from '@angular/material/button';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatListModule } from '@angular/material/list';
 import { CreateTemplateComponent } from './create-template/create-template.component';
-import {MatChipsModule} from "@angular/material/chips";
-import {MatAutocompleteModule} from "@angular/material/autocomplete";
-import {MatDatepickerModule} from "@angular/material/datepicker";
-import {MatNativeDateModule} from "@angular/material/core";
+import { SurveyInventoryComponent } from './survey-inventory/survey-inventory.component';
+import { MatNativeDateModule } from '@angular/material/core';
+import { HttpClientModule } from '@angular/common/http';
+import { TemplateInventoryComponent } from './template-inventory/template-inventory.component';
+import { AuthModule, LogLevel } from 'angular-auth-oidc-client';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [
     AppComponent,
     MenuComponent,
-    ShowFormComponent,
-    TemplateInventoryComponent,
-    SurveyInventoryComponent,
     CreateSurveyComponent,
-    CreateTemplateComponent
+    CreateTemplateComponent,
+    SurveyInventoryComponent,
+    TemplateInventoryComponent
   ],
   imports: [
     BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
     BrowserAnimationsModule,
-    LayoutModule,
+    MatSidenavModule,
+    MatListModule,
     MatToolbarModule,
     MatButtonModule,
-    MatSidenavModule,
     MatIconModule,
-    MatListModule,
-    AppRoutingModule,
+    MarkdownModule,
+    MatInputModule,
+    FormsModule,
+    MatChipsModule,
+    ReactiveFormsModule,
+    MatAutocompleteModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MarkdownModule.forRoot({
       markedOptions: {
         provide: MarkedOptions,
@@ -57,25 +60,28 @@ import {MatNativeDateModule} from "@angular/material/core";
           breaks: false,
           pedantic: false,
           smartLists: true, // enable smartLists
-          smartypants: false,
-        },
+          smartypants: false
+        }
       },
       sanitize: SecurityContext.NONE // disable sanitization
     }),
-    FormsModule,
-    MatFormFieldModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatInputModule,
-    HttpClientModule,
-    MatChipsModule,
-    ReactiveFormsModule,
-    MatAutocompleteModule,
-    MatDatepickerModule,
-    MatNativeDateModule
+    AuthModule.forRoot({
+      config: {
+        authority: 'https://auth.htl-leonding.ac.at/realms/htlleonding',
+        redirectUrl: window.location.origin,
+        postLogoutRedirectUri: window.location.origin,
+        clientId: 'htlleonding',
+        scope: 'openid profile email offline_access',
+        responseType: 'code',
+        silentRenew: true,
+        useRefreshToken: true,
+        logLevel: LogLevel.Debug
+      }
+    }),
+    MatMenuModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [ AppComponent ]
 })
-export class AppModule { }
+export class AppModule {
+}
