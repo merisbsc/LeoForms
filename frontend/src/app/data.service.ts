@@ -82,9 +82,7 @@ export class DataService {
 
   saveSurvey(endDate: string, name: string, description: string, finalForm: string, templateId: number, groups: string[]) {
 
-    // console.log(finalForm);
 
-    // console.log(name + ' - ' + description);
 
     const survey = {
       'creationDate': new Date().toISOString().substring(0, 10),

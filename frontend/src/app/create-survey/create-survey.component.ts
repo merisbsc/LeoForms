@@ -165,7 +165,7 @@ export class CreateSurveyComponent implements OnInit {
     this.markdown = '';
     this.formName = '';
     this.formDesc = '';
-    //this.route.navigate(["/survey_inv"]);
+    this.route.navigate(["/survey_inv"]);
 
   }
 
