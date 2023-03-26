@@ -148,6 +148,7 @@ export class CreateSurveyComponent implements OnInit {
       '            window.location.href = "http://localhost:4200"\n' +
       '        }\n' +
       '    })\n' +
+      //'setTimeout(() => window.location.href = "http://localhost:4200", 2000)' +
       '}' +
       '</script>' +
       '<div id="formNameDiv"><h1 id="formName">' + this.formName + '</h1></div>' + inputElement;

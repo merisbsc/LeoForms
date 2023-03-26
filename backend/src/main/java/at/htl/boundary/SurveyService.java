@@ -10,8 +10,10 @@ import at.htl.repositories.TemplateRepository;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import java.io.*;
 import java.util.List;
 import java.util.Set;
@@ -73,7 +75,10 @@ public class SurveyService {
     @GET
     @Produces(MediaType.TEXT_HTML)
     @Transactional
-    public InputStream getHTML(@QueryParam("token") String token) {
+    public InputStream getHTML(@QueryParam("token") String token, @Context UriInfo uriInfo) {
+        if (!uriInfo.getQueryParameters().containsKey("token")) {
+            return null;
+        }
         String[] parts = inviteController.decode(token).split("&");
         long surveyId = Long.parseLong(parts[0]);
         String matNr = parts[1];
