@@ -1,0 +1,22 @@
+<h2>Alle Antworten</h2>
+
+<head>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<table class="w3-table-all">
+  <thead class="w3-deep-purple">
+  <th>Schüler</th>
+  <th>Beschreibung</th>
+  <th>Antwort</th>
+
+  </thead>
+
+  <tr *ngFor="let answer of allAnswers" >
+    <td>{{answer?.poll?.student?.firstName}} {{answer?.poll?.student?.lastName}}</td>
+    <td>{{answer?.poll?.survey?.description}}</td>
+    <td>{{answer?.value?.toString()}}</td>
+  </tr>
+
+</table>
+
+
