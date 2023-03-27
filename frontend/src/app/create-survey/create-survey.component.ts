@@ -129,7 +129,7 @@ export class CreateSurveyComponent implements OnInit {
 
   saveSurvey() {
     // @ts-ignore
-    let inputElement = '<form action="#" id=\'daform\'>' + document.getElementsByClassName('variable-binding').item(0).innerHTML + '<button onclick="submitData()">Serialize form values</button></form>';
+    let inputElement = '<form action="#" id=\'daform\'>' + document.getElementsByClassName('variable-binding').item(0).innerHTML + '<button onclick="submitData()">Antworten abschicken</button></form>';
 
     let finalForm = '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>\n' +
       '<script>function submitData() {\n' +
@@ -145,12 +145,33 @@ export class CreateSurveyComponent implements OnInit {
       '        success: function (result) {\n' +
       '            console.log(\'Data received: \');\n' +
       '            console.log(result);\n' +
-      '            window.location.href = "http://localhost:4200"\n' +
+      '            window.location.href = "http://localhost:4200/survey_inv"\n' +
       '        }\n' +
       '    })\n' +
-      //'setTimeout(() => window.location.href = "http://localhost:4200", 2000)' +
       '}' +
       '</script>' +
+      '<style>' +
+      '* {\n' +
+      '  font-family: "Helvetica Neue";\n' +
+      '}\n' +
+      '\n' +
+      'form {\n' +
+      '  width: 100%;\n' +
+      '  max-width: 500px;\n' +
+      '  margin: 50px auto;\n' +
+      '  background:#fafafa;\n' +
+      '  min-height: 250px;\n' +
+      '  padding: 40px;\n' +
+      '  border-radius: 15px;\n' +
+      '}\n' +
+      '\n' +
+      'form input {\n' +
+      '  width: 100%;\n' +
+      '  height: 28px;\n' +
+      '  margin-bottom: 15px;\n' +
+      '  padding\n' +
+      '{\n' +
+      '</style>' +
       '<div id="formNameDiv"><h1 id="formName">' + this.formName + '</h1></div>' + inputElement;
     //console.log(finalForm);
 

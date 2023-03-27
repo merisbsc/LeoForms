@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TemplateModel } from './model/template.model';
 import { SurveyModel } from './model/survey.model';
+import {AnswerModel} from "./model/answer.model";
 
 export interface FormInterface {
   name: string;
@@ -55,6 +56,11 @@ export class DataService {
     return this.http.get<TemplateModel>('http://localhost:8080/template/' + id);
   }
 
+  getAllAnswers(): Observable<AnswerModel[]> {
+    console.log(this.http.get<AnswerModel[]>('http://localhost:8080/answer'));
+    return this.http.get<AnswerModel[]>('http://localhost:8080/answer');
+  }
+
   saveMd(nameForm: string, markdownString: string, descForm: string, fieldNames: string[]) {
 
     let datenow = new Date().toISOString().substring(0, 10);
@@ -100,5 +106,7 @@ export class DataService {
       }
     );
   }
+
+
 
 }

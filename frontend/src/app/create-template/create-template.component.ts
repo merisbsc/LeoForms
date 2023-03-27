@@ -23,25 +23,7 @@ export class CreateTemplateComponent implements OnInit {
 
   title = 'LeoFormsfe';
 
-  markdown = `### Choose one
-- [r:obst] Apfel
-- [r:obst] Birne
-- [r:obst] Schoko
-
-### Choose Multiple
-- [x]Mathe
-- [x]Deutsch
-- [x]Englisch
-
-### Write Text
-- [t:spitzname]
-
-### Dropdown
-| Extrafach |
-| -----------  |
-| Wirtschaft |
-| Chemie |
-`;
+  markdown = ``;
 
   constructor(private markdownService: MarkdownService, private titleService: Title, private data: DataService, private route: Router) {
     this.titleService.setTitle('Create Template');

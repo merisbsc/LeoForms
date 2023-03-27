@@ -24,6 +24,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { TemplateInventoryComponent } from './template-inventory/template-inventory.component';
 import { AuthModule, LogLevel } from 'angular-auth-oidc-client';
 import { MatMenuModule } from '@angular/material/menu';
+import { AnswersComponent } from './answers/answers.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { MatMenuModule } from '@angular/material/menu';
     CreateSurveyComponent,
     CreateTemplateComponent,
     SurveyInventoryComponent,
-    TemplateInventoryComponent
+    TemplateInventoryComponent,
+    AnswersComponent
   ],
   imports: [
     BrowserModule,

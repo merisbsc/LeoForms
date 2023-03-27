@@ -10,7 +10,6 @@
   <th>Deadline</th>
   <th>Empfänger</th>
   <th>Status</th>
-  <th>Aktionen</th>
   </thead>
 
   <tr *ngFor="let survey of allSurveys" >
@@ -19,9 +18,6 @@
     <td>{{survey.endDate}}</td>
     <td>5AHTIM</td>
     <td>{{survey.status}}</td>
-    <td>
-      <button mat-flat-button color="primary" >Senden</button>
-    </td>
   </tr>
 
 </table>

@@ -5,12 +5,14 @@ import { SurveyInventoryComponent } from './survey-inventory/survey-inventory.co
 import { TemplateInventoryComponent } from './template-inventory/template-inventory.component';
 import { CreateTemplateComponent } from './create-template/create-template.component';
 import { AuthGuard } from './auth.guard';
+import {AnswersComponent} from "./answers/answers.component";
 
 const routes: Routes = [
   { path: '', component: CreateTemplateComponent },
   { path: 'template_inv', component: TemplateInventoryComponent, canActivate: [ AuthGuard ] },
   { path: 'survey_inv', component: SurveyInventoryComponent, canActivate: [ AuthGuard ] },
-  { path: 'cs/:id', component: CreateSurveyComponent, canActivate: [ AuthGuard ] }
+  { path: 'cs/:id', component: CreateSurveyComponent, canActivate: [ AuthGuard ] },
+  { path: 'answers', component: AnswersComponent, canActivate: [ AuthGuard ] }
 ];
 
 @NgModule({
