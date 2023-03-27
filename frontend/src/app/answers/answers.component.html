@@ -6,6 +6,7 @@
 <table class="w3-table-all">
   <thead class="w3-deep-purple">
   <th>Schüler</th>
+  <th>Umfrage</th>
   <th>Beschreibung</th>
   <th>Antwort</th>
 
@@ -13,6 +14,7 @@
 
   <tr *ngFor="let answer of allAnswers" >
     <td>{{answer?.poll?.student?.firstName}} {{answer?.poll?.student?.lastName}}</td>
+    <td>{{answer?.poll?.survey?.name}}</td>
     <td>{{answer?.poll?.survey?.description}}</td>
     <td>{{answer?.value?.toString()}}</td>
   </tr>
