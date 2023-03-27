@@ -26,7 +26,7 @@ public class EmailController {
 
             protected PasswordAuthentication getPasswordAuthentication() {
 
-                return new PasswordAuthentication(from, "MySuperPassword");
+                return new PasswordAuthentication(from, "MySecretPassword");
 
             }
 
