@@ -5,6 +5,7 @@ import { Title } from '@angular/platform-browser';
 import { DataService } from '../data.service';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-create-template',
   templateUrl: './create-template.component.html',
@@ -22,7 +23,7 @@ export class CreateTemplateComponent implements OnInit {
   dataSource: GroupInterface[];
 
   title = 'LeoFormsfe';
-
+  dropdown = '';
   markdown = ``;
 
   constructor(private markdownService: MarkdownService, private titleService: Title, private data: DataService, private route: Router) {
@@ -31,7 +32,7 @@ export class CreateTemplateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    let dropdownId = "";
     this.markdownService.renderer.listitem = function (text) {
       let fieldName;
       if (/\[x\]\s*/.test(text)) {
@@ -46,13 +47,31 @@ export class CreateTemplateComponent implements OnInit {
         return '<li style="list-style: none">' + text + '</li>';
       }
       if (/\[r:.{1,}\]\s/gi.test(text)) {
-        //console.log(text)
+        console.log(text)
         var name = text.substring(
           text.indexOf(':') + 1,
           text.lastIndexOf(']')
         );
         text = text
-          .replace(/\[r:.{1,}\]\s/gi, '<input type="radio" name="' + name + '" value="' + text.substring(9) + '"> ');
+          .replace(/\[r:.{1,}\]\s/gi, '<input type="radio" name="' + name + '" value="' + text.substring(9) + '" id="hide-dropdown" class="radio-btn"> ');
+        return '<li style="list-style: none">' + text + '</li>';
+      }
+      if (/\[rd:.*?;.{1,}\]\s/gi.test(text)) {
+        console.log(text)
+        var name = text.substring(
+          text.indexOf(':') + 1,
+          text.lastIndexOf(';')
+        );
+        var dd = text.substring(
+          text.indexOf(';') + 1,
+          text.lastIndexOf(']')
+        );
+        console.log(name)
+        console.log(dd);
+        dropdownId = dd;
+        console.log(text.substring(text.lastIndexOf(']') + 2));
+        text = text
+          .replace(/\[rd:.*?;.{1,}\]\s/gi, '<input type="radio" name="' + name + '" value="' + text.substring(text.lastIndexOf(']') + 2) + '" id="show-dropdown" class="radio-btn"> ');
         return '<li style="list-style: none">' + text + '</li>';
       }
       if (/^\s*\[[d ]\]\s*/.test(text)) {
@@ -78,7 +97,8 @@ export class CreateTemplateComponent implements OnInit {
       //console.log(header.substring(9, header.length - 12));
       let fieldName = header.substring(9, header.length - 12);
       console.log(fieldName);
-      return '<select name="' + fieldName + '">\n'
+      //return '<select name="' + fieldName + '" id="' + fieldName + '" >\n'
+      return '<select name="' + fieldName + '" id="dropdown-menu" >\n'
         + '<option disabled selected hidden>\n'
         + header + 'wählen...'
         + '</option>\n'
@@ -88,16 +108,19 @@ export class CreateTemplateComponent implements OnInit {
 
   }
 
+
+
+
   sendForm() {
-    let fieldNames = [ 'figojdagf', 'gdsagfdsg' ];
     // @ts-ignore
-    this.data.saveMd(this.formName, this.markdown, this.formDesc, fieldNames);
+    this.data.saveMd(this.formName, this.markdown, this.formDesc, this.dropdown);
 
     this.markdown = '';
     this.formName = '';
     this.formDesc = '';
+    console.log(this.dropdown);
 
-    this.route.navigate([ '/template_inv' ]);
+    //this.route.navigate([ '/template_inv' ]);
 
 
   }

@@ -72,9 +72,11 @@ export class CreateSurveyComponent implements OnInit {
 
     console.log(this.markdown);
 
+    let dropdownId = "";
     this.markdownService.renderer.listitem = function (text) {
       let fieldName;
       if (/\[x\]\s*/.test(text)) {
+        console.log(text);
         fieldName = text.substring(3, text.length);
         text = text
           .replace(/\[x\]\s*/, '<input type="checkbox" class="boxerl" style="list-style: none" ' +
@@ -85,13 +87,31 @@ export class CreateSurveyComponent implements OnInit {
         return '<li style="list-style: none">' + text + '</li>';
       }
       if (/\[r:.{1,}\]\s/gi.test(text)) {
-        //console.log(text)
+        console.log(text)
         var name = text.substring(
           text.indexOf(':') + 1,
           text.lastIndexOf(']')
         );
         text = text
-          .replace(/\[r:.{1,}\]\s/gi, '<input type="radio" name="' + name + '" value="' + text.substring(9) + '"> ');
+          .replace(/\[r:.{1,}\]\s/gi, '<input type="radio" name="' + name + '" value="' + text.substring(9) + '" id="hide-dropdown" class="radio-btn"> ');
+        return '<li style="list-style: none">' + text + '</li>';
+      }
+      if (/\[rd:.*?;.{1,}\]\s/gi.test(text)) {
+        console.log(text)
+        var name = text.substring(
+          text.indexOf(':') + 1,
+          text.lastIndexOf(';')
+        );
+        var dd = text.substring(
+          text.indexOf(';') + 1,
+          text.lastIndexOf(']')
+        );
+        console.log(name)
+        console.log(dd);
+        dropdownId = dd;
+        console.log(text.substring(text.lastIndexOf(']') + 2));
+        text = text
+          .replace(/\[rd:.*?;.{1,}\]\s/gi, '<input type="radio" name="' + name + '" value="' + text.substring(text.lastIndexOf(']') + 2) + '" id="show-dropdown" class="radio-btn"> ');
         return '<li style="list-style: none">' + text + '</li>';
       }
       if (/^\s*\[[d ]\]\s*/.test(text)) {
@@ -117,7 +137,8 @@ export class CreateSurveyComponent implements OnInit {
       //console.log(header.substring(9, header.length - 12));
       let fieldName = header.substring(9, header.length - 12);
       console.log(fieldName);
-      return '<select name="' + fieldName + '">\n'
+      //return '<select name="' + fieldName + '" id="' + fieldName + '" >\n'
+      return '<select name="' + fieldName + '" id="dropdown-menu" >\n'
         + '<option disabled selected hidden>\n'
         + header + 'wählen...'
         + '</option>\n'
@@ -149,6 +170,18 @@ export class CreateSurveyComponent implements OnInit {
       '        }\n' +
       '    })\n' +
       '}' +
+      '$(document).ready(function() {\n' +
+      '    const radioBtns = $(\'.radio-btn\');\n' +
+      '    const dropdownMenu = $(\'#dropdown-menu\');\n' +
+      '\n' +
+      '    radioBtns.on(\'click\', function() {\n' +
+      '        if ($(this).val() === \'Fachtheorie\') {\n' +
+      '            dropdownMenu.show();\n' +
+      '        } else {\n' +
+      '            dropdownMenu.hide();\n' +
+      '        }\n' +
+      '    });\n' +
+      '});' +
       '</script>' +
       '<style>' +
       '* {\n' +
@@ -169,8 +202,10 @@ export class CreateSurveyComponent implements OnInit {
       '  width: 100%;\n' +
       '  height: 28px;\n' +
       '  margin-bottom: 15px;\n' +
-      '  padding\n' +
-      '{\n' +
+      '}\n' +
+      '#dropdown-menu {\n' +
+      '  display: none;\n' +
+      '}' +
       '</style>' +
       '<div id="formNameDiv"><h1 id="formName">' + this.formName + '</h1></div>' + inputElement;
     //console.log(finalForm);
@@ -186,7 +221,7 @@ export class CreateSurveyComponent implements OnInit {
     this.markdown = '';
     this.formName = '';
     this.formDesc = '';
-    this.route.navigate(["/survey_inv"]);
+    //this.route.navigate(["/survey_inv"]);
 
   }
 
